@@ -44,10 +44,12 @@ class ContestListScreen extends Component {
   }
 
   selectContest(contest) {
-    this.props.navigator.push({
-      title: contest.name,
-      name: 'contest',
-      contest: contest,
+    this.props.toRoute({
+      name: contest.name,
+      component: PerformanceListScreen,
+      passProps: {
+        contest: contest
+      }
     });
   }
 
