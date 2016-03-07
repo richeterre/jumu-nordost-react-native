@@ -6,24 +6,71 @@
 import React, {
   AppRegistry,
   Component,
+  ListView,
   StyleSheet,
   Text,
   View
 } from 'react-native';
 
+var CONTESTS_URL = 'http://10.0.2.2:5000/api/v1/contests';
+var API_KEY = '';
+
 class JumuNordost extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      }),
+      loaded: false
+    };
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    fetch(CONTESTS_URL, { headers: { 'X-Api-Key': API_KEY } })
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(responseData),
+          loaded: true,
+        });
+      })
+      .done();
+  }
+
   render() {
+    if (!this.state.loaded) {
+      return this.renderLoadingView();
+    }
+
+    return (
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderContest}
+        style={styles.listView}
+      />
+    )
+  }
+
+  renderLoadingView() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native, Martin!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
-        </Text>
+        <Text>Loading contests…</Text>
+      </View>
+    );
+  }
+
+  renderContest(contest) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.rightContainer}>
+          <Text style={styles.name}>{contest.name}</Text>
+          <Text style={styles.dateInfo}>{contest.start_date}</Text>
+        </View>
       </View>
     );
   }
@@ -32,20 +79,32 @@ class JumuNordost extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
+  thumbnail: {
+    width: 53,
+    height: 81
+  },
+  rightContainer: {
+    flex: 1
+  },
+  name: {
     fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+    marginBottom: 8,
+    textAlign: 'left'
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  dateInfo: {
+    marginBottom: 16,
+    textAlign: 'left'
   },
+  listView: {
+    paddingTop: 20,
+    paddingLeft: 20,
+    backgroundColor: '#F5FCFF'
+  }
 });
 
 AppRegistry.registerComponent('JumuNordost', () => JumuNordost);
