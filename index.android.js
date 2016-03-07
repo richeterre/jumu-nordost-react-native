@@ -12,8 +12,11 @@ import React, {
   View
 } from 'react-native';
 
+// Grab credentials (add this file if missing, as it's ignored by Git)
+var credentials = require('./credentials.json');
+
 var CONTESTS_URL = 'http://10.0.2.2:5000/api/v1/contests';
-var API_KEY = '';
+var API_KEY = credentials['api-key']
 
 class JumuNordost extends Component {
   constructor(props) {

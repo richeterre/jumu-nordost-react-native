@@ -1,3 +1,7 @@
+# App-specific stuff
+# Keep credentials out of version control:
+credentials.json
+
 # OSX
 #
 .DS_Store
