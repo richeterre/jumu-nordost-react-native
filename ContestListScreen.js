@@ -9,12 +9,7 @@ import React, {
 
 import ContestCell from './ContestCell';
 import PerformanceListScreen from './PerformanceListScreen';
-
-// Grab credentials (add this file if missing, as it's ignored by Git)
-var credentials = require('./credentials.json');
-
-var CONTESTS_URL = 'http://192.168.56.1:5000/api/v1/contests';
-var API_KEY = credentials['api-key']
+import { BASE_URL, API_KEY } from './Constants';
 
 class ContestListScreen extends Component {
 
@@ -24,7 +19,7 @@ class ContestListScreen extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
-      loaded: false
+      loading: true
     };
   }
 
@@ -33,15 +28,18 @@ class ContestListScreen extends Component {
   }
 
   fetchData() {
-    fetch(CONTESTS_URL, { headers: { 'X-Api-Key': API_KEY } })
-      .then((response) => response.json())
-      .then((responseData) => {
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(responseData),
-          loaded: true,
-        });
-      })
-      .done();
+    fetch(
+      BASE_URL + 'contests?timetables_public=1',
+      { headers: { 'X-Api-Key': API_KEY } }
+    )
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(responseData),
+        loading: false,
+      });
+    })
+    .done();
   }
 
   selectContest(contest) {
@@ -73,7 +71,7 @@ class ContestListScreen extends Component {
   }
 
   render() {
-    if (!this.state.loaded) {
+    if (this.state.loading) {
       return this.renderLoadingView();
     }
 
