@@ -79,7 +79,7 @@ class ContestListScreen extends Component {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
+        renderRow={this.renderRow.bind(this)}
         style={styles.listView}
       />
     )
