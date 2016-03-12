@@ -10,8 +10,12 @@ var {
   View
 } = React;
 
+import moment from 'moment-timezone'
+
 var ContestCell = React.createClass({
   render: function() {
+    const contest = this.props.contest
+
     var TouchableElement = TouchableHighlight;
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
@@ -28,8 +32,12 @@ var ContestCell = React.createClass({
 
             <View style={styles.container}>
               <View style={styles.rightContainer}>
-                <Text style={styles.name}>{this.props.contest.name}</Text>
-                <Text style={styles.dateInfo}>{this.props.contest.start_date}</Text>
+                <Text style={styles.name}>{contest.name}</Text>
+                <Text style={styles.dateInfo}>
+                  {moment(contest.start_date).tz(contest.time_zone).format('LL')}
+                  –
+                  {moment(contest.end_date).tz(contest.time_zone).format('LL')}
+                </Text>
               </View>
             </View>
           </View>
