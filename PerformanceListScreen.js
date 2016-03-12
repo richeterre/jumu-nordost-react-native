@@ -56,7 +56,8 @@ class PerformanceListScreen extends Component {
       component: PerformanceScreen,
       passProps: {
         performance: performance,
-        venue: this.state.currentVenue
+        venue: this.state.currentVenue,
+        timeZone: this.props.contest.time_zone
       }
     });
   }
@@ -75,7 +76,7 @@ class PerformanceListScreen extends Component {
         key={performance.id}
         onSelect={() => this.selectPerformance(performance)}
         performance={performance}
-        time_zone={this.props.contest.time_zone}
+        timeZone={this.props.contest.time_zone}
       />
     );
   }

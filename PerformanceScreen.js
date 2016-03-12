@@ -6,15 +6,19 @@ import React, {
   View
 } from 'react-native';
 
+import moment from 'moment-timezone'
+
 class PerformanceScreen extends Component {
 
   render() {
     const performance = this.props.performance
     const venue = this.props.venue
+    const timeZone = this.props.timeZone
+
     return (
       <View style={styles.container}>
         <View style={styles.generalInfo}>
-          <Text>{performance.stage_time}</Text>
+          <Text>{moment(performance.stage_time).tz(timeZone).format('LLLL')}</Text>
           <Text>{venue.name}</Text>
           <Text>{performance.category_name}</Text>
           <Text>Altersgruppe {performance.age_group}</Text>
