@@ -16,7 +16,6 @@ var PerformanceCell = React.createClass({
   render: function() {
     const performance = this.props.performance
     const timeZone = this.props.timeZone
-    const appearance = performance.appearances[0]
 
     var TouchableElement = TouchableHighlight;
     if (Platform.OS === 'android') {
@@ -35,16 +34,20 @@ var PerformanceCell = React.createClass({
             <View style={styles.container}>
               <View style={styles.leftContainer}>
                 <Text style={styles.time}>
-                  {moment(performance.stage_time).tz(timeZone).format('hh:mm')}
+                  {moment(performance.stage_time).tz(timeZone).format('HH:mm')}
                 </Text>
               </View>
               <View style={styles.rightContainer}>
                 <Text style={styles.categoryInfo}>
                   {performance.category_name}, AG {performance.age_group}
                 </Text>
-                <Text style={styles.appearance}>
-                  {appearance.participant_name}, {appearance.instrument_name}
-                </Text>
+                <View style={styles.appearance}>
+                  {performance.appearances.map((appearance, i) =>
+                    <Text key={'appearance' + (i + 1)}>
+                      {appearance.participant_name}, {appearance.instrument_name}
+                    </Text>
+                  )}
+                </View>
                 <Text style={styles.predecessorInfo}>
                   {performance.predecessor_host_name}
                 </Text>
@@ -61,8 +64,9 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingTop: 5,
+    paddingBottom: 5,
+    alignItems: 'flex-start',
     backgroundColor: '#F5FCFF',
   },
   leftContainer: {
