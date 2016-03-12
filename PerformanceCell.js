@@ -85,7 +85,9 @@ var styles = StyleSheet.create({
     textAlign: 'left'
   },
   appearance: {},
-  predecessorInfo: {}
+  predecessorInfo: {
+    marginTop: 5
+  }
 });
 
 export default PerformanceCell;
