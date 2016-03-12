@@ -8,6 +8,7 @@ import React, {
 } from 'react-native';
 
 import ContestCell from './ContestCell';
+import PerformanceListScreen from './PerformanceListScreen';
 
 // Grab credentials (add this file if missing, as it's ignored by Git)
 var credentials = require('./credentials.json');

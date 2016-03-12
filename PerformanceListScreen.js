@@ -10,7 +10,7 @@ class PerformanceListScreen extends Component {
 
   render() {
     return (
-      <View style="styles.container">
+      <View style={styles.container}>
         <Text>{this.props.contest.name}</Text>
       </View>
     )
