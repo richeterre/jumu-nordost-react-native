@@ -10,6 +10,7 @@ import React, {
 import PerformanceCell from './PerformanceCell';
 import PerformanceScreen from './PerformanceScreen';
 import { BASE_URL, API_KEY } from './Constants';
+import moment from 'moment-timezone';
 
 class PerformanceListScreen extends Component {
 
@@ -30,7 +31,11 @@ class PerformanceListScreen extends Component {
 
   fetchData() {
     const contest = this.props.contest
-    const query = '?venue_id=' + this.state.currentVenue.id + '&date=2016-03-17'
+    const date = moment(contest.start_date)
+    const dateString = date.tz(contest.time_zone).format('YYYY-MM-DD')
+
+    const query = '?venue_id=' + this.state.currentVenue.id + '&date=' + dateString
+
     fetch(
       BASE_URL + 'contests/' + contest.id + '/performances' + query,
       { headers: { 'X-Api-Key': API_KEY } }
