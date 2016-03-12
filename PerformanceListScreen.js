@@ -75,6 +75,7 @@ class PerformanceListScreen extends Component {
         key={performance.id}
         onSelect={() => this.selectPerformance(performance)}
         performance={performance}
+        time_zone={this.props.contest.time_zone}
       />
     );
   }

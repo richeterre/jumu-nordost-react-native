@@ -10,9 +10,12 @@ var {
   View
 } = React;
 
+import moment from 'moment-timezone';
+
 var PerformanceCell = React.createClass({
   render: function() {
     const performance = this.props.performance
+    const time_zone = this.props.time_zone
     const appearance = performance.appearances[0]
 
     var TouchableElement = TouchableHighlight;
@@ -32,7 +35,7 @@ var PerformanceCell = React.createClass({
             <View style={styles.container}>
               <View style={styles.leftContainer}>
                 <Text style={styles.time}>
-                  {performance.stage_time}
+                  {moment(performance.stage_time).tz(time_zone).format('hh:mm')}
                 </Text>
               </View>
               <View style={styles.rightContainer}>
