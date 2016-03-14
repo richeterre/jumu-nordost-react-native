@@ -122,13 +122,21 @@ class PerformanceListScreen extends Component {
             {
               this.state.loading
               ?
-              <Text style={styles.loadingText}>Loading performances…</Text>
+              <Text style={styles.messageText}>
+                Einen Moment, bitte…
+              </Text>
               :
-              <ListView
-                dataSource={this.state.dataSource}
-                renderRow={this.renderRow.bind(this)}
-                style={styles.listView}
-              />
+              (this.state.dataSource.getRowCount() > 0 ?
+                <ListView
+                  dataSource={this.state.dataSource}
+                  renderRow={this.renderRow.bind(this)}
+                  style={styles.listView}
+                />
+                :
+                <Text style={styles.messageText}>
+                  An diesem Tag finden am ausgewählten Ort keine Vorspiele statt.
+                </Text>
+              )
             }
           </View>
         </View>
@@ -142,9 +150,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
-  loadingText: {
+  messageText: {
     marginTop: 100,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontStyle: 'italic'
   },
   filterControls: {
     flex: 1
