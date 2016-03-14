@@ -163,7 +163,6 @@ const styles = StyleSheet.create({
     flex: 5
   },
   listView: {
-    paddingTop: 20,
     paddingLeft: 20,
   }
 });
