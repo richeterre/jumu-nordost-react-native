@@ -115,7 +115,6 @@ class PerformanceListScreen extends Component {
                 }
               }
               selectedTitleStyle={{fontWeight:'bold'}}
-              underlayColor={"#FF0000"}
             />
           </View>
           <View style={styles.contentArea}>

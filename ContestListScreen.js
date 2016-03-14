@@ -52,14 +52,6 @@ class ContestListScreen extends Component {
     });
   }
 
-  renderLoadingView() {
-    return (
-      <View style={styles.container}>
-        <Text>Einen Moment, bitte…</Text>
-      </View>
-    );
-  }
-
   renderRow(contest) {
     return (
       <ContestCell
@@ -71,16 +63,29 @@ class ContestListScreen extends Component {
   }
 
   render() {
-    if (this.state.loading) {
-      return this.renderLoadingView();
-    }
-
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow.bind(this)}
-        style={styles.listView}
-      />
+      <View style={styles.container}>
+        <View style={styles.welcomeView}>
+          <Text style={styles.welcomeText}>
+            Willkommen! Bitte wähle einen Wettbewerb:
+          </Text>
+        </View>
+        <View style={styles.contentArea}>
+          {
+            this.state.loading
+            ?
+            <Text style={styles.messageText}>
+              Einen Moment, bitte…
+            </Text>
+            :
+            <ListView
+              dataSource={this.state.dataSource}
+              renderRow={this.renderRow.bind(this)}
+              style={styles.listView}
+            />
+          }
+        </View>
+      </View>
     )
   }
 }
@@ -88,12 +93,27 @@ class ContestListScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
+  welcomeView: {
+    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    paddingLeft: 20
+  },
+  welcomeText: {
+    fontStyle: 'italic'
+  },
+  contentArea: {
+    flex: 7
+  },
+  messageText: {
+    marginTop: 100,
+    textAlign: 'center',
+    fontStyle: 'italic'
   },
   listView: {
-    paddingTop: 20,
     paddingLeft: 20,
   }
 });
