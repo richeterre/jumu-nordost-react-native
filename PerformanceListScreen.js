@@ -1,5 +1,6 @@
 'use strict';
 import React, {
+  AppState,
   Component,
   ListView,
   StyleSheet,
@@ -28,7 +29,18 @@ class PerformanceListScreen extends Component {
   }
 
   componentDidMount() {
+    AppState.addEventListener('change', this.handleAppStateChange.bind(this));
     this.fetchData();
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange.bind(this));
+  }
+
+  handleAppStateChange(currentAppState) {
+    if (currentAppState == 'active') {
+      this.fetchData()
+    }
   }
 
   fetchData() {

@@ -1,5 +1,6 @@
 'use strict';
 import React, {
+  AppState,
   Component,
   ListView,
   StyleSheet,
@@ -24,10 +25,23 @@ class ContestListScreen extends Component {
   }
 
   componentDidMount() {
+    AppState.addEventListener('change', this.handleAppStateChange.bind(this));
     this.fetchData();
   }
 
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange.bind(this));
+  }
+
+  handleAppStateChange(currentAppState) {
+    if (currentAppState == 'active') {
+      this.fetchData()
+    }
+  }
+
   fetchData() {
+    this.setState({ loading: true })
+
     fetch(
       BASE_URL + 'contests?timetables_public=1',
       { headers: { 'X-Api-Key': API_KEY } }
