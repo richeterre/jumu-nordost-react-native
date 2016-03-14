@@ -169,10 +169,9 @@ const styles = StyleSheet.create({
     fontStyle: 'italic'
   },
   filterControls: {
-    flex: 1
   },
   contentArea: {
-    flex: 5
+    flex: 1
   },
   listView: {
     paddingLeft: 20,
