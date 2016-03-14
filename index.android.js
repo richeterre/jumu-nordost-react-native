@@ -11,6 +11,7 @@ import React, {
 
 import Router from 'react-native-simple-router';
 import ContestListScreen from './ContestListScreen';
+import BackButton from './BackButton';
 
 class JumuNordost extends Component {
   render() {
@@ -19,13 +20,14 @@ class JumuNordost extends Component {
         firstRoute={firstRoute}
         headerStyle={styles.header}
         handleBackAndroid={true}
+        backButtonComponent={BackButton}
       />
     )
   }
 }
 
 const firstRoute = {
-  name: 'Contests',
+  name: 'Wettbewerbe',
   component: ContestListScreen
 };
 
