@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
   },
   listView: {
     paddingLeft: 20,
+    paddingRight: 10
   }
 });
 

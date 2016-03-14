@@ -59,12 +59,14 @@ var styles = StyleSheet.create({
   },
   name: {
     fontSize: 20,
-    marginBottom: 8,
-    textAlign: 'left'
+    marginBottom: 5,
+    textAlign: 'left',
+    color: '#333333'
   },
   dateInfo: {
-    marginBottom: 16,
-    textAlign: 'left'
+    marginBottom: 20,
+    textAlign: 'left',
+    color: '#333333'
   },
 });
 

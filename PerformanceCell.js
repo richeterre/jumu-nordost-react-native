@@ -41,9 +41,9 @@ var PerformanceCell = React.createClass({
                 <Text style={styles.categoryInfo}>
                   {performance.category_name}, AG {performance.age_group}
                 </Text>
-                <View style={styles.appearance}>
+                <View style={styles.appearances}>
                   {performance.appearances.map((appearance, i) =>
-                    <Text key={'appearance' + (i + 1)}>
+                    <Text key={'appearance' + (i + 1)} style={styles.appearanceText}>
                       {appearance.participant_name}, {appearance.instrument_name}
                     </Text>
                   )}
@@ -72,20 +72,27 @@ var styles = StyleSheet.create({
     flex: 1
   },
   rightContainer: {
-    flex: 4
+    flex: 5
   },
   categoryInfo: {
-    fontSize: 16,
+    fontWeight: 'bold',
     marginBottom: 8,
-    textAlign: 'left'
+    textAlign: 'left',
+    color: '#333333',
+    fontSize: 15
   },
   time: {
-    marginBottom: 16,
-    textAlign: 'left'
+    textAlign: 'left',
+    color: '#333333',
+    fontSize: 15
   },
-  appearance: {},
+  appearanceText: {
+    color: '#333333',
+    fontSize: 15
+  },
   predecessorInfo: {
-    marginTop: 5
+    marginTop: 5,
+    fontSize: 15
   }
 });
 
