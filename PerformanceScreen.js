@@ -39,30 +39,30 @@ class PerformanceScreen extends Component {
             </Text>
           )}
           {accompanists.map((appearance, i) => {
-            if (appearance.age_group != performance.age_group) {
-              return <Text key={'accompanist' + (i + 1)} style={styles.accompanistText}>
-                {appearance.participant_name}, {appearance.instrument_name} (AG {appearance.age_group})
-                </Text>
-            } else {
-              return <Text key={'accompanist' + (i + 1)} style={styles.accompanistText}>
-                {appearance.participant_name}, {appearance.instrument_name}
-                </Text>
-            }
+            const ageGroupText = appearance.age_group != performance.age_group
+              ? " (AG " + appearance.age_group + ")"
+              : ""
+            return <Text key={'accompanist' + (i + 1)} style={styles.accompanistText}>
+              {appearance.participant_name}, {appearance.instrument_name}{ageGroupText}
+              </Text>
           }
           )}
           <Text style={styles.predecessorInfo}>{performance.predecessor_host_name}</Text>
         </View>
         <View style={styles.piecesInfo}>
-          {performance.pieces.map((piece, i) =>
-            <View key={'piece' + (i + 1)} style={styles.piece}>
+          {performance.pieces.map((piece, i) => {
+            const composerDates = piece.composer_born
+              ? " (" + piece.composer_born + "–" + piece.composer_died + ")"
+              : ""
+            return <View key={'piece' + (i + 1)} style={styles.piece}>
               <Text style={styles.composer}>
-                {piece.composer_name}
+                {piece.composer_name}{composerDates}
               </Text>
               <Text style={styles.pieceTitle}>
                 {piece.title}
               </Text>
             </View>
-          )}
+          })}
         </View>
       </View>
     )
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   },
   predecessorInfo: {
     marginTop: 5,
-    color: '#333333'
+    color: '#333333',
   },
   piece: {
     marginBottom: 5
