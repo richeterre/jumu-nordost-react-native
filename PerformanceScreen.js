@@ -38,10 +38,17 @@ class PerformanceScreen extends Component {
               {appearance.participant_name}, {appearance.instrument_name}
             </Text>
           )}
-          {accompanists.map((appearance, i) =>
-            <Text key={'accompanist' + (i + 1)} style={styles.accompanistText}>
-              {appearance.participant_name}, {appearance.instrument_name}
-            </Text>
+          {accompanists.map((appearance, i) => {
+            if (appearance.age_group != performance.age_group) {
+              return <Text key={'accompanist' + (i + 1)} style={styles.accompanistText}>
+                {appearance.participant_name}, {appearance.instrument_name} (AG {appearance.age_group})
+                </Text>
+            } else {
+              return <Text key={'accompanist' + (i + 1)} style={styles.accompanistText}>
+                {appearance.participant_name}, {appearance.instrument_name}
+                </Text>
+            }
+          }
           )}
           <Text style={styles.predecessorInfo}>{performance.predecessor_host_name}</Text>
         </View>
