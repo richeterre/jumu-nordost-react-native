@@ -1,6 +1,7 @@
 'use strict';
 import React, {
   Component,
+  ScrollView,
   StyleSheet,
   Text,
   View
@@ -23,47 +24,49 @@ class PerformanceScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.generalInfo}>
-          <Text style={styles.categoryName}>{performance.category_name}</Text>
-          <Text style={styles.ageGroup}>Altersgruppe {performance.age_group}</Text>
-          <Text style={styles.stageTime}>
-            {moment(performance.stage_time).tz(timeZone).format('LLLL')}
-          </Text>
-          <Text style={styles.venueName}>{venue.name}</Text>
-
-        </View>
-        <View style={styles.appearancesInfo}>
-          {mainAppearances.map((appearance, i) =>
-            <Text key={'mainAppearance' + (i + 1)} style={styles.mainAppearanceText}>
-              {appearance.participant_name}, {appearance.instrument_name}
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.generalInfo}>
+            <Text style={styles.categoryName}>{performance.category_name}</Text>
+            <Text style={styles.ageGroup}>Altersgruppe {performance.age_group}</Text>
+            <Text style={styles.stageTime}>
+              {moment(performance.stage_time).tz(timeZone).format('LLLL')}
             </Text>
-          )}
-          {accompanists.map((appearance, i) => {
-            const ageGroupText = appearance.age_group != performance.age_group
-              ? " (AG " + appearance.age_group + ")"
-              : ""
-            return <Text key={'accompanist' + (i + 1)} style={styles.accompanistText}>
-              {appearance.participant_name}, {appearance.instrument_name}{ageGroupText}
+            <Text style={styles.venueName}>{venue.name}</Text>
+
+          </View>
+          <View style={styles.appearancesInfo}>
+            {mainAppearances.map((appearance, i) =>
+              <Text key={'mainAppearance' + (i + 1)} style={styles.mainAppearanceText}>
+                {appearance.participant_name}, {appearance.instrument_name}
               </Text>
-          }
-          )}
-          <Text style={styles.predecessorInfo}>{performance.predecessor_host_name}</Text>
-        </View>
-        <View style={styles.piecesInfo}>
-          {performance.pieces.map((piece, i) => {
-            const composerDates = piece.composer_born
-              ? " (" + piece.composer_born + "–" + piece.composer_died + ")"
-              : ""
-            return <View key={'piece' + (i + 1)} style={styles.piece}>
-              <Text style={styles.composer}>
-                {piece.composer_name}{composerDates}
-              </Text>
-              <Text style={styles.pieceTitle}>
-                {piece.title}
-              </Text>
-            </View>
-          })}
-        </View>
+            )}
+            {accompanists.map((appearance, i) => {
+              const ageGroupText = appearance.age_group != performance.age_group
+                ? " (AG " + appearance.age_group + ")"
+                : ""
+              return <Text key={'accompanist' + (i + 1)} style={styles.accompanistText}>
+                {appearance.participant_name}, {appearance.instrument_name}{ageGroupText}
+                </Text>
+            }
+            )}
+            <Text style={styles.predecessorInfo}>{performance.predecessor_host_name}</Text>
+          </View>
+          <View style={styles.piecesInfo}>
+            {performance.pieces.map((piece, i) => {
+              const composerDates = piece.composer_born
+                ? " (" + piece.composer_born + "–" + piece.composer_died + ")"
+                : ""
+              return <View key={'piece' + (i + 1)} style={styles.piece}>
+                <Text style={styles.composer}>
+                  {piece.composer_name}{composerDates}
+                </Text>
+                <Text style={styles.pieceTitle}>
+                  {piece.title}
+                </Text>
+              </View>
+            })}
+          </View>
+        </ScrollView>
       </View>
     )
   }
@@ -73,11 +76,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+  },
+  scrollContainer: {
     paddingTop: 10,
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 10,
-    alignItems: 'flex-start',
   },
   generalInfo: {
     paddingTop: 10,
