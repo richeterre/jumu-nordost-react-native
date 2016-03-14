@@ -18,6 +18,7 @@ class JumuNordost extends Component {
       <Router
         firstRoute={firstRoute}
         headerStyle={styles.header}
+        handleBackAndroid={true}
       />
     )
   }
