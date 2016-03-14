@@ -22,6 +22,7 @@ class PerformanceListScreen extends Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       loading: true,
+      dateIndex: 0,
       venueIndex: 0
     };
   }
@@ -32,7 +33,7 @@ class PerformanceListScreen extends Component {
 
   fetchData() {
     const contest = this.props.contest
-    const date = moment(contest.start_date)
+    const date = moment(contest.start_date).add(this.state.dateIndex, 'days')
     const dateString = date.tz(contest.time_zone).format('YYYY-MM-DD')
     const venue = contest.venues[this.state.venueIndex]
 
@@ -66,14 +67,6 @@ class PerformanceListScreen extends Component {
     });
   }
 
-  renderLoadingView() {
-    return (
-      <View style={styles.container}>
-        <Text>Loading performances…</Text>
-      </View>
-    );
-  }
-
   renderRow(performance) {
     return (
       <PerformanceCell
@@ -86,10 +79,33 @@ class PerformanceListScreen extends Component {
   }
 
   render() {
+      const contest = this.props.contest
+      const endDate = moment(contest.end_date)
+      var date = moment(contest.start_date)
+      var dates = [date]
+
+      while (date.isBefore(endDate)) {
+          var new_date = date.clone()
+          new_date.add(1, 'days')
+          dates.push(new_date)
+          date = new_date
+      }
+
       return (
         <View>
           <SegmentedView
-            titles={this.props.contest.venues.map(venue => venue.name)}
+            titles={dates.map( date => date.tz(contest.time_zone).format('ddd, Do MMMM') )}
+            index={this.state.dateIndex}
+            stretch
+            onPress={index => {
+                this.setState({ dateIndex: index })
+                this.fetchData()
+              }
+            }
+            selectedTitleStyle={{fontWeight:'bold'}}
+          />
+          <SegmentedView
+            titles={contest.venues.map(venue => venue.name)}
             index={this.state.venueIndex}
             stretch
             onPress={index => {
