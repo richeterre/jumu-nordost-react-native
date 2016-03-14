@@ -11,6 +11,7 @@ import PerformanceCell from './PerformanceCell';
 import PerformanceScreen from './PerformanceScreen';
 import { BASE_URL, API_KEY } from './Constants';
 import moment from 'moment-timezone';
+import SegmentedView from 'react-native-segmented-view';
 
 class PerformanceListScreen extends Component {
 
@@ -21,7 +22,7 @@ class PerformanceListScreen extends Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       loading: true,
-      currentVenue: props.contest.venues[0]
+      venueIndex: 0
     };
   }
 
@@ -33,8 +34,11 @@ class PerformanceListScreen extends Component {
     const contest = this.props.contest
     const date = moment(contest.start_date)
     const dateString = date.tz(contest.time_zone).format('YYYY-MM-DD')
+    const venue = contest.venues[this.state.venueIndex]
 
-    const query = '?venue_id=' + this.state.currentVenue.id + '&date=' + dateString
+    const query = '?venue_id=' + venue.id + '&date=' + dateString
+
+    this.setState({ loading: true })
 
     fetch(
       BASE_URL + 'contests/' + contest.id + '/performances' + query,
@@ -56,7 +60,7 @@ class PerformanceListScreen extends Component {
       component: PerformanceScreen,
       passProps: {
         performance: performance,
-        venue: this.state.currentVenue,
+        venue: this.props.contest.venues[this.state.venueIndex],
         timeZone: this.props.contest.time_zone
       }
     });
@@ -82,17 +86,32 @@ class PerformanceListScreen extends Component {
   }
 
   render() {
-    if (this.state.loading) {
-      return this.renderLoadingView();
-    }
-
-    return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow.bind(this)}
-        style={styles.listView}
-      />
-    )
+      return (
+        <View>
+          <SegmentedView
+            titles={this.props.contest.venues.map(venue => venue.name)}
+            index={this.state.venueIndex}
+            stretch
+            onPress={index => {
+                this.setState({ venueIndex: index })
+                this.fetchData()
+              }
+            }
+            selectedTitleStyle={{fontWeight:'bold'}}
+          />
+          {
+            this.state.loading
+            ?
+            <Text style={styles.loadingText}>Loading performances…</Text>
+            :
+            <ListView
+              dataSource={this.state.dataSource}
+              renderRow={this.renderRow.bind(this)}
+              style={styles.listView}
+            />
+          }
+        </View>
+      )
   }
 }
 
@@ -103,6 +122,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  loadingText: {
+    marginTop: 100,
+    textAlign: 'center'
   },
   listView: {
     paddingTop: 20,

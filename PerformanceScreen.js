@@ -29,15 +29,15 @@ class PerformanceScreen extends Component {
               {appearance.participant_name}, {appearance.instrument_name}
             </Text>
           )}
-          <Text>{performance.predecessor_host_name}</Text>
+          <Text style={styles.predecessorInfo}>{performance.predecessor_host_name}</Text>
         </View>
         <View style={styles.piecesInfo}>
           {performance.pieces.map((piece, i) =>
-            <View key={'piece' + (i + 1)}>
-            <Text>
+            <View key={'piece' + (i + 1)} style={styles.piece}>
+            <Text style={styles.composer}>
               {piece.composer_name}
             </Text>
-            <Text>
+            <Text style={styles.piece}>
               {piece.title}
             </Text>
             </View>
@@ -52,8 +52,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    paddingTop: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 10,
+    alignItems: 'flex-start',
     backgroundColor: '#F5FCFF',
   },
   generalInfo: {
@@ -62,6 +65,15 @@ const styles = StyleSheet.create({
   },
   appearancesInfo: {
     paddingBottom: 20
+  },
+  predecessorInfo: {
+    marginTop: 5
+  },
+  piece: {
+    marginBottom: 5
+  },
+  composer: {
+    fontWeight: 'bold'
   }
 });
 

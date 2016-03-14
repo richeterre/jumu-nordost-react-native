@@ -8,6 +8,7 @@
   "dependencies": {
     "moment-timezone": "^0.5.1",
     "react-native": "^0.21.0",
+    "react-native-segmented-view": "^1.0.1",
     "react-native-simple-router": "^0.8.4"
   }
 }
