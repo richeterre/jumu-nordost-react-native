@@ -1,4 +1,4 @@
-package com.jumunordost;
+package jugendmusiziert.jumunordost;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactPackage;

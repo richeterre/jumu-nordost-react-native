@@ -81,7 +81,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "jugend-musiziert.jumunordost"
+        applicationId "jugendmusiziert.jumunordost"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
