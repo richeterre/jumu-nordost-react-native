@@ -105,7 +105,7 @@ class PerformanceListScreen extends Component {
                   this.fetchData()
                 }
               }
-              selectedTitleStyle={{fontWeight:'bold'}}
+              selectedTitleStyle={{fontWeight:'bold', color: '#D61921'}}
             />
             <SegmentedView
               titles={contest.venues.map(venue => venue.name)}
@@ -116,7 +116,7 @@ class PerformanceListScreen extends Component {
                   this.fetchData()
                 }
               }
-              selectedTitleStyle={{fontWeight:'bold'}}
+              selectedTitleStyle={{fontWeight:'bold', color: '#D61921'}}
             />
           </View>
           <View style={styles.contentArea}>
