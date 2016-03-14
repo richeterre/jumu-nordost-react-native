@@ -12,6 +12,10 @@ import React, {
 import Router from 'react-native-simple-router';
 import ContestListScreen from './ContestListScreen';
 import BackButton from './BackButton';
+import moment from 'moment-timezone'
+import deLocale from 'moment/locale/de'
+
+moment.updateLocale('de', deLocale);
 
 class JumuNordost extends Component {
   render() {

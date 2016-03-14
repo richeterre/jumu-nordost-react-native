@@ -91,11 +91,13 @@ class PerformanceListScreen extends Component {
           date = new_date
       }
 
+      const dayFormat = dates.length > 2 ? 'ddd, Do MMMM' : 'dddd, Do MMMM'
+
       return (
         <View style={styles.container}>
           <View style={styles.filterControls}>
             <SegmentedView
-              titles={dates.map( date => date.tz(contest.time_zone).format('ddd, Do MMMM') )}
+              titles={dates.map( date => date.tz(contest.time_zone).format(dayFormat) )}
               index={this.state.dateIndex}
               stretch
               onPress={index => {
