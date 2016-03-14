@@ -92,7 +92,8 @@ var styles = StyleSheet.create({
   },
   predecessorInfo: {
     marginTop: 5,
-    fontSize: 15
+    fontSize: 15,
+    color: '#333333'
   }
 });
 

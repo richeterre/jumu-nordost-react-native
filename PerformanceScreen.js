@@ -15,17 +15,31 @@ class PerformanceScreen extends Component {
     const venue = this.props.venue
     const timeZone = this.props.timeZone
 
+    const mainAppearances = performance.appearances
+      .filter( a => a.participant_role != 'accompanist' )
+
+    const accompanists = performance.appearances
+        .filter( a => a.participant_role == 'accompanist' )
+
     return (
       <View style={styles.container}>
         <View style={styles.generalInfo}>
-          <Text>{moment(performance.stage_time).tz(timeZone).format('LLLL')}</Text>
-          <Text>{venue.name}</Text>
-          <Text>{performance.category_name}</Text>
-          <Text>Altersgruppe {performance.age_group}</Text>
+          <Text style={styles.categoryName}>{performance.category_name}</Text>
+          <Text style={styles.ageGroup}>Altersgruppe {performance.age_group}</Text>
+          <Text style={styles.stageTime}>
+            {moment(performance.stage_time).tz(timeZone).format('LLLL')}
+          </Text>
+          <Text style={styles.venueName}>{venue.name}</Text>
+
         </View>
         <View style={styles.appearancesInfo}>
-          {performance.appearances.map((appearance, i) =>
-            <Text key={'appearance' + (i + 1)}>
+          {mainAppearances.map((appearance, i) =>
+            <Text key={'mainAppearance' + (i + 1)} style={styles.mainAppearanceText}>
+              {appearance.participant_name}, {appearance.instrument_name}
+            </Text>
+          )}
+          {accompanists.map((appearance, i) =>
+            <Text key={'accompanist' + (i + 1)} style={styles.accompanistText}>
               {appearance.participant_name}, {appearance.instrument_name}
             </Text>
           )}
@@ -34,12 +48,12 @@ class PerformanceScreen extends Component {
         <View style={styles.piecesInfo}>
           {performance.pieces.map((piece, i) =>
             <View key={'piece' + (i + 1)} style={styles.piece}>
-            <Text style={styles.composer}>
-              {piece.composer_name}
-            </Text>
-            <Text style={styles.piece}>
-              {piece.title}
-            </Text>
+              <Text style={styles.composer}>
+                {piece.composer_name}
+              </Text>
+              <Text style={styles.pieceTitle}>
+                {piece.title}
+              </Text>
             </View>
           )}
         </View>
@@ -59,20 +73,54 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   generalInfo: {
-    paddingTop: 20,
+    paddingTop: 10,
     paddingBottom: 20
+  },
+  categoryName: {
+    fontSize: 17,
+    color: '#333333',
+    fontWeight: 'bold'
+  },
+  ageGroup: {
+    fontSize: 17,
+    color: '#333333',
+    marginBottom: 10
+  },
+  stageTime: {
+    fontSize: 15,
+    color: '#333333',
+  },
+  venueName: {
+    fontSize: 15,
+    color: '#333333',
   },
   appearancesInfo: {
     paddingBottom: 20
   },
+  mainAppearanceText: {
+    fontSize: 15,
+    color: '#333333',
+    fontWeight: 'bold'
+  },
+  accompanistText: {
+    fontSize: 15,
+    color: '#666666',
+  },
   predecessorInfo: {
-    marginTop: 5
+    marginTop: 5,
+    color: '#333333'
   },
   piece: {
     marginBottom: 5
   },
   composer: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: '#333333',
+    fontSize: 15
+  },
+  pieceTitle: {
+    color: '#333333',
+    fontSize: 15
   }
 });
 
