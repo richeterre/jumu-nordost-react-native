@@ -141,7 +141,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    backgroundColor: '#F5FCFF',
   },
   loadingText: {
     marginTop: 100,
@@ -156,7 +155,6 @@ const styles = StyleSheet.create({
   listView: {
     paddingTop: 20,
     paddingLeft: 20,
-    backgroundColor: '#F5FCFF'
   }
 });
 

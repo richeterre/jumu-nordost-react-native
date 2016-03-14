@@ -67,7 +67,6 @@ var styles = StyleSheet.create({
     paddingTop: 5,
     paddingBottom: 5,
     alignItems: 'flex-start',
-    backgroundColor: '#F5FCFF',
   },
   leftContainer: {
     flex: 1

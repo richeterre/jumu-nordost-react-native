@@ -91,12 +91,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   listView: {
     paddingTop: 20,
     paddingLeft: 20,
-    backgroundColor: '#F5FCFF'
   }
 });
 
