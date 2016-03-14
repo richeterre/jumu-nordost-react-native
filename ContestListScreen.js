@@ -43,7 +43,7 @@ class ContestListScreen extends Component {
     this.setState({ loading: true })
 
     fetch(
-      BASE_URL + 'contests?timetables_public=1',
+      BASE_URL + 'contests?current_only=1&timetables_public=1',
       { headers: { 'X-Api-Key': API_KEY } }
     )
     .then((response) => response.json())
