@@ -92,40 +92,45 @@ class PerformanceListScreen extends Component {
       }
 
       return (
-        <View>
-          <SegmentedView
-            titles={dates.map( date => date.tz(contest.time_zone).format('ddd, Do MMMM') )}
-            index={this.state.dateIndex}
-            stretch
-            onPress={index => {
-                this.setState({ dateIndex: index })
-                this.fetchData()
+        <View style={styles.container}>
+          <View style={styles.filterControls}>
+            <SegmentedView
+              titles={dates.map( date => date.tz(contest.time_zone).format('ddd, Do MMMM') )}
+              index={this.state.dateIndex}
+              stretch
+              onPress={index => {
+                  this.setState({ dateIndex: index })
+                  this.fetchData()
+                }
               }
-            }
-            selectedTitleStyle={{fontWeight:'bold'}}
-          />
-          <SegmentedView
-            titles={contest.venues.map(venue => venue.name)}
-            index={this.state.venueIndex}
-            stretch
-            onPress={index => {
-                this.setState({ venueIndex: index })
-                this.fetchData()
-              }
-            }
-            selectedTitleStyle={{fontWeight:'bold'}}
-          />
-          {
-            this.state.loading
-            ?
-            <Text style={styles.loadingText}>Loading performances…</Text>
-            :
-            <ListView
-              dataSource={this.state.dataSource}
-              renderRow={this.renderRow.bind(this)}
-              style={styles.listView}
+              selectedTitleStyle={{fontWeight:'bold'}}
             />
-          }
+            <SegmentedView
+              titles={contest.venues.map(venue => venue.name)}
+              index={this.state.venueIndex}
+              stretch
+              onPress={index => {
+                  this.setState({ venueIndex: index })
+                  this.fetchData()
+                }
+              }
+              selectedTitleStyle={{fontWeight:'bold'}}
+              underlayColor={"#FF0000"}
+            />
+          </View>
+          <View style={styles.contentArea}>
+            {
+              this.state.loading
+              ?
+              <Text style={styles.loadingText}>Loading performances…</Text>
+              :
+              <ListView
+                dataSource={this.state.dataSource}
+                renderRow={this.renderRow.bind(this)}
+                style={styles.listView}
+              />
+            }
+          </View>
         </View>
       )
   }
@@ -134,14 +139,19 @@ class PerformanceListScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
     backgroundColor: '#F5FCFF',
   },
   loadingText: {
     marginTop: 100,
     textAlign: 'center'
+  },
+  filterControls: {
+    flex: 1
+  },
+  contentArea: {
+    flex: 5
   },
   listView: {
     paddingTop: 20,
