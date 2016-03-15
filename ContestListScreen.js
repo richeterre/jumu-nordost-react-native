@@ -20,7 +20,8 @@ class ContestListScreen extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
-      loading: true
+      loading: true,
+      hasError: false
     };
   }
 
@@ -40,7 +41,10 @@ class ContestListScreen extends Component {
   }
 
   fetchData() {
-    this.setState({ loading: true })
+    this.setState({
+      hasError: false,
+      loading: true
+    })
 
     fetch(
       BASE_URL + 'contests?current_only=1&timetables_public=1',
@@ -51,6 +55,12 @@ class ContestListScreen extends Component {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(responseData),
         loading: false,
+      });
+    })
+    .catch(error => {
+      this.setState({
+        hasError: true,
+        loading: false
       });
     })
     .done();
@@ -77,6 +87,10 @@ class ContestListScreen extends Component {
   }
 
   render() {
+    const messageText = this.state.hasError
+      ? "Die Wettbewerbe konnten leider nicht geladen werden."
+      : "Einen Moment, bitte…"
+
     return (
       <View style={styles.container}>
         <View style={styles.welcomeView}>
@@ -86,17 +100,17 @@ class ContestListScreen extends Component {
         </View>
         <View style={styles.contentArea}>
           {
-            this.state.loading
+            this.state.loading || this.state.hasError
             ?
             <Text style={styles.messageText}>
-              Einen Moment, bitte…
+              {messageText}
             </Text>
             :
             <ListView
               dataSource={this.state.dataSource}
               renderRow={this.renderRow.bind(this)}
               style={styles.listView}
-            />
+              />
           }
         </View>
       </View>

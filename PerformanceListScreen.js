@@ -23,6 +23,7 @@ class PerformanceListScreen extends Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       loading: true,
+      hasError: false,
       dateIndex: 0,
       venueIndex: 0
     };
@@ -51,7 +52,10 @@ class PerformanceListScreen extends Component {
 
     const query = '?venue_id=' + venue.id + '&date=' + dateString
 
-    this.setState({ loading: true })
+    this.setState({
+      loading: true,
+      hasError: false
+     })
 
     fetch(
       BASE_URL + 'contests/' + contest.id + '/performances' + query,
@@ -62,6 +66,12 @@ class PerformanceListScreen extends Component {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(responseData),
         loading: false,
+      });
+    })
+    .catch(error => {
+      this.setState({
+        hasError: true,
+        loading: false
       });
     })
     .done();
@@ -105,6 +115,10 @@ class PerformanceListScreen extends Component {
 
       const dayFormat = dates.length > 2 ? 'ddd, Do MMMM' : 'dddd, Do MMMM'
 
+      const messageText = this.state.hasError
+        ? "Der Vorspielplan konnte leider nicht geladen werden."
+        : "Einen Moment, bitte…"
+
       return (
         <View style={styles.container}>
           <View style={styles.filterControls}>
@@ -133,10 +147,10 @@ class PerformanceListScreen extends Component {
           </View>
           <View style={styles.contentArea}>
             {
-              this.state.loading
+              this.state.loading || this.state.hasError
               ?
               <Text style={styles.messageText}>
-                Einen Moment, bitte…
+                {messageText}
               </Text>
               :
               (this.state.dataSource.getRowCount() > 0 ?
