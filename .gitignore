@@ -1,6 +1,7 @@
 # App-specific stuff
 # Keep credentials out of version control:
 credentials.json
+android/app/*.keystore
 
 # OSX
 #
