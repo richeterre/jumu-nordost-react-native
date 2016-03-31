@@ -32,7 +32,7 @@ The project doesn't compile until you have provided a credentials file. Do as fo
 
     ```json
     {
-      "api-key": <INSERT API KEY HERE>
+      "api-key": "<INSERT API KEY HERE>"
     }
     ```
 
