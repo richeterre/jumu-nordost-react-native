@@ -10,9 +10,9 @@ import React, {
 
 import PerformanceCell from './PerformanceCell';
 import PerformanceScreen from './PerformanceScreen';
+import SegmentedControl from './SegmentedControl';
 import { BASE_URL, API_KEY } from './Constants';
 import moment from 'moment-timezone';
-import SegmentedView from 'react-native-segmented-view';
 
 class PerformanceListScreen extends Component {
 
@@ -122,27 +122,21 @@ class PerformanceListScreen extends Component {
       return (
         <View style={styles.container}>
           <View style={styles.filterControls}>
-            <SegmentedView
-              titles={dates.map( date => date.tz(contest.time_zone).format(dayFormat) )}
-              index={this.state.dateIndex}
-              stretch
-              onPress={index => {
-                  this.setState({ dateIndex: index })
-                  this.fetchData()
-                }
-              }
-              selectedTitleStyle={{fontWeight:'bold', color: '#D61921'}}
+            <SegmentedControl
+              values={dates.map( date => date.tz(contest.time_zone).format(dayFormat) )}
+              selectedIndex={this.state.dateIndex}
+              onChange={index => {
+                this.setState({ dateIndex: index })
+                this.fetchData()
+              }}
             />
-            <SegmentedView
-              titles={contest.venues.map(venue => venue.name)}
-              index={this.state.venueIndex}
-              stretch
-              onPress={index => {
-                  this.setState({ venueIndex: index })
-                  this.fetchData()
-                }
-              }
-              selectedTitleStyle={{fontWeight:'bold', color: '#D61921'}}
+            <SegmentedControl
+              values={contest.venues.map(venue => venue.name)}
+              selectedIndex={this.state.venueIndex}
+              onChange={index => {
+                this.setState({ venueIndex: index })
+                this.fetchData()
+              }}
             />
           </View>
           <View style={styles.contentArea}>
