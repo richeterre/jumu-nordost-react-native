@@ -12,6 +12,7 @@ import React, {
 import Router from 'react-native-simple-router';
 import ContestListScreen from './ContestListScreen';
 import BackButton from './BackButton';
+import { PRIMARY_COLOR } from './Constants';
 import moment from 'moment-timezone'
 import deLocale from 'moment/locale/de'
 
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   header: {
-    backgroundColor: '#D61921',
+    backgroundColor: PRIMARY_COLOR
   },
 });
 
