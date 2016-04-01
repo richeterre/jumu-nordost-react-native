@@ -12,7 +12,10 @@ class SegmentedControl extends Component {
       <SegmentedControlIOS
         values={this.props.values}
         selectedIndex={this.props.selectedIndex}
-        onChange={this.props.onChange}
+        onChange={event => {
+          const index = event.nativeEvent.selectedSegmentIndex
+          this.props.onChange(index)
+        }}
       />
     )
   }
