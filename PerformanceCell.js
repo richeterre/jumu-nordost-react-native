@@ -93,6 +93,7 @@ var styles = StyleSheet.create({
   time: {
     textAlign: 'left',
     color: '#333333',
+    fontWeight: 'bold',
     fontSize: 15
   },
   appearanceText: {
