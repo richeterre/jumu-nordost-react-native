@@ -65,6 +65,8 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     paddingTop: 5,
+    paddingLeft: 20,
+    paddingRight: 10,
     paddingBottom: 5,
     alignItems: 'flex-start',
     backgroundColor: '#FFFFFF',

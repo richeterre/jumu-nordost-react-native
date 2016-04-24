@@ -164,7 +164,6 @@ class PerformanceListScreen extends Component {
                       onRefresh={this.fetchData.bind(this)}
                     />
                   }
-                  style={styles.listView}
                 />
                 :
                 <Text style={styles.messageText}>
@@ -195,10 +194,6 @@ const styles = StyleSheet.create({
   },
   contentArea: {
     flex: 1
-  },
-  listView: {
-    paddingLeft: 20,
-    paddingRight: 10
   }
 });
 
