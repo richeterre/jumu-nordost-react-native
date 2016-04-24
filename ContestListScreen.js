@@ -3,6 +3,7 @@ import React, {
   AppState,
   Component,
   ListView,
+  Platform,
   StyleSheet,
   Text,
   View
@@ -67,13 +68,19 @@ class ContestListScreen extends Component {
   }
 
   selectContest(contest) {
-    this.props.toRoute({
-      name: contest.name,
+    const route = {
+      name: contest.name, // Navigator
+      title: contest.name, // NavigatorIOS
       component: PerformanceListScreen,
       passProps: {
         contest: contest
       }
-    });
+    }
+    if (Platform.OS === 'android') {
+      this.props.toRoute(route);
+    } else {
+      this.props.navigator.push(route);
+    }
   }
 
   renderRow(contest) {

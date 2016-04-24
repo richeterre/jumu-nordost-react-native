@@ -3,6 +3,7 @@ import React, {
   AppState,
   Component,
   ListView,
+  Platform,
   StyleSheet,
   Text,
   View
@@ -78,7 +79,7 @@ class PerformanceListScreen extends Component {
   }
 
   selectPerformance(performance) {
-    this.props.toRoute({
+    const route = {
       name: performance.category_name,
       component: PerformanceScreen,
       passProps: {
@@ -86,7 +87,12 @@ class PerformanceListScreen extends Component {
         venue: this.props.contest.venues[this.state.venueIndex],
         timeZone: this.props.contest.time_zone
       }
-    });
+    }
+    if (Platform.OS === 'android') {
+      this.props.toRoute(route)
+    } else {
+      this.props.navigator.push(route)
+    }
   }
 
   renderRow(performance) {

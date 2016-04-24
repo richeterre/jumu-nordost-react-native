@@ -6,12 +6,11 @@
  import React, {
    AppRegistry,
    Component,
+   NavigatorIOS,
    StyleSheet
  } from 'react-native';
 
- import Router from 'react-native-simple-router';
  import ContestListScreen from './ContestListScreen';
- import BackButton from './BackButton';
  import { PRIMARY_COLOR } from './Constants';
  import moment from 'moment-timezone'
  import deLocale from 'moment/locale/de'
@@ -21,28 +20,26 @@
  class JumuNordost extends Component {
    render() {
      return (
-       <Router
-         firstRoute={firstRoute}
-         headerStyle={styles.header}
-         handleBackAndroid={true}
-         backButtonComponent={BackButton}
+       <NavigatorIOS
+         barTintColor={PRIMARY_COLOR}
+         titleTextColor='#FFFFFF'
+         style={styles.nav}
+         translucent={false}
+         initialRoute={initialRoute}
        />
      )
    }
  }
 
- const firstRoute = {
-   name: 'Wettbewerbe',
+ const initialRoute = {
+   title: 'Wettbewerbe',
    component: ContestListScreen
- };
+ }
 
  const styles = StyleSheet.create({
-   container: {
+   nav: {
      flex: 1
-   },
-   header: {
-     backgroundColor: PRIMARY_COLOR,
-   },
+   }
  });
 
 AppRegistry.registerComponent('JumuNordost', () => JumuNordost);
