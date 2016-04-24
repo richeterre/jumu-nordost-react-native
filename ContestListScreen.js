@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic'
   },
   contentArea: {
-    flex: 7
+    flex: 8
   },
   messageText: {
     marginTop: 100,
