@@ -5,6 +5,7 @@ import React, {
   ListView,
   Platform,
   StyleSheet,
+  RefreshControl,
   Text,
   View
 } from 'react-native';
@@ -117,6 +118,12 @@ class ContestListScreen extends Component {
             <ListView
               dataSource={this.state.dataSource}
               renderRow={this.renderRow.bind(this)}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.loading}
+                  onRefresh={this.fetchData.bind(this)}
+                />
+              }
               />
           }
         </View>

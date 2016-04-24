@@ -4,6 +4,7 @@ import React, {
   Component,
   ListView,
   Platform,
+  RefreshControl,
   StyleSheet,
   Text,
   View
@@ -157,6 +158,12 @@ class PerformanceListScreen extends Component {
                 <ListView
                   dataSource={this.state.dataSource}
                   renderRow={this.renderRow.bind(this)}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={this.state.loading}
+                      onRefresh={this.fetchData.bind(this)}
+                    />
+                  }
                   style={styles.listView}
                 />
                 :
