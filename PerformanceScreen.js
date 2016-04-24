@@ -1,6 +1,7 @@
 'use strict';
 import React, {
   Component,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -8,6 +9,7 @@ import React, {
 } from 'react-native';
 
 import moment from 'moment-timezone'
+import { getFlag } from './EmojiFlagHelper'
 
 class PerformanceScreen extends Component {
 
@@ -20,7 +22,12 @@ class PerformanceScreen extends Component {
       .filter( a => a.participant_role != 'accompanist' )
 
     const accompanists = performance.appearances
-        .filter( a => a.participant_role == 'accompanist' )
+      .filter( a => a.participant_role == 'accompanist' )
+
+    const predecessorInfo = (Platform.OS === 'ios'
+      ? getFlag(performance.predecessor_host_country) + " " + performance.predecessor_host_name
+      : performance.predecessor_host_name
+    )
 
     return (
       <View style={styles.container}>
@@ -49,7 +56,7 @@ class PerformanceScreen extends Component {
                 </Text>
             }
             )}
-            <Text style={styles.predecessorInfo}>{performance.predecessor_host_name}</Text>
+            <Text style={styles.predecessorInfo}>{predecessorInfo}</Text>
           </View>
           <View style={styles.piecesInfo}>
             {performance.pieces.map((piece, i) => {

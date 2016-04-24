@@ -11,23 +11,15 @@ var {
 } = React;
 
 import moment from 'moment-timezone';
-import punycode from 'punycode';
+import { getFlag } from './EmojiFlagHelper'
 
 var PerformanceCell = React.createClass({
   render: function() {
     const performance = this.props.performance
     const timeZone = this.props.timeZone
 
-    const emojiFlag = function(country_code) {
-      const base = 127397
-      const codePoints = country_code.split('').map(function(letter) {
-        return base + letter.charCodeAt(0)
-      })
-      return punycode.ucs2.encode(codePoints)
-    }
-
     const predecessorInfo = (Platform.OS === 'ios'
-      ? emojiFlag(performance.predecessor_host_country) + " " + performance.predecessor_host_name
+      ? getFlag(performance.predecessor_host_country) + " " + performance.predecessor_host_name
       : performance.predecessor_host_name
     )
 
