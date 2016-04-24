@@ -72,6 +72,7 @@ class ContestListScreen extends Component {
       name: contest.name, // Navigator
       title: contest.name, // NavigatorIOS
       component: PerformanceListScreen,
+      backButtonTitle: "Vorspielplan",
       passProps: {
         contest: contest
       }

@@ -33,7 +33,8 @@
 
  const initialRoute = {
    title: 'Wettbewerbe',
-   component: ContestListScreen
+   component: ContestListScreen,
+   backButtonTitle: " "
  }
 
  const styles = StyleSheet.create({
