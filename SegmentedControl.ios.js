@@ -28,10 +28,10 @@ class SegmentedControl extends Component {
 
 const styles = StyleSheet.create({
   segmentedControl: {
-    marginTop: 5,
+    marginTop: 4,
     marginLeft: 10,
     marginRight: 10,
-    marginBottom: 5
+    marginBottom: 4
   }
 });
 

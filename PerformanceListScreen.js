@@ -183,6 +183,8 @@ const styles = StyleSheet.create({
     fontStyle: 'italic'
   },
   filterControls: {
+    marginTop: 6,
+    marginBottom: 6
   },
   contentArea: {
     flex: 1
