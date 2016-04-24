@@ -117,7 +117,6 @@ class ContestListScreen extends Component {
             <ListView
               dataSource={this.state.dataSource}
               renderRow={this.renderRow.bind(this)}
-              style={styles.listView}
               />
           }
         </View>
@@ -148,9 +147,6 @@ const styles = StyleSheet.create({
     marginTop: 100,
     textAlign: 'center',
     fontStyle: 'italic'
-  },
-  listView: {
-    paddingLeft: 20,
   }
 });
 

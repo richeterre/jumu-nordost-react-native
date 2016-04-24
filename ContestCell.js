@@ -54,6 +54,9 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
+    paddingTop: 10,
+    paddingLeft: 20,
+    paddingBottom: 10
   },
   rightContainer: {
     flex: 1
@@ -65,7 +68,6 @@ var styles = StyleSheet.create({
     color: '#333333'
   },
   dateInfo: {
-    marginBottom: 20,
     textAlign: 'left',
     color: '#333333'
   },
