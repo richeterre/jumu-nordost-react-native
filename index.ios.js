@@ -22,6 +22,7 @@
      return (
        <NavigatorIOS
          barTintColor={PRIMARY_COLOR}
+         tintColor='#FFFFFF'
          titleTextColor='#FFFFFF'
          style={styles.nav}
          translucent={false}
