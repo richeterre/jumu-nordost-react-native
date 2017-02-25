@@ -8,7 +8,7 @@
   "dependencies": {
     "moment-timezone": "0.5.11",
     "punycode": "2.1.0",
-    "react": "15.4.1",
+    "react": "15.4.2",
     "react-native": "0.42.0-rc.3",
     "react-native-segmented-view": "2.0.0",
     "react-native-simple-router": "0.12.0"
