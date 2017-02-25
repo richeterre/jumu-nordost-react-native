@@ -1,12 +1,11 @@
-'use strict';
-import React, {
-  Component,
+import React, { Component } from 'react'
+import {
   Platform,
   ScrollView,
   StyleSheet,
   Text,
   View
-} from 'react-native';
+} from 'react-native'
 
 import moment from 'moment-timezone'
 import { getFlag } from './EmojiFlagHelper'

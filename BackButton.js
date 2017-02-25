@@ -1,11 +1,5 @@
-'use strict';
-
-var React = require('react-native');
-var {
-  Component,
-  StyleSheet,
-  Text
-} = React;
+import React, { Component } from 'react'
+import { StyleSheet, Text } from 'react-native'
 
 class BackButton extends Component {
   render() {
@@ -23,4 +17,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default BackButton;
+export default BackButton

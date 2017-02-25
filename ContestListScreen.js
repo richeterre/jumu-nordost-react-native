@@ -1,18 +1,17 @@
-'use strict';
-import React, {
+import React, { Component } from 'react'
+import {
   AppState,
-  Component,
   ListView,
   Platform,
   StyleSheet,
   RefreshControl,
   Text,
-  View
-} from 'react-native';
+  View,
+} from 'react-native'
 
-import ContestCell from './ContestCell';
-import PerformanceListScreen from './PerformanceListScreen';
-import { BASE_URL, API_KEY } from './Constants';
+import ContestCell from './ContestCell'
+import PerformanceListScreen from './PerformanceListScreen'
+import { BASE_URL, API_KEY } from './Constants'
 
 class ContestListScreen extends Component {
 
@@ -155,6 +154,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontStyle: 'italic'
   }
-});
+})
 
-export default ContestListScreen;
+export default ContestListScreen

@@ -1,25 +1,24 @@
-'use strict';
-
-var React = require('react-native');
-var {
+import React, { Component } from 'react'
+import {
   Platform,
   StyleSheet,
   Text,
   TouchableHighlight,
   TouchableNativeFeedback,
-  View
-} = React;
+  View,
+} from 'react-native'
 
 import moment from 'moment-timezone'
 
-var ContestCell = React.createClass({
-  render: function() {
+class ContestCell extends Component {
+  render() {
     const contest = this.props.contest
 
     var TouchableElement = TouchableHighlight;
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
     }
+
     return (
       <View>
         <TouchableElement
@@ -43,11 +42,11 @@ var ContestCell = React.createClass({
           </View>
         </TouchableElement>
       </View>
-    );
+    )
   }
-});
+}
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
@@ -73,4 +72,4 @@ var styles = StyleSheet.create({
   },
 });
 
-export default ContestCell;
+export default ContestCell

@@ -1,10 +1,4 @@
-'use strict';
-
-var React = require('react-native');
-var {
-  Component
-} = React;
-
+import React, { Component } from 'react'
 import SegmentedView from 'react-native-segmented-view';
 
 class SegmentedControl extends Component {

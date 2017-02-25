@@ -1,20 +1,18 @@
-'use strict';
-
-var React = require('react-native');
-var {
+import React, { Component } from 'react'
+import {
   Platform,
   StyleSheet,
   Text,
   TouchableHighlight,
   TouchableNativeFeedback,
-  View
-} = React;
+  View,
+} from 'react-native'
 
-import moment from 'moment-timezone';
+import moment from 'moment-timezone'
 import { getFlag } from './EmojiFlagHelper'
 
-var PerformanceCell = React.createClass({
-  render: function() {
+class PerformanceCell extends Component {
+  render() {
     const performance = this.props.performance
     const timeZone = this.props.timeZone
 
@@ -27,6 +25,7 @@ var PerformanceCell = React.createClass({
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
     }
+
     return (
       <View>
         <TouchableElement
@@ -64,9 +63,9 @@ var PerformanceCell = React.createClass({
       </View>
     );
   }
-});
+}
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
@@ -105,6 +104,6 @@ var styles = StyleSheet.create({
     fontSize: 15,
     color: '#333333'
   }
-});
+})
 
-export default PerformanceCell;
+export default PerformanceCell

@@ -1,14 +1,13 @@
-'use strict';
-import React, {
+import React, { Component } from 'react'
+import {
   AppState,
-  Component,
   ListView,
   Platform,
   RefreshControl,
   StyleSheet,
   Text,
   View
-} from 'react-native';
+} from 'react-native'
 
 import PerformanceCell from './PerformanceCell';
 import PerformanceScreen from './PerformanceScreen';

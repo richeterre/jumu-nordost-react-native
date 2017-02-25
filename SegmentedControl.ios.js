@@ -1,13 +1,10 @@
-'use strict';
-
-var React = require('react-native');
-var {
-  Component,
+import React, { Component } from 'react'
+import {
   SegmentedControlIOS,
   StyleSheet
-} = React;
+} from 'react-native'
 
-import { PRIMARY_COLOR } from './Constants';
+import { PRIMARY_COLOR } from './Constants'
 
 class SegmentedControl extends Component {
   render() {

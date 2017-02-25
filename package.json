@@ -1,17 +1,16 @@
 {
   "name": "JumuNordost",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
-    "moment-timezone": "^0.5.1",
-    "punycode": "^1.4.1",
-    "react": "^0.14.8",
-    "react-native": "^0.24.1",
-    "react-native-cli": "^0.2.0",
-    "react-native-segmented-view": "^1.0.1",
-    "react-native-simple-router": "^0.8.4"
+    "moment-timezone": "0.5.11",
+    "punycode": "2.1.0",
+    "react": "15.4.1",
+    "react-native": "0.42.0-rc.3",
+    "react-native-segmented-view": "2.0.0",
+    "react-native-simple-router": "0.12.0"
   }
 }
