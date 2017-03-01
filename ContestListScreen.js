@@ -14,29 +14,28 @@ import PerformanceListScreen from './PerformanceListScreen'
 import { BASE_URL, API_KEY } from './Constants'
 
 class ContestListScreen extends Component {
-
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       loading: true,
-      hasError: false
-    };
+      hasError: false,
+    }
   }
 
   componentDidMount() {
-    AppState.addEventListener('change', this.handleAppStateChange.bind(this));
-    this.fetchData();
+    AppState.addEventListener('change', this.handleAppStateChange.bind(this))
+    this.fetchData()
   }
 
   componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange.bind(this));
+    AppState.removeEventListener('change', this.handleAppStateChange.bind(this))
   }
 
   handleAppStateChange(currentAppState) {
-    if (currentAppState == 'active') {
+    if (currentAppState === 'active') {
       this.fetchData()
     }
   }
@@ -44,7 +43,7 @@ class ContestListScreen extends Component {
   fetchData() {
     this.setState({
       hasError: false,
-      loading: true
+      loading: true,
     })
 
     fetch(
@@ -56,15 +55,15 @@ class ContestListScreen extends Component {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(responseData),
         loading: false,
-      });
+      })
     })
     .catch(error => {
       this.setState({
         hasError: true,
-        loading: false
-      });
+        loading: false,
+      })
     })
-    .done();
+    .done()
   }
 
   selectContest(contest) {
@@ -72,15 +71,15 @@ class ContestListScreen extends Component {
       name: contest.name, // Navigator
       title: contest.name, // NavigatorIOS
       component: PerformanceListScreen,
-      backButtonTitle: "Vorspielplan",
+      backButtonTitle: 'Vorspielplan',
       passProps: {
-        contest: contest
-      }
+        contest: contest,
+      },
     }
     if (Platform.OS === 'android') {
-      this.props.toRoute(route);
+      this.props.toRoute(route)
     } else {
-      this.props.navigator.push(route);
+      this.props.navigator.push(route)
     }
   }
 
@@ -91,13 +90,13 @@ class ContestListScreen extends Component {
         onSelect={() => this.selectContest(contest)}
         contest={contest}
       />
-    );
+    )
   }
 
   render() {
     const messageText = this.state.hasError
-      ? "Die Wettbewerbe konnten leider nicht geladen werden."
-      : "Einen Moment, bitte…"
+      ? 'Die Wettbewerbe konnten leider nicht geladen werden.'
+      : 'Einen Moment, bitte…'
 
     return (
       <View style={styles.container}>
@@ -108,22 +107,22 @@ class ContestListScreen extends Component {
         </View>
         <View style={styles.contentArea}>
           {
-            this.state.loading || this.state.hasError
-            ?
-            <Text style={styles.messageText}>
-              {messageText}
-            </Text>
-            :
-            <ListView
-              dataSource={this.state.dataSource}
-              renderRow={this.renderRow.bind(this)}
-              refreshControl={
-                <RefreshControl
-                  refreshing={this.state.loading}
-                  onRefresh={this.fetchData.bind(this)}
-                />
-              }
+            this.state.loading || this.state.hasError ? (
+              <Text style={styles.messageText}>
+                {messageText}
+              </Text>
+            ) : (
+              <ListView
+                dataSource={this.state.dataSource}
+                renderRow={this.renderRow.bind(this)}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={this.state.loading}
+                    onRefresh={this.fetchData.bind(this)}
+                  />
+                }
               />
+            )
           }
         </View>
       </View>
@@ -141,19 +140,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'flex-start',
-    paddingLeft: 20
+    paddingLeft: 20,
   },
   welcomeText: {
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   },
   contentArea: {
-    flex: 8
+    flex: 8,
   },
   messageText: {
     marginTop: 100,
     textAlign: 'center',
-    fontStyle: 'italic'
-  }
+    fontStyle: 'italic',
+  },
 })
 
 export default ContestListScreen

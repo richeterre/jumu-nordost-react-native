@@ -14,9 +14,9 @@ class ContestCell extends Component {
   render() {
     const contest = this.props.contest
 
-    var TouchableElement = TouchableHighlight;
+    var TouchableElement = TouchableHighlight
     if (Platform.OS === 'android') {
-      TouchableElement = TouchableNativeFeedback;
+      TouchableElement = TouchableNativeFeedback
     }
 
     return (
@@ -55,21 +55,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     paddingTop: 10,
     paddingLeft: 20,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   rightContainer: {
-    flex: 1
+    flex: 1,
   },
   name: {
     fontSize: 20,
     marginBottom: 5,
     textAlign: 'left',
-    color: '#333333'
+    color: '#333333',
   },
   dateInfo: {
     textAlign: 'left',
-    color: '#333333'
+    color: '#333333',
   },
-});
+})
 
 export default ContestCell

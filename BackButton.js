@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     marginLeft: 5,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 })
 
 export default BackButton

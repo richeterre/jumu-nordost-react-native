@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "lint": "node node_modules/.bin/eslint *.js src/"
+    "lint": "node node_modules/.bin/eslint *.js"
   },
   "dependencies": {
     "moment-timezone": "0.5.11",

@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-import punycode from 'punycode';
+import punycode from 'punycode'
 
-export const getFlag = function(country_code) {
+export const getFlag = function(countryCode) {
   const base = 127397
-  const codePoints = country_code.split('').map(function(letter) {
+  const codePoints = countryCode.split('').map(function(letter) {
     return base + letter.charCodeAt(0)
   })
   return punycode.ucs2.encode(codePoints)

@@ -6,19 +6,18 @@ import {
   RefreshControl,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native'
 
-import PerformanceCell from './PerformanceCell';
-import PerformanceScreen from './PerformanceScreen';
-import SegmentedControl from './SegmentedControl';
-import { BASE_URL, API_KEY } from './Constants';
-import moment from 'moment-timezone';
+import PerformanceCell from './PerformanceCell'
+import PerformanceScreen from './PerformanceScreen'
+import SegmentedControl from './SegmentedControl'
+import { BASE_URL, API_KEY } from './Constants'
+import moment from 'moment-timezone'
 
 class PerformanceListScreen extends Component {
-
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
@@ -26,21 +25,21 @@ class PerformanceListScreen extends Component {
       loading: true,
       hasError: false,
       dateIndex: 0,
-      venueIndex: 0
-    };
+      venueIndex: 0,
+    }
   }
 
   componentDidMount() {
-    AppState.addEventListener('change', this.handleAppStateChange.bind(this));
-    this.fetchData();
+    AppState.addEventListener('change', this.handleAppStateChange.bind(this))
+    this.fetchData()
   }
 
   componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange.bind(this));
+    AppState.removeEventListener('change', this.handleAppStateChange.bind(this))
   }
 
   handleAppStateChange(currentAppState) {
-    if (currentAppState == 'active') {
+    if (currentAppState === 'active') {
       this.fetchData()
     }
   }
@@ -55,8 +54,8 @@ class PerformanceListScreen extends Component {
 
     this.setState({
       loading: true,
-      hasError: false
-     })
+      hasError: false,
+    })
 
     fetch(
       BASE_URL + 'contests/' + contest.id + '/performances' + query,
@@ -67,15 +66,15 @@ class PerformanceListScreen extends Component {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(responseData),
         loading: false,
-      });
+      })
     })
     .catch(error => {
       this.setState({
         hasError: true,
-        loading: false
-      });
+        loading: false,
+      })
     })
-    .done();
+    .done()
   }
 
   selectPerformance(performance) {
@@ -85,8 +84,8 @@ class PerformanceListScreen extends Component {
       passProps: {
         performance: performance,
         venue: this.props.contest.venues[this.state.venueIndex],
-        timeZone: this.props.contest.time_zone
-      }
+        timeZone: this.props.contest.time_zone,
+      },
     }
     if (Platform.OS === 'android') {
       this.props.toRoute(route)
@@ -103,57 +102,56 @@ class PerformanceListScreen extends Component {
         performance={performance}
         timeZone={this.props.contest.time_zone}
       />
-    );
+    )
   }
 
   render() {
-      const contest = this.props.contest
-      const endDate = moment(contest.end_date)
-      var date = moment(contest.start_date)
-      var dates = [date]
+    const contest = this.props.contest
+    const endDate = moment(contest.end_date)
+    var date = moment(contest.start_date)
+    var dates = [date]
 
-      while (date.isBefore(endDate)) {
-          var new_date = date.clone()
-          new_date.add(1, 'days')
-          dates.push(new_date)
-          date = new_date
-      }
+    while (date.isBefore(endDate)) {
+      var newDate = date.clone()
+      newDate.add(1, 'days')
+      dates.push(newDate)
+      date = newDate
+    }
 
-      const dayFormat = dates.length > 2 ? 'ddd, Do MMMM' : 'dddd, Do MMMM'
+    const dayFormat = dates.length > 2 ? 'ddd, Do MMMM' : 'dddd, Do MMMM'
 
-      const messageText = this.state.hasError
-        ? "Der Vorspielplan konnte leider nicht geladen werden."
-        : "Einen Moment, bitte…"
+    const messageText = this.state.hasError
+      ? 'Der Vorspielplan konnte leider nicht geladen werden.'
+      : 'Einen Moment, bitte…'
 
-      return (
-        <View style={styles.container}>
-          <View style={styles.filterControls}>
-            <SegmentedControl
-              values={dates.map( date => date.tz(contest.time_zone).format(dayFormat) )}
-              selectedIndex={this.state.dateIndex}
-              onChange={index => {
-                this.setState({ dateIndex: index })
-                this.fetchData()
-              }}
-            />
-            <SegmentedControl
-              values={contest.venues.map(venue => venue.name)}
-              selectedIndex={this.state.venueIndex}
-              onChange={index => {
-                this.setState({ venueIndex: index })
-                this.fetchData()
-              }}
-            />
-          </View>
-          <View style={styles.contentArea}>
-            {
-              this.state.loading || this.state.hasError
-              ?
+    return (
+      <View style={styles.container}>
+        <View style={styles.filterControls}>
+          <SegmentedControl
+            values={dates.map(date => date.tz(contest.time_zone).format(dayFormat))}
+            selectedIndex={this.state.dateIndex}
+            onChange={index => {
+              this.setState({ dateIndex: index })
+              this.fetchData()
+            }}
+          />
+          <SegmentedControl
+            values={contest.venues.map(venue => venue.name)}
+            selectedIndex={this.state.venueIndex}
+            onChange={index => {
+              this.setState({ venueIndex: index })
+              this.fetchData()
+            }}
+          />
+        </View>
+        <View style={styles.contentArea}>
+          {
+            this.state.loading || this.state.hasError ? (
               <Text style={styles.messageText}>
                 {messageText}
               </Text>
-              :
-              (this.state.dataSource.getRowCount() > 0 ?
+            ) : (
+              this.state.dataSource.getRowCount() > 0 ? (
                 <ListView
                   dataSource={this.state.dataSource}
                   renderRow={this.renderRow.bind(this)}
@@ -164,15 +162,16 @@ class PerformanceListScreen extends Component {
                     />
                   }
                 />
-                :
+              ) : (
                 <Text style={styles.messageText}>
                   An diesem Tag finden am ausgewählten Ort keine Vorspiele statt.
                 </Text>
               )
-            }
-          </View>
+            )
+          }
         </View>
-      )
+      </View>
+    )
   }
 }
 
@@ -185,15 +184,15 @@ const styles = StyleSheet.create({
   messageText: {
     marginTop: 100,
     textAlign: 'center',
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   },
   filterControls: {
     marginTop: 6,
-    marginBottom: 6
+    marginBottom: 6,
   },
   contentArea: {
-    flex: 1
-  }
-});
+    flex: 1,
+  },
+})
 
-export default PerformanceListScreen;
+export default PerformanceListScreen

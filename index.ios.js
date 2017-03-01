@@ -3,7 +3,6 @@ import {
  AppRegistry,
  NavigatorIOS,
  StyleSheet,
- View,
 } from 'react-native'
 
 import ContestListScreen from './ContestListScreen'
@@ -14,30 +13,30 @@ import deLocale from 'moment/locale/de'
 moment.updateLocale('de', deLocale)
 
 class JumuNordost extends Component {
- render() {
-   return (
-     <NavigatorIOS
-       barTintColor={PRIMARY_COLOR}
-       tintColor='#FFFFFF'
-       titleTextColor='#FFFFFF'
-       style={styles.nav}
-       translucent={false}
-       initialRoute={initialRoute}
-     />
-   )
- }
+  render() {
+    return (
+      <NavigatorIOS
+        barTintColor={PRIMARY_COLOR}
+        tintColor='#FFFFFF'
+        titleTextColor='#FFFFFF'
+        style={styles.nav}
+        translucent={false}
+        initialRoute={initialRoute}
+      />
+    )
+  }
 }
 
 const initialRoute = {
   title: 'Wettbewerbe',
   component: ContestListScreen,
-  backButtonTitle: " "
+  backButtonTitle: ' ',
 }
 
 const styles = StyleSheet.create({
   nav: {
-    flex: 1
-  }
+    flex: 1,
+  },
 })
 
 AppRegistry.registerComponent('JumuNordost', () => JumuNordost)

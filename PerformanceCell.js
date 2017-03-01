@@ -17,13 +17,13 @@ class PerformanceCell extends Component {
     const timeZone = this.props.timeZone
 
     const predecessorInfo = (Platform.OS === 'ios'
-      ? getFlag(performance.predecessor_host_country) + " " + performance.predecessor_host_name
+      ? getFlag(performance.predecessor_host_country) + ' ' + performance.predecessor_host_name
       : performance.predecessor_host_name
     )
 
-    var TouchableElement = TouchableHighlight;
+    var TouchableElement = TouchableHighlight
     if (Platform.OS === 'android') {
-      TouchableElement = TouchableNativeFeedback;
+      TouchableElement = TouchableNativeFeedback
     }
 
     return (
@@ -61,7 +61,7 @@ class PerformanceCell extends Component {
           </View>
         </TouchableElement>
       </View>
-    );
+    )
   }
 }
 
@@ -77,33 +77,33 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   leftContainer: {
-    flex: 1
+    flex: 1,
   },
   rightContainer: {
-    flex: 5
+    flex: 5,
   },
   categoryInfo: {
     fontWeight: 'bold',
     marginBottom: 8,
     textAlign: 'left',
     color: '#333333',
-    fontSize: 15
+    fontSize: 15,
   },
   time: {
     textAlign: 'left',
     color: '#333333',
     fontWeight: 'bold',
-    fontSize: 15
+    fontSize: 15,
   },
   appearanceText: {
     color: '#333333',
-    fontSize: 15
+    fontSize: 15,
   },
   predecessorInfo: {
     marginTop: 5,
     fontSize: 15,
-    color: '#333333'
-  }
+    color: '#333333',
+  },
 })
 
 export default PerformanceCell

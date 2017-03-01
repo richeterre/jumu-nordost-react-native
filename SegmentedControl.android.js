@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import SegmentedView from 'react-native-segmented-view';
+import SegmentedView from 'react-native-segmented-view'
 
 class SegmentedControl extends Component {
   render() {
@@ -9,10 +9,10 @@ class SegmentedControl extends Component {
         index={this.props.selectedIndex}
         stretch
         onPress={this.props.onChange}
-        selectedTitleStyle={{fontWeight:'bold', color: '#D61921'}}
+        selectedTitleStyle={{ fontWeight: 'bold', color: '#D61921' }}
       />
     )
   }
 }
 
-export default SegmentedControl;
+export default SegmentedControl

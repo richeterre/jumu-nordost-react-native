@@ -4,27 +4,26 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native'
 
 import moment from 'moment-timezone'
 import { getFlag } from './EmojiFlagHelper'
 
 class PerformanceScreen extends Component {
-
   render() {
     const performance = this.props.performance
     const venue = this.props.venue
     const timeZone = this.props.timeZone
 
     const mainAppearances = performance.appearances
-      .filter( a => a.participant_role != 'accompanist' )
+      .filter(a => a.participant_role !== 'accompanist')
 
     const accompanists = performance.appearances
-      .filter( a => a.participant_role == 'accompanist' )
+      .filter(a => a.participant_role === 'accompanist')
 
     const predecessorInfo = (Platform.OS === 'ios'
-      ? getFlag(performance.predecessor_host_country) + " " + performance.predecessor_host_name
+      ? getFlag(performance.predecessor_host_country) + ' ' + performance.predecessor_host_name
       : performance.predecessor_host_name
     )
 
@@ -47,9 +46,9 @@ class PerformanceScreen extends Component {
               </Text>
             )}
             {accompanists.map((appearance, i) => {
-              const ageGroupText = appearance.age_group != performance.age_group
-                ? " (AG " + appearance.age_group + ")"
-                : ""
+              const ageGroupText = appearance.age_group !== performance.age_group
+                ? ' (AG ' + appearance.age_group + ')'
+                : ''
               return <Text key={'accompanist' + (i + 1)} style={styles.accompanistText}>
                 {appearance.participant_name}, {appearance.instrument_name}{ageGroupText}
                 </Text>
@@ -60,8 +59,8 @@ class PerformanceScreen extends Component {
           <View style={styles.piecesInfo}>
             {performance.pieces.map((piece, i) => {
               const composerDates = piece.composer_born
-                ? " (" + piece.composer_born + "–" + piece.composer_died + ")"
-                : ""
+                ? ' (' + piece.composer_born + '–' + piece.composer_died + ')'
+                : ''
               return <View key={'piece' + (i + 1)} style={styles.piece}>
                 <Text style={styles.composer}>
                   {piece.composer_name}{composerDates}
@@ -91,17 +90,17 @@ const styles = StyleSheet.create({
   },
   generalInfo: {
     paddingTop: 10,
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   categoryName: {
     fontSize: 17,
     color: '#333333',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   ageGroup: {
     fontSize: 17,
     color: '#333333',
-    marginBottom: 10
+    marginBottom: 10,
   },
   stageTime: {
     fontSize: 15,
@@ -112,12 +111,12 @@ const styles = StyleSheet.create({
     color: '#333333',
   },
   appearancesInfo: {
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   mainAppearanceText: {
     fontSize: 15,
     color: '#333333',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   accompanistText: {
     fontSize: 15,
@@ -128,17 +127,17 @@ const styles = StyleSheet.create({
     color: '#333333',
   },
   piece: {
-    marginBottom: 5
+    marginBottom: 5,
   },
   composer: {
     fontWeight: 'bold',
     color: '#333333',
-    fontSize: 15
+    fontSize: 15,
   },
   pieceTitle: {
     color: '#333333',
-    fontSize: 15
-  }
-});
+    fontSize: 15,
+  },
+})
 
-export default PerformanceScreen;
+export default PerformanceScreen

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {
   SegmentedControlIOS,
-  StyleSheet
+  StyleSheet,
 } from 'react-native'
 
 import { PRIMARY_COLOR } from './Constants'
@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     marginTop: 4,
     marginLeft: 10,
     marginRight: 10,
-    marginBottom: 4
-  }
-});
+    marginBottom: 4,
+  },
+})
 
-export default SegmentedControl;
+export default SegmentedControl
