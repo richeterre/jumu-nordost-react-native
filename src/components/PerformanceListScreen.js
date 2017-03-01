@@ -178,8 +178,6 @@ class PerformanceListScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
   },
   messageText: {
     marginTop: 100,
@@ -187,6 +185,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   filterControls: {
+    minHeight: 80,
     marginTop: 6,
     marginBottom: 6,
   },
