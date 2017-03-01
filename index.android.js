@@ -4,7 +4,7 @@ import { AppRegistry, StyleSheet } from 'react-native'
 import Router from 'react-native-simple-router'
 import ContestListScreen from './src/components/ContestListScreen'
 import BackButton from './src/components/BackButton'
-import { PRIMARY_COLOR } from './src/constants/colors'
+import colors from './src/constants/colors'
 import moment from 'moment-timezone'
 import deLocale from 'moment/locale/de'
 
@@ -30,7 +30,7 @@ const firstRoute = {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: PRIMARY_COLOR,
+    backgroundColor: colors.primary,
   },
 })
 

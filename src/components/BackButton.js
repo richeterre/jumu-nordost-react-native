@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text } from 'react-native'
 
+import colors from '../constants/colors'
+
 class BackButton extends Component {
   render() {
     return (
@@ -11,7 +13,7 @@ class BackButton extends Component {
 
 const styles = StyleSheet.create({
   text: {
-    color: 'white',
+    color: colors.white,
     marginLeft: 5,
     fontWeight: 'bold',
   },

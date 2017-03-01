@@ -4,7 +4,7 @@ import {
   StyleSheet,
 } from 'react-native'
 
-import { PRIMARY_COLOR } from '../constants/colors'
+import colors from '../constants/colors'
 
 class SegmentedControl extends Component {
   render() {
@@ -17,7 +17,7 @@ class SegmentedControl extends Component {
           const index = event.nativeEvent.selectedSegmentIndex
           this.props.onChange(index)
         }}
-        tintColor={PRIMARY_COLOR}
+        tintColor={colors.primary}
       />
     )
   }

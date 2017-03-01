@@ -1,3 +1,4 @@
+import moment from 'moment-timezone'
 import React, { Component } from 'react'
 import {
   Platform,
@@ -8,7 +9,7 @@ import {
   View,
 } from 'react-native'
 
-import moment from 'moment-timezone'
+import colors from '../constants/colors'
 
 class ContestCell extends Component {
   render() {
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.white,
     paddingTop: 10,
     paddingLeft: 20,
     paddingBottom: 10,
@@ -64,11 +65,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 5,
     textAlign: 'left',
-    color: '#333333',
+    color: colors.gray,
   },
   dateInfo: {
     textAlign: 'left',
-    color: '#333333',
+    color: colors.gray,
   },
 })
 

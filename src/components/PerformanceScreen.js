@@ -1,3 +1,4 @@
+import moment from 'moment-timezone'
 import React, { Component } from 'react'
 import {
   Platform,
@@ -7,7 +8,7 @@ import {
   View,
 } from 'react-native'
 
-import moment from 'moment-timezone'
+import colors from '../constants/colors'
 import { getFlag } from '../helpers/EmojiFlagHelper'
 
 class PerformanceScreen extends Component {
@@ -94,48 +95,48 @@ const styles = StyleSheet.create({
   },
   categoryName: {
     fontSize: 17,
-    color: '#333333',
+    color: colors.gray,
     fontWeight: 'bold',
   },
   ageGroup: {
     fontSize: 17,
-    color: '#333333',
+    color: colors.gray,
     marginBottom: 10,
   },
   stageTime: {
     fontSize: 15,
-    color: '#333333',
+    color: colors.gray,
   },
   venueName: {
     fontSize: 15,
-    color: '#333333',
+    color: colors.gray,
   },
   appearancesInfo: {
     paddingBottom: 20,
   },
   mainAppearanceText: {
     fontSize: 15,
-    color: '#333333',
+    color: colors.gray,
     fontWeight: 'bold',
   },
   accompanistText: {
     fontSize: 15,
-    color: '#666666',
+    color: colors.lightGray,
   },
   predecessorInfo: {
     marginTop: 5,
-    color: '#333333',
+    color: colors.gray,
   },
   piece: {
     marginBottom: 5,
   },
   composer: {
     fontWeight: 'bold',
-    color: '#333333',
+    color: colors.gray,
     fontSize: 15,
   },
   pieceTitle: {
-    color: '#333333',
+    color: colors.gray,
     fontSize: 15,
   },
 })

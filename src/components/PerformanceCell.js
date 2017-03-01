@@ -1,3 +1,4 @@
+import moment from 'moment-timezone'
 import React, { Component } from 'react'
 import {
   Platform,
@@ -8,7 +9,7 @@ import {
   View,
 } from 'react-native'
 
-import moment from 'moment-timezone'
+import colors from '../constants/colors'
 import { getFlag } from '../helpers/EmojiFlagHelper'
 
 class PerformanceCell extends Component {
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingBottom: 5,
     alignItems: 'flex-start',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.white,
   },
   leftContainer: {
     flex: 1,
@@ -86,23 +87,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
     textAlign: 'left',
-    color: '#333333',
+    color: colors.gray,
     fontSize: 15,
   },
   time: {
     textAlign: 'left',
-    color: '#333333',
+    color: colors.gray,
     fontWeight: 'bold',
     fontSize: 15,
   },
   appearanceText: {
-    color: '#333333',
+    color: colors.gray,
     fontSize: 15,
   },
   predecessorInfo: {
     marginTop: 5,
     fontSize: 15,
-    color: '#333333',
+    color: colors.gray,
   },
 })
 

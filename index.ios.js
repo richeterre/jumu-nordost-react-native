@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 
 import ContestListScreen from './src/components/ContestListScreen'
-import { PRIMARY_COLOR } from './src/constants/colors'
+import colors from './src/constants/colors'
 import moment from 'moment-timezone'
 import deLocale from 'moment/locale/de'
 
@@ -16,9 +16,9 @@ class JumuNordost extends Component {
   render() {
     return (
       <NavigatorIOS
-        barTintColor={PRIMARY_COLOR}
-        tintColor='#FFFFFF'
-        titleTextColor='#FFFFFF'
+        barTintColor={colors.primary}
+        tintColor={colors.white}
+        titleTextColor={colors.white}
         style={styles.nav}
         translucent={false}
         initialRoute={initialRoute}
