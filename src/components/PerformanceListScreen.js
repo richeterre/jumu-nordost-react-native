@@ -12,7 +12,7 @@ import {
 import PerformanceCell from './PerformanceCell'
 import PerformanceScreen from './PerformanceScreen'
 import SegmentedControl from './SegmentedControl'
-import { BASE_URL, API_KEY } from '../Constants'
+import config from '../../config'
 import moment from 'moment-timezone'
 
 class PerformanceListScreen extends Component {
@@ -58,8 +58,8 @@ class PerformanceListScreen extends Component {
     })
 
     fetch(
-      BASE_URL + 'contests/' + contest.id + '/performances' + query,
-      { headers: { 'X-Api-Key': API_KEY } }
+      config.baseUrl + 'contests/' + contest.id + '/performances' + query,
+      { headers: { 'X-Api-Key': config.apiKey } }
     )
     .then((response) => response.json())
     .then((responseData) => {

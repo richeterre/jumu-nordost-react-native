@@ -4,7 +4,7 @@ import {
   StyleSheet,
 } from 'react-native'
 
-import { PRIMARY_COLOR } from '../Constants'
+import { PRIMARY_COLOR } from '../constants/colors'
 
 class SegmentedControl extends Component {
   render() {

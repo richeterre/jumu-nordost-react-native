@@ -27,12 +27,12 @@ Setup
 
 The project doesn't compile until you have provided a credentials file. Do as follows:
 
-1. Fire up your favorite text editor and create a file named `credentials.json` in the project root.
+1. Fire up your favorite text editor and create a file named `secrets.js` in the project root.
 1. Enter the following:
 
-    ```json
-    {
-      "api-key": "<INSERT API KEY HERE>"
+    ```javascript
+    export default {
+      apiKey: '<INSERT API KEY HERE>',
     }
     ```
 

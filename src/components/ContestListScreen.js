@@ -11,7 +11,7 @@ import {
 
 import ContestCell from './ContestCell'
 import PerformanceListScreen from './PerformanceListScreen'
-import { BASE_URL, API_KEY } from '../Constants'
+import config from '../../config'
 
 class ContestListScreen extends Component {
   constructor(props) {
@@ -47,8 +47,8 @@ class ContestListScreen extends Component {
     })
 
     fetch(
-      BASE_URL + 'contests?current_only=1&timetables_public=1',
-      { headers: { 'X-Api-Key': API_KEY } }
+      config.baseUrl + 'contests?current_only=1&timetables_public=1',
+      { headers: { 'X-Api-Key': config.apiKey } }
     )
     .then((response) => response.json())
     .then((responseData) => {
