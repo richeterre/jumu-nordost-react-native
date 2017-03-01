@@ -121,6 +121,7 @@ class ContestListScreen extends Component {
                     onRefresh={this.fetchData.bind(this)}
                   />
                 }
+                enableEmptySections={true}
               />
             )
           }
