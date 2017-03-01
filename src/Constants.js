@@ -1,5 +1,5 @@
 // Grab credentials (add this file if missing, as it's ignored by Git)
-const credentials = require('./credentials.json')
+const credentials = require('../credentials.json')
 
 export const BASE_URL = 'http://10.0.2.2:5000/api/v1/' // AVD
 // export const BASE_URL = 'http://192.168.56.1:5000/api/v1/' // Genymotion

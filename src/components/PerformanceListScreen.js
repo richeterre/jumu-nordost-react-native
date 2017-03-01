@@ -12,7 +12,7 @@ import {
 import PerformanceCell from './PerformanceCell'
 import PerformanceScreen from './PerformanceScreen'
 import SegmentedControl from './SegmentedControl'
-import { BASE_URL, API_KEY } from './Constants'
+import { BASE_URL, API_KEY } from '../Constants'
 import moment from 'moment-timezone'
 
 class PerformanceListScreen extends Component {

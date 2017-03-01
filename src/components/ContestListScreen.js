@@ -11,7 +11,7 @@ import {
 
 import ContestCell from './ContestCell'
 import PerformanceListScreen from './PerformanceListScreen'
-import { BASE_URL, API_KEY } from './Constants'
+import { BASE_URL, API_KEY } from '../Constants'
 
 class ContestListScreen extends Component {
   constructor(props) {

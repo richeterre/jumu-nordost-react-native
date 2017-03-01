@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 
 import moment from 'moment-timezone'
-import { getFlag } from './EmojiFlagHelper'
+import { getFlag } from '../helpers/EmojiFlagHelper'
 
 class PerformanceCell extends Component {
   render() {

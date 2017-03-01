@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { AppRegistry, StyleSheet } from 'react-native'
 
 import Router from 'react-native-simple-router'
-import ContestListScreen from './ContestListScreen'
-import BackButton from './BackButton'
-import { PRIMARY_COLOR } from './Constants'
+import ContestListScreen from './src/components/ContestListScreen'
+import BackButton from './src/components/BackButton'
+import { PRIMARY_COLOR } from './src/Constants'
 import moment from 'moment-timezone'
 import deLocale from 'moment/locale/de'
 

@@ -5,8 +5,8 @@ import {
  StyleSheet,
 } from 'react-native'
 
-import ContestListScreen from './ContestListScreen'
-import { PRIMARY_COLOR } from './Constants'
+import ContestListScreen from './src/components/ContestListScreen'
+import { PRIMARY_COLOR } from './src/Constants'
 import moment from 'moment-timezone'
 import deLocale from 'moment/locale/de'
 
