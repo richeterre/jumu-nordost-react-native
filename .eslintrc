@@ -1,0 +1,29 @@
+{
+  "extends": [
+    "standard",
+    "plugin:react/recommended"
+  ],
+  "parser": "babel-eslint",
+  "plugins": [
+    "babel",
+    "flowtype",
+    "react",
+    "react-native"
+  ],
+  "env": {
+    "jest": true
+  },
+  "rules": {
+    "no-console": [2, { allow: ['warn', 'error'] }],
+    "no-duplicate-imports" : 0,
+    "space-before-function-paren": 0,
+    "comma-dangle": [2, "always-multiline"],
+    "generator-star-spacing": 0,
+    "react-native/no-unused-styles": 2,
+    "react-native/split-platform-components": 2,
+    "react-native/no-inline-styles": 2,
+    "react-native/no-color-literals": 2,
+    "flowtype/define-flow-type": 1,
+    "flowtype/use-flow-type": 1
+  }
+}
