@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {
   AppState,
   ListView,
-  Platform,
   StyleSheet,
   RefreshControl,
   Text,
@@ -10,10 +9,13 @@ import {
 } from 'react-native'
 
 import ContestCell from './ContestCell'
-import PerformanceListScreen from './PerformanceListScreen'
 import config from '../../config'
 
 class ContestListScreen extends Component {
+  static navigationOptions = {
+    title: 'Wettbewerbe',
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -67,20 +69,8 @@ class ContestListScreen extends Component {
   }
 
   selectContest(contest) {
-    const route = {
-      name: contest.name, // Navigator
-      title: contest.name, // NavigatorIOS
-      component: PerformanceListScreen,
-      backButtonTitle: 'Vorspielplan',
-      passProps: {
-        contest: contest,
-      },
-    }
-    if (Platform.OS === 'android') {
-      this.props.toRoute(route)
-    } else {
-      this.props.navigator.push(route)
-    }
+    const { navigate } = this.props.navigation
+    navigate('PerformanceList', { contest: contest })
   }
 
   renderRow(contest) {

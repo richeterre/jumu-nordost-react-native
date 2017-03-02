@@ -12,10 +12,13 @@ import colors from '../constants/colors'
 import { getFlag } from '../helpers/EmojiFlagHelper'
 
 class PerformanceScreen extends Component {
+  static navigationOptions = {
+    title: ({ state }) => state.params.performance.category_name,
+  }
+
   render() {
-    const performance = this.props.performance
-    const venue = this.props.venue
-    const timeZone = this.props.timeZone
+    const { params } = this.props.navigation.state
+    const { performance, timeZone, venue } = params
 
     const mainAppearances = performance.appearances
       .filter(a => a.participant_role !== 'accompanist')

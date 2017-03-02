@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {
   AppState,
   ListView,
-  Platform,
   RefreshControl,
   StyleSheet,
   Text,
@@ -10,12 +9,15 @@ import {
 } from 'react-native'
 
 import PerformanceCell from './PerformanceCell'
-import PerformanceScreen from './PerformanceScreen'
 import SegmentedControl from './SegmentedControl'
 import config from '../../config'
 import moment from 'moment-timezone'
 
 class PerformanceListScreen extends Component {
+  static navigationOptions = {
+    title: ({ state }) => `${state.params.contest.name}`,
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -44,8 +46,12 @@ class PerformanceListScreen extends Component {
     }
   }
 
+  contest() {
+    return this.props.navigation.state.params.contest
+  }
+
   fetchData() {
-    const contest = this.props.contest
+    const contest = this.contest()
     const date = moment(contest.start_date).add(this.state.dateIndex, 'days')
     const dateString = date.tz(contest.time_zone).format('YYYY-MM-DD')
     const venue = contest.venues[this.state.venueIndex]
@@ -78,35 +84,30 @@ class PerformanceListScreen extends Component {
   }
 
   selectPerformance(performance) {
-    const route = {
-      name: performance.category_name,
-      component: PerformanceScreen,
-      passProps: {
-        performance: performance,
-        venue: this.props.contest.venues[this.state.venueIndex],
-        timeZone: this.props.contest.time_zone,
-      },
-    }
-    if (Platform.OS === 'android') {
-      this.props.toRoute(route)
-    } else {
-      this.props.navigator.push(route)
-    }
+    const { navigate } = this.props.navigation
+
+    const contest = this.contest()
+    const venue = contest.venues[this.state.venueIndex]
+    const timeZone = contest.time_zone
+
+    navigate('Performance', { performance, venue, timeZone })
   }
 
   renderRow(performance) {
+    const contest = this.contest()
+
     return (
       <PerformanceCell
         key={performance.id}
         onSelect={() => this.selectPerformance(performance)}
         performance={performance}
-        timeZone={this.props.contest.time_zone}
+        timeZone={contest.time_zone}
       />
     )
   }
 
   render() {
-    const contest = this.props.contest
+    const contest = this.contest()
     const endDate = moment(contest.end_date)
     var date = moment(contest.start_date)
     var dates = [date]
