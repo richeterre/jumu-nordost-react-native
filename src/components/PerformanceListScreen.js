@@ -10,6 +10,7 @@ import {
 
 import PerformanceCell from './PerformanceCell'
 import SegmentedControl from './SegmentedControl'
+import colors from '../constants/colors'
 import config from '../../config'
 import moment from 'moment-timezone'
 
@@ -178,6 +179,7 @@ class PerformanceListScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.white,
     flex: 1,
   },
   messageText: {

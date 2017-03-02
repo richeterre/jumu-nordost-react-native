@@ -49,11 +49,11 @@ class ContestCell extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
+    backgroundColor: colors.white,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.white,
     paddingTop: 10,
     paddingLeft: 20,
     paddingBottom: 10,
@@ -62,10 +62,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   name: {
+    color: colors.gray,
     fontSize: 20,
     marginBottom: 5,
     textAlign: 'left',
-    color: colors.gray,
   },
   dateInfo: {
     textAlign: 'left',

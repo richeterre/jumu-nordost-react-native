@@ -68,14 +68,13 @@ class PerformanceCell extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.white,
     flex: 1,
     flexDirection: 'row',
     paddingTop: 5,
     paddingLeft: 20,
     paddingRight: 10,
     paddingBottom: 5,
-    alignItems: 'flex-start',
-    backgroundColor: colors.white,
   },
   leftContainer: {
     flex: 1,
@@ -84,26 +83,26 @@ const styles = StyleSheet.create({
     flex: 5,
   },
   categoryInfo: {
+    color: colors.gray,
+    fontSize: 15,
     fontWeight: 'bold',
     marginBottom: 8,
     textAlign: 'left',
-    color: colors.gray,
-    fontSize: 15,
   },
   time: {
-    textAlign: 'left',
     color: colors.gray,
-    fontWeight: 'bold',
     fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: 'left',
   },
   appearanceText: {
     color: colors.gray,
     fontSize: 15,
   },
   predecessorInfo: {
-    marginTop: 5,
-    fontSize: 15,
     color: colors.gray,
+    fontSize: 15,
+    marginTop: 5,
   },
 })
 

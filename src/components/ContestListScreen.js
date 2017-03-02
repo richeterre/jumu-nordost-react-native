@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 
 import ContestCell from './ContestCell'
+import colors from '../constants/colors'
 import config from '../../config'
 
 class ContestListScreen extends Component {
@@ -123,21 +124,18 @@ class ContestListScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.white,
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
   },
   welcomeView: {
-    flex: 1,
     justifyContent: 'center',
-    alignItems: 'flex-start',
-    paddingLeft: 20,
+    padding: 20,
   },
   welcomeText: {
     fontStyle: 'italic',
   },
   contentArea: {
-    flex: 8,
+    flex: 1,
   },
   messageText: {
     marginTop: 100,

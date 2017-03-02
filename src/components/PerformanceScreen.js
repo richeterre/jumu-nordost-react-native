@@ -83,8 +83,8 @@ class PerformanceScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.white,
     flex: 1,
-    flexDirection: 'column',
   },
   scrollContainer: {
     paddingTop: 10,
@@ -97,45 +97,45 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   categoryName: {
-    fontSize: 17,
     color: colors.gray,
+    fontSize: 17,
     fontWeight: 'bold',
   },
   ageGroup: {
-    fontSize: 17,
     color: colors.gray,
+    fontSize: 17,
     marginBottom: 10,
   },
   stageTime: {
-    fontSize: 15,
     color: colors.gray,
+    fontSize: 15,
   },
   venueName: {
-    fontSize: 15,
     color: colors.gray,
+    fontSize: 15,
   },
   appearancesInfo: {
     paddingBottom: 20,
   },
   mainAppearanceText: {
-    fontSize: 15,
     color: colors.gray,
+    fontSize: 15,
     fontWeight: 'bold',
   },
   accompanistText: {
-    fontSize: 15,
     color: colors.lightGray,
+    fontSize: 15,
   },
   predecessorInfo: {
-    marginTop: 5,
     color: colors.gray,
+    marginTop: 5,
   },
   piece: {
     marginBottom: 5,
   },
   composer: {
-    fontWeight: 'bold',
     color: colors.gray,
+    fontWeight: 'bold',
     fontSize: 15,
   },
   pieceTitle: {
