@@ -24,6 +24,10 @@ class PerformanceCell extends Component {
       ? `${emojiFlag(predecessorHostCountry)} ${predecessorHostName}`
       : null
 
+    const TouchableElement = (Platform.OS === 'android')
+      ? TouchableNativeFeedback
+      : TouchableHighlight
+
     return (
       <View>
         <TouchableElement

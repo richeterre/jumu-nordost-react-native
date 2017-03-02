@@ -15,10 +15,9 @@ class ContestCell extends Component {
   render() {
     const contest = this.props.contest
 
-    var TouchableElement = TouchableHighlight
-    if (Platform.OS === 'android') {
-      TouchableElement = TouchableNativeFeedback
-    }
+    const TouchableElement = (Platform.OS === 'android')
+      ? TouchableNativeFeedback
+      : TouchableHighlight
 
     return (
       <View>
