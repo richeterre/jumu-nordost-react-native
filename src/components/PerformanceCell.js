@@ -1,3 +1,4 @@
+import emojiFlag from 'emoji-flag'
 import moment from 'moment-timezone'
 import React, { Component } from 'react'
 import {
@@ -10,22 +11,18 @@ import {
 } from 'react-native'
 
 import colors from '../constants/colors'
-import { getFlag } from '../helpers/EmojiFlagHelper'
 
 class PerformanceCell extends Component {
   render() {
     const performance = this.props.performance
     const timeZone = this.props.timeZone
 
-    const predecessorInfo = (Platform.OS === 'ios'
-      ? getFlag(performance.predecessor_host_country) + ' ' + performance.predecessor_host_name
-      : performance.predecessor_host_name
-    )
+    const predecessorHostCountry = performance.predecessor_host_country
+    const predecessorHostName = performance.predecessor_host_name
 
-    var TouchableElement = TouchableHighlight
-    if (Platform.OS === 'android') {
-      TouchableElement = TouchableNativeFeedback
-    }
+    const predecessorInfo = predecessorHostCountry && predecessorHostName
+      ? `${emojiFlag(predecessorHostCountry)} ${predecessorHostName}`
+      : null
 
     return (
       <View>
@@ -54,9 +51,11 @@ class PerformanceCell extends Component {
                     </Text>
                   )}
                 </View>
-                <Text style={styles.predecessorInfo}>
-                  {predecessorInfo}
-                </Text>
+                {predecessorInfo &&
+                  <Text style={styles.predecessorInfo}>
+                    {predecessorInfo}
+                  </Text>
+                }
               </View>
             </View>
           </View>

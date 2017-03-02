@@ -1,7 +1,7 @@
+import emojiFlag from 'emoji-flag'
 import moment from 'moment-timezone'
 import React, { Component } from 'react'
 import {
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,7 +9,6 @@ import {
 } from 'react-native'
 
 import colors from '../constants/colors'
-import { getFlag } from '../helpers/EmojiFlagHelper'
 
 class PerformanceScreen extends Component {
   static navigationOptions = {
@@ -26,10 +25,12 @@ class PerformanceScreen extends Component {
     const accompanists = performance.appearances
       .filter(a => a.participant_role === 'accompanist')
 
-    const predecessorInfo = (Platform.OS === 'ios'
-      ? getFlag(performance.predecessor_host_country) + ' ' + performance.predecessor_host_name
-      : performance.predecessor_host_name
-    )
+    const predecessorHostCountry = performance.predecessor_host_country
+    const predecessorHostName = performance.predecessor_host_name
+
+    const predecessorInfo = predecessorHostCountry && predecessorHostName
+      ? emojiFlag(performance.predecessor_host_country) + ' ' + performance.predecessor_host_name
+      : null
 
     return (
       <View style={styles.container}>
@@ -58,7 +59,9 @@ class PerformanceScreen extends Component {
                 </Text>
             }
             )}
-            <Text style={styles.predecessorInfo}>{predecessorInfo}</Text>
+            {predecessorInfo &&
+              <Text style={styles.predecessorInfo}>{predecessorInfo}</Text>
+            }
           </View>
           <View style={styles.piecesInfo}>
             {performance.pieces.map((piece, i) => {

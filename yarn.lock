@@ -131,10 +131,6 @@ asn1@~0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/asn1/-/asn1-0.2.3.tgz#dac8787713c9966849fc8180777ebe9c1ddf3b86"
 
-aspect-js@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/aspect-js/-/aspect-js-1.0.3.tgz#3eb5ab3226f340f89bc1e425fa105eea1450e18d"
-
 assert-plus@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/assert-plus/-/assert-plus-0.2.0.tgz#d74e1b87e7affc0db8aadb7021f3fe48101ab234"
@@ -1206,6 +1202,12 @@ ecc-jsbn@~0.1.1:
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
+
+emoji-flag@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/emoji-flag/-/emoji-flag-1.1.0.tgz#b3062db3e559fc21a2b78de6638b973360ead74c"
+  dependencies:
+    punycode2 "~1.0.0"
 
 encoding@^0.1.11:
   version "0.1.12"
@@ -2659,6 +2661,10 @@ pseudomap@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
 
+punycode2@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/punycode2/-/punycode2-1.0.0.tgz#e2b4b9a9a8ff157d0b84438e203181ee7892dfd8"
+
 punycode@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.0.tgz#5f863edc89b96db09074bad7947bf09056ca4e7d"
@@ -2715,13 +2721,6 @@ react-native-segmented-view@2.0.0:
   resolved "https://registry.yarnpkg.com/react-native-segmented-view/-/react-native-segmented-view-2.0.0.tgz#a5c9372176f04e3490fe5327be785c04e9361e94"
   dependencies:
     react-tween-state "0.0.5"
-
-react-native-simple-router@0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/react-native-simple-router/-/react-native-simple-router-0.12.0.tgz#eb11d49771ffc9f08f61bbbbd218e58e5086fc3a"
-  dependencies:
-    aspect-js "^1.0.3"
-    underscore "^1.8.3"
 
 react-native-tab-view@^0.0.56:
   version "0.0.56"
@@ -3421,10 +3420,6 @@ uid-safe@~2.0.0:
 ultron@1.0.x:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/ultron/-/ultron-1.0.2.tgz#ace116ab557cd197386a4e88f4685378c8b2e4fa"
-
-underscore@^1.8.3:
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
 
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
