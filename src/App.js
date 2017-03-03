@@ -2,15 +2,28 @@
 
 import deLocale from 'moment/locale/de'
 import moment from 'moment-timezone'
+import React, { Component } from 'react'
 import { AppRegistry, StyleSheet } from 'react-native'
 import { StackNavigator } from 'react-navigation'
+import { Provider } from 'react-redux'
 
 import ContestListScreen from './components/ContestListScreen'
 import PerformanceListScreen from './components/PerformanceListScreen'
 import PerformanceScreen from './components/PerformanceScreen'
 import colors from './constants/colors'
+import store from './redux/store'
 
 moment.updateLocale('de', deLocale)
+
+class JumuNordost extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <AppNavigator />
+      </Provider>
+    )
+  }
+}
 
 const styles = StyleSheet.create({
   header: {
@@ -18,7 +31,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const JumuNordost = StackNavigator({
+const AppNavigator = StackNavigator({
   ContestList: { screen: ContestListScreen },
   PerformanceList: { screen: PerformanceListScreen },
   Performance: { screen: PerformanceScreen },
