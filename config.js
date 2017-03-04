@@ -1,9 +1,15 @@
+// @flow
+
+import { Platform } from 'react-native'
+
 import secrets from './secrets' // See README
+
+const localBaseUrl = Platform.OS === 'ios'
+  ? 'http://localhost:5000/api/v1/'
+  : 'http://10.0.2.2:5000/api/v1/'
 
 export default {
   apiKey: secrets.apiKey,
-  // baseUrl: 'http://localhost:5000/api/v1/', // iOS,
-  baseUrl: 'http://10.0.2.2:5000/api/v1/', // AVD,
-  // baseUrl: 'http://192.168.56.1:5000/api/v1/' // Genymotion,
+  baseUrl: localBaseUrl,
   // baseUrl: 'http://www.jumu-nordost.eu/api/v1/' // Production
 }
