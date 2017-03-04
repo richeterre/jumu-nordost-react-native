@@ -4,9 +4,12 @@ import type { State } from '../redux/modules'
 import type { Contest } from '../redux/modules/contests'
 
 import React, { Component } from 'react'
+import { Platform, StyleSheet } from 'react-native'
 import { StackNavigator, TabNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 
+import listIcon from '../../images/icon-list.png'
+import IconButton from '../components/IconButton'
 import PerformanceScreen from '../components/PerformanceScreen'
 import colors from '../constants/colors'
 import PerformanceListScreen from './PerformanceListScreen'
@@ -32,7 +35,7 @@ class HomeScreen extends Component {
   }
 
   render() {
-    const { contest } = this.props
+    const { contest, navigation: { goBack } } = this.props
     if (!contest) return null
 
     const navigationOptions = {
@@ -42,11 +45,21 @@ class HomeScreen extends Component {
       },
     }
 
+    const contestListButton = <IconButton
+      style={styles.contestListButton}
+      icon={listIcon}
+      onPress={() => goBack()}
+    />
+
     const TimetableTab = StackNavigator({
       PerformanceList: {
         screen: PerformanceListScreen,
         navigationOptions: {
           title: () => contest.name,
+          header: {
+            ...navigationOptions.header,
+            left: contestListButton,
+          },
         },
       },
       Performance: { screen: PerformanceScreen },
@@ -67,11 +80,35 @@ class HomeScreen extends Component {
       tabBarPosition: 'bottom',
       animationEnabled: false,
       swipeEnabled: false,
+      tabBarOptions: this.tabBarOptions(),
     })
 
     return <TabStack />
   }
+
+  tabBarOptions() {
+    if (Platform.OS === 'android') {
+      return {
+        style: styles.tabBarAndroid,
+        indicatorStyle: styles.tabBarIndicatorAndroid,
+      }
+    } else {
+      return undefined
+    }
+  }
 }
+
+const styles = StyleSheet.create({
+  contestListButton: {
+    marginLeft: 8,
+  },
+  tabBarAndroid: {
+    backgroundColor: colors.primary,
+  },
+  tabBarIndicatorAndroid: {
+    backgroundColor: colors.white,
+  },
+})
 
 function mapStateToProps(state: State): PropsFromState {
   return {
