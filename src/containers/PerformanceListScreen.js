@@ -1,4 +1,9 @@
+// @flow
+import type { State } from '../redux/modules'
+import type { Contest } from '../redux/modules/contests'
+
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
   AppState,
   ListView,
@@ -8,16 +13,29 @@ import {
   View,
 } from 'react-native'
 
-import PerformanceCell from './PerformanceCell'
-import SegmentedControl from './SegmentedControl'
+import PerformanceCell from '../components/PerformanceCell'
+import SegmentedControl from '../components/SegmentedControl'
 import colors from '../constants/colors'
 import config from '../../config'
 import moment from 'moment-timezone'
 
+type PropsFromState = {|
+  contest: ?Contest,
+|}
+
+type Props = PropsFromState
+
+type ComponentState = {|
+  dateIndex: number,
+  dataSource: ListView.DataSource,
+  hasError: boolean,
+  loading: boolean,
+  venueIndex: number,
+|}
+
 class PerformanceListScreen extends Component {
-  static navigationOptions = {
-    title: ({ state }) => `${state.params.contest.name}`,
-  }
+  props: Props
+  state: ComponentState
 
   constructor(props) {
     super(props)
@@ -48,7 +66,9 @@ class PerformanceListScreen extends Component {
   }
 
   contest() {
-    return this.props.navigation.state.params.contest
+    const { contest } = this.props
+    if (!contest) throw new Error('Contest cannot be missing here')
+    return contest
   }
 
   fetchData() {
@@ -197,4 +217,10 @@ const styles = StyleSheet.create({
   },
 })
 
-export default PerformanceListScreen
+function mapStateToProps(state: State): PropsFromState {
+  return {
+    contest: state.contests.currentContest,
+  }
+}
+
+export default connect(mapStateToProps)(PerformanceListScreen)

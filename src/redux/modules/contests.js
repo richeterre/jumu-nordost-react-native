@@ -23,15 +23,17 @@ export type Contest = {|
 
 export type ContestsState = {
   contests: ?Array<Contest>,
+  currentContest: ?Contest,
   fetchContestsError: boolean,
   fetchingContests: boolean,
 }
 
 // Actions
 
-const FETCH_CONTESTS = 'FETCH_CONTESTS'
-const FETCH_CONTESTS_SUCCESS = 'FETCH_CONTESTS_SUCCESS'
-const FETCH_CONTESTS_FAILURE = 'FETCH_CONTESTS_FAILURE'
+const FETCH_CONTESTS = 'contests/FETCH_CONTESTS'
+const FETCH_CONTESTS_SUCCESS = 'contests/FETCH_CONTESTS_SUCCESS'
+const FETCH_CONTESTS_FAILURE = 'contests/FETCH_CONTESTS_FAILURE'
+const SELECT_CONTEST = 'contests/SELECT_CONTEST'
 
 export function fetchContests(): Action {
   return {
@@ -53,6 +55,14 @@ function fetchContestsFailure(error: Error): Action {
   }
 }
 
+export function selectContest(contest: Contest): Action {
+  console.log('Selected contest:', contest)
+  return {
+    type: SELECT_CONTEST,
+    contest,
+  }
+}
+
 // Epics
 
 export const fetchContestsEpic: Epic = action$ =>
@@ -70,6 +80,7 @@ export const fetchContestsEpic: Epic = action$ =>
 
 const initialState = {
   contests: null,
+  currentContest: null,
   fetchContestsError: false,
   fetchingContests: false,
 }
@@ -94,6 +105,11 @@ export default function contestsReducer(state: ContestsState = initialState, act
         contests: null,
         fetchContestsError: true,
         fetchingContests: false,
+      }
+    case SELECT_CONTEST:
+      return {
+        ...state,
+        currentContest: action.contest,
       }
     default:
       return state

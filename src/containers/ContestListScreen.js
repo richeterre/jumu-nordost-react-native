@@ -16,7 +16,7 @@ import {
 
 import ContestCell from '../components/ContestCell'
 import colors from '../constants/colors'
-import { fetchContests } from '../redux/modules/contests'
+import { fetchContests, selectContest } from '../redux/modules/contests'
 
 type PropsFromParent = {|
   navigation: NavigationScreenProp,
@@ -30,6 +30,7 @@ type PropsFromState = {|
 
 type PropsFromDispatch = {|
   fetchContests: () => any,
+  selectContest: (contest: Contest) => any,
 |}
 
 type Props = PropsFromParent & PropsFromState & PropsFromDispatch
@@ -78,16 +79,17 @@ class ContestListScreen extends Component {
     }
   }
 
-  selectContest(contest) {
-    const { navigate } = this.props.navigation
-    navigate('PerformanceList', { contest: contest })
+  handleRowSelect(contest) {
+    const { navigation: { navigate }, selectContest } = this.props
+    selectContest(contest)
+    navigate('Contest')
   }
 
   renderRow(contest) {
     return (
       <ContestCell
         key={contest.id}
-        onSelect={() => this.selectContest(contest)}
+        onSelect={() => this.handleRowSelect(contest)}
         contest={contest}
       />
     )
@@ -189,6 +191,7 @@ function mapStateToProps(state: State): PropsFromState {
 
 const mapDispatchToProps: PropsFromDispatch = {
   fetchContests,
+  selectContest,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContestListScreen)
