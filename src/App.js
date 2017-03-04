@@ -7,10 +7,10 @@ import { AppRegistry, StyleSheet } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { Provider } from 'react-redux'
 
-import ContestListScreen from './components/ContestListScreen'
 import PerformanceListScreen from './components/PerformanceListScreen'
 import PerformanceScreen from './components/PerformanceScreen'
 import colors from './constants/colors'
+import ContestListScreen from './containers/ContestListScreen'
 import store from './redux/store'
 
 moment.updateLocale('de', deLocale)
