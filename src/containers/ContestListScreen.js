@@ -62,9 +62,8 @@ class ContestListScreen extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { contests } = nextProps
-    contests && this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(contests),
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(nextProps.contests || []),
     })
   }
 
@@ -96,55 +95,53 @@ class ContestListScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.welcomeView}>
-          <Text style={styles.welcomeText}>
-            Willkommen! Bitte wähle einen Wettbewerb:
-          </Text>
-        </View>
-        <View style={styles.contentArea}>
-          {this.renderContent()}
-        </View>
+        <Text style={styles.welcomeText}>
+          {`Willkommen!\nBitte wähle einen Wettbewerb:`}
+        </Text>
+        {this.renderContent()}
       </View>
     )
   }
 
   renderContent() {
-    const { contests, fetchContestsError } = this.props
+    const { fetchContests, fetchingContests } = this.props
+
+    const statusText = this.statusText()
+
+    return (
+      <View style={styles.content}>
+        <View style={styles.statusContainer}>
+          {statusText && <Text style={styles.statusText}>{statusText}</Text>}
+        </View>
+        <ListView
+          style={styles.listView}
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow.bind(this)}
+          refreshControl={
+            <RefreshControl
+              refreshing={fetchingContests}
+              onRefresh={() => fetchContests()}
+            />
+          }
+          enableEmptySections={true}
+        />
+      </View>
+    )
+  }
+
+  statusText(): ?string {
+    const { contests, fetchContestsError, fetchingContests } = this.props
 
     if (fetchContestsError) {
-      return this.renderMessage('Die Wettbewerbe konnten leider nicht geladen werden.')
-    } else if (contests === null) {
-      return this.renderMessage('Einen Moment, bitte…')
+      return [
+        'Die Wettbewerbe konnten leider nicht geladen werden. 😕',
+        'Prüfe bitte auch, ob du die neueste Version der App verwendest!',
+      ].join('\n')
+    } else if (!contests && fetchingContests) {
+      return 'Einen Moment, bitte…'
     } else {
-      return this.renderContestList()
+      return null
     }
-  }
-
-  renderMessage(messageText: string) {
-    return (
-      <Text style={styles.messageText}>
-        {messageText}
-      </Text>
-    )
-  }
-
-  renderContestList() {
-    const { contests, fetchContests, fetchingContests } = this.props
-    const refreshControlVisible = fetchingContests && !!contests
-
-    return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow.bind(this)}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshControlVisible}
-            onRefresh={() => fetchContests()}
-          />
-        }
-        enableEmptySections={true}
-      />
-    )
   }
 }
 
@@ -153,20 +150,31 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     flex: 1,
   },
-  welcomeView: {
-    justifyContent: 'center',
-    padding: 20,
-  },
   welcomeText: {
+    color: colors.lightGray,
     fontStyle: 'italic',
+    padding: 16,
+    textAlign: 'center',
   },
-  contentArea: {
+  content: {
     flex: 1,
   },
-  messageText: {
-    marginTop: 100,
-    textAlign: 'center',
+  statusContainer: {
+    alignItems: 'center',
+    bottom: 0,
+    justifyContent: 'center',
+    left: 0,
+    right: 0,
+    top: 0,
+    position: 'absolute',
+  },
+  statusText: {
+    color: colors.lightGray,
+    fontSize: 16,
     fontStyle: 'italic',
+    marginLeft: 16,
+    marginRight: 16,
+    textAlign: 'center',
   },
 })
 

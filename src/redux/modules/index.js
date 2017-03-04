@@ -95,6 +95,7 @@ export function rootReducer(state: State = initialState, action: Action): State 
     case FETCH_CONTESTS_FAILURE:
       return {
         ...state,
+        contests: null,
         fetchContestsError: true,
         fetchingContests: false,
       }
