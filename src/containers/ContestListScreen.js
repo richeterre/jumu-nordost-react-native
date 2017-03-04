@@ -1,6 +1,7 @@
 // @flow
 import type { NavigationScreenProp } from 'react-navigation'
-import type { Contest, State } from '../redux/modules'
+import type { State } from '../redux/modules'
+import type { Contest } from '../redux/modules/contests'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
@@ -15,7 +16,7 @@ import {
 
 import ContestCell from '../components/ContestCell'
 import colors from '../constants/colors'
-import { fetchContests } from '../redux/modules'
+import { fetchContests } from '../redux/modules/contests'
 
 type PropsFromParent = {|
   navigation: NavigationScreenProp,
@@ -180,9 +181,9 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state: State): PropsFromState {
   return {
-    contests: state.contests,
-    fetchContestsError: state.fetchContestsError,
-    fetchingContests: state.fetchingContests,
+    contests: state.contests.contests,
+    fetchContestsError: state.contests.fetchContestsError,
+    fetchingContests: state.contests.fetchingContests,
   }
 }
 
