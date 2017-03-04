@@ -42,6 +42,9 @@ const AppNavigator = StackNavigator({
       style: { backgroundColor: colors.primary },
       tintColor: colors.white,
     },
+    cardStack: {
+      gesturesEnabled: false,
+    },
   },
 })
 
