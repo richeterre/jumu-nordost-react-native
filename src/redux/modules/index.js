@@ -3,13 +3,12 @@ import type { Action } from 'redux'
 
 import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs/Observable'
-import { ajax } from 'rxjs/observable/dom/ajax'
 import 'rxjs/add/observable/of'
 import 'rxjs/add/operator/catch'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/switchMap'
 
-import config from '../../../config'
+import ApiService from '../../services/ApiService'
 
 // Types
 
@@ -59,11 +58,11 @@ function fetchContestsFailure(error: Error): Action {
 const fetchContestsEpic = action$ =>
   action$.ofType(FETCH_CONTESTS)
     .switchMap(action =>
-      ajax({
-        url: `${config.baseUrl}/contests?current_only=1&timetables_public=1`,
-        headers: { 'X-Api-Key': config.apiKey },
+      ApiService.get$('/contests', {
+        current_only: 1,
+        timetables_public: 1,
       })
-        .map(({ response }) => fetchContestsSuccess(response))
+        .map((contests) => fetchContestsSuccess(contests))
         .catch(error => Observable.of(fetchContestsFailure(error)))
     )
 
