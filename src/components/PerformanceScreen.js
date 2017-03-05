@@ -13,6 +13,7 @@ import {
 
 import Separator from '../components/Separator'
 import colors from '../constants/colors'
+import fonts from '../constants/fonts'
 
 type Props = {|
   navigation: NavigationScreenProp,
@@ -43,7 +44,10 @@ class PerformanceScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          alwaysBounceVertical={false}
+        >
           <View style={styles.generalInfo}>
             <Text style={styles.categoryName}>{performance.categoryName}</Text>
             <Text style={styles.ageGroup}>Altersgruppe {performance.ageGroup}</Text>
@@ -116,34 +120,39 @@ const styles = StyleSheet.create({
   },
   categoryName: {
     color: colors.gray,
-    fontSize: 17,
-    fontWeight: 'bold',
+    fontFamily: fonts.bold.normal,
+    fontSize: 19,
   },
   ageGroup: {
     color: colors.gray,
-    fontSize: 17,
-    marginBottom: 10,
+    fontFamily: fonts.regular.normal,
+    fontSize: 19,
     marginBottom: 16,
   },
   stageTime: {
     color: colors.gray,
-    fontSize: 15,
+    fontFamily: fonts.regular.normal,
+    fontSize: 16,
   },
   venueName: {
     color: colors.gray,
-    fontSize: 15,
+    fontFamily: fonts.regular.normal,
+    fontSize: 16,
   },
   mainAppearanceText: {
     color: colors.gray,
-    fontSize: 15,
-    fontWeight: 'bold',
+    fontFamily: fonts.bold.normal,
+    fontSize: 16,
   },
   accompanistText: {
     color: colors.lightGray,
-    fontSize: 15,
+    fontFamily: fonts.regular.normal,
+    fontSize: 16,
   },
   predecessorInfo: {
     color: colors.gray,
+    fontFamily: fonts.regular.normal,
+    fontSize: 16,
     marginTop: 5,
   },
   piece: {
@@ -151,12 +160,13 @@ const styles = StyleSheet.create({
   },
   composer: {
     color: colors.gray,
-    fontWeight: 'bold',
-    fontSize: 15,
+    fontFamily: fonts.bold.normal,
+    fontSize: 16,
   },
   pieceTitle: {
     color: colors.gray,
-    fontSize: 15,
+    fontFamily: fonts.regular.normal,
+    fontSize: 16,
   },
 })
 

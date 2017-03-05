@@ -14,6 +14,7 @@ import {
 } from 'react-native'
 
 import colors from '../constants/colors'
+import fonts from '../constants/fonts'
 
 type Props = {|
   contest: Contest,
@@ -35,19 +36,15 @@ class ContestCell extends Component {
         <TouchableElement
           onPress={onSelect}
         >
-          <View style={styles.row}>
-            <View style={styles.container}>
-              <View style={styles.rightContainer}>
-                <Text style={styles.name}>
-                  {`${emojiFlag(contest.hostCountry)} ${contest.name}`}
-                </Text>
-                <Text style={styles.dateInfo}>
-                  {moment(contest.startDate).tz(contest.timeZone).format('LL')}
-                  –
-                  {moment(contest.endDate).tz(contest.timeZone).format('LL')}
-                </Text>
-              </View>
-            </View>
+          <View style={styles.container}>
+            <Text style={styles.name} numberOfLines={1}>
+              {`${emojiFlag(contest.hostCountry)} ${contest.name}`}
+            </Text>
+            <Text style={styles.dateInfo} numberOfLines={1}>
+              {moment(contest.startDate).tz(contest.timeZone).format('LL')}
+              –
+              {moment(contest.endDate).tz(contest.timeZone).format('LL')}
+            </Text>
           </View>
         </TouchableElement>
       </View>
@@ -57,27 +54,22 @@ class ContestCell extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
     backgroundColor: colors.white,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingTop: 10,
-    paddingLeft: 20,
     paddingBottom: 10,
-  },
-  rightContainer: {
-    flex: 1,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 10,
   },
   name: {
     color: colors.gray,
-    fontSize: 20,
+    fontFamily: fonts.regular.normal,
+    fontSize: 19,
     marginBottom: 5,
-    textAlign: 'left',
   },
   dateInfo: {
-    textAlign: 'left',
     color: colors.gray,
+    fontFamily: fonts.regular.normal,
+    fontSize: 14,
   },
 })
 

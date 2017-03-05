@@ -11,10 +11,10 @@ import {
   ListView,
   RefreshControl,
   StyleSheet,
-  Text,
   View,
 } from 'react-native'
 
+import ListStatusView from '../components/ListStatusView'
 import PerformanceCell from '../components/PerformanceCell'
 // $FlowFixMe: Platform suffix support (https://github.com/facebook/flow/issues/945)
 import SegmentedControl from '../components/SegmentedControl'
@@ -168,7 +168,8 @@ class PerformanceListScreen extends Component {
     return (
       <View style={styles.content}>
         <View style={styles.statusContainer}>
-          {statusText && <Text style={styles.statusText}>{statusText}</Text>}
+          {statusText &&
+            <ListStatusView style={styles.statusView} text={statusText} />}
         </View>
         <ListView
           style={styles.listView}
@@ -193,7 +194,7 @@ class PerformanceListScreen extends Component {
       return [
         'Der Vorspielplan konnte leider nicht geladen werden. 😕',
         'Prüfe bitte auch, ob du die neueste Version der App verwendest!',
-      ].join('\n')
+      ].join('\n\n')
     } else if (!performances && fetchingPerformances) {
       return 'Einen Moment, bitte…'
     } else if (performances && performances.length === 0) {
@@ -220,19 +221,13 @@ const styles = StyleSheet.create({
   statusContainer: {
     alignItems: 'center',
     bottom: 0,
-    justifyContent: 'center',
     left: 0,
     right: 0,
     top: 0,
     position: 'absolute',
   },
-  statusText: {
-    color: colors.lightGray,
-    fontSize: 16,
-    fontStyle: 'italic',
-    marginLeft: 16,
-    marginRight: 16,
-    textAlign: 'center',
+  statusView: {
+    marginTop: 96,
   },
 })
 

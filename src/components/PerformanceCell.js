@@ -14,6 +14,7 @@ import {
 } from 'react-native'
 
 import colors from '../constants/colors'
+import fonts from '../constants/fonts'
 
 type Props = {|
   onSelect: () => any,
@@ -90,24 +91,27 @@ const styles = StyleSheet.create({
   },
   categoryInfo: {
     color: colors.gray,
-    fontSize: 15,
-    fontWeight: 'bold',
+    fontFamily: fonts.bold.normal,
+    fontSize: 16,
     marginBottom: 8,
     textAlign: 'left',
   },
   time: {
     color: colors.gray,
-    fontSize: 15,
+    fontFamily: fonts.bold.normal,
+    fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'left',
   },
   appearanceText: {
     color: colors.gray,
-    fontSize: 15,
+    fontFamily: fonts.regular.normal,
+    fontSize: 16,
   },
   predecessorInfo: {
     color: colors.gray,
-    fontSize: 15,
+    fontFamily: fonts.regular.normal,
+    fontSize: 16,
     marginTop: 5,
   },
 })

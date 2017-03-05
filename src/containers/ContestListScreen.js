@@ -15,7 +15,9 @@ import {
 } from 'react-native'
 
 import ContestCell from '../components/ContestCell'
+import ListStatusView from '../components/ListStatusView'
 import colors from '../constants/colors'
+import fonts from '../constants/fonts'
 import { fetchContests, selectContest } from '../redux/modules/contests'
 
 type PropsFromParent = {|
@@ -114,7 +116,8 @@ class ContestListScreen extends Component {
     return (
       <View style={styles.content}>
         <View style={styles.statusContainer}>
-          {statusText && <Text style={styles.statusText}>{statusText}</Text>}
+          {statusText &&
+            <ListStatusView style={styles.statusView} text={statusText} />}
         </View>
         <ListView
           style={styles.listView}
@@ -139,7 +142,7 @@ class ContestListScreen extends Component {
       return [
         'Die Wettbewerbe konnten leider nicht geladen werden. 😕',
         'Prüfe bitte auch, ob du die neueste Version der App verwendest!',
-      ].join('\n')
+      ].join('\n\n')
     } else if (!contests && fetchingContests) {
       return 'Einen Moment, bitte…'
     } else {
@@ -155,7 +158,8 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     color: colors.lightGray,
-    fontStyle: 'italic',
+    fontFamily: fonts.regular.italic,
+    fontSize: 16,
     padding: 16,
     textAlign: 'center',
   },
@@ -163,21 +167,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   statusContainer: {
-    alignItems: 'center',
     bottom: 0,
-    justifyContent: 'center',
     left: 0,
     right: 0,
     top: 0,
     position: 'absolute',
   },
-  statusText: {
-    color: colors.lightGray,
-    fontSize: 16,
-    fontStyle: 'italic',
-    marginLeft: 16,
-    marginRight: 16,
-    textAlign: 'center',
+  statusView: {
+    marginTop: 96,
   },
 })
 
