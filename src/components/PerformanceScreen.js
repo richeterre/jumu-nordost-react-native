@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native'
 
+import Separator from '../components/Separator'
 import colors from '../constants/colors'
 
 type Props = {|
@@ -50,9 +51,9 @@ class PerformanceScreen extends Component {
               {moment(performance.stageTime).tz(timeZone).format('LLLL')}
             </Text>
             <Text style={styles.venueName}>{venue.name}</Text>
-
           </View>
-          <View style={styles.appearancesInfo}>
+          <Separator style={styles.separator} />
+          <View>
             {mainAppearances.map((appearance, i) =>
               <Text key={'mainAppearance' + (i + 1)} style={styles.mainAppearanceText}>
                 {appearance.participantName}, {appearance.instrumentName}
@@ -71,6 +72,7 @@ class PerformanceScreen extends Component {
               <Text style={styles.predecessorInfo}>{predecessorInfo}</Text>
             }
           </View>
+          <Separator style={styles.separator} />
           <View style={styles.piecesInfo}>
             {performance.pieces.map((piece, i) => {
               const composerDates = piece.composerBorn
@@ -103,9 +105,14 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingBottom: 10,
   },
+  separator: {
+    alignSelf: 'center',
+    marginBottom: 16,
+    marginTop: 16,
+    width: '70%',
+  },
   generalInfo: {
-    paddingTop: 10,
-    paddingBottom: 20,
+    marginTop: 8,
   },
   categoryName: {
     color: colors.gray,
@@ -116,6 +123,7 @@ const styles = StyleSheet.create({
     color: colors.gray,
     fontSize: 17,
     marginBottom: 10,
+    marginBottom: 16,
   },
   stageTime: {
     color: colors.gray,
@@ -124,9 +132,6 @@ const styles = StyleSheet.create({
   venueName: {
     color: colors.gray,
     fontSize: 15,
-  },
-  appearancesInfo: {
-    paddingBottom: 20,
   },
   mainAppearanceText: {
     color: colors.gray,
