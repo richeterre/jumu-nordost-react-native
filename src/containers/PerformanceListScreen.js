@@ -73,8 +73,8 @@ class PerformanceListScreen extends Component {
 
   fetchData() {
     const contest = this.contest()
-    const date = moment(contest.start_date).add(this.state.dateIndex, 'days')
-    const dateString = date.tz(contest.time_zone).format('YYYY-MM-DD')
+    const date = moment(contest.startDate).add(this.state.dateIndex, 'days')
+    const dateString = date.tz(contest.timeZone).format('YYYY-MM-DD')
     const venue = contest.venues[this.state.venueIndex]
 
     const query = '?venue_id=' + venue.id + '&date=' + dateString
@@ -109,7 +109,7 @@ class PerformanceListScreen extends Component {
 
     const contest = this.contest()
     const venue = contest.venues[this.state.venueIndex]
-    const timeZone = contest.time_zone
+    const timeZone = contest.timeZone
 
     navigate('Performance', { performance, venue, timeZone })
   }
@@ -122,15 +122,15 @@ class PerformanceListScreen extends Component {
         key={performance.id}
         onSelect={() => this.selectPerformance(performance)}
         performance={performance}
-        timeZone={contest.time_zone}
+        timeZone={contest.timeZone}
       />
     )
   }
 
   render() {
     const contest = this.contest()
-    const endDate = moment(contest.end_date)
-    var date = moment(contest.start_date)
+    const endDate = moment(contest.endDate)
+    var date = moment(contest.startDate)
     var dates = [date]
 
     while (date.isBefore(endDate)) {
@@ -150,7 +150,7 @@ class PerformanceListScreen extends Component {
       <View style={styles.container}>
         <View style={styles.filterControls}>
           <SegmentedControl
-            values={dates.map(date => date.tz(contest.time_zone).format(dayFormat))}
+            values={dates.map(date => date.tz(contest.timeZone).format(dayFormat))}
             selectedIndex={this.state.dateIndex}
             onChange={index => {
               this.setState({ dateIndex: index })

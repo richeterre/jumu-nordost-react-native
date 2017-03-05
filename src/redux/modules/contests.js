@@ -19,6 +19,7 @@ export type Contest = {|
   timeZone: string,
   startDate: string,
   endDate: string,
+  venues: Array<Venue>,
 |}
 
 export type ContestsState = {
@@ -27,6 +28,11 @@ export type ContestsState = {
   fetchContestsError: boolean,
   fetchingContests: boolean,
 }
+
+type Venue = {|
+  id: string,
+  name: string,
+|}
 
 // Actions
 
@@ -56,7 +62,6 @@ function fetchContestsFailure(error: Error): Action {
 }
 
 export function selectContest(contest: Contest): Action {
-  console.log('Selected contest:', contest)
   return {
     type: SELECT_CONTEST,
     contest,
@@ -72,9 +77,25 @@ export const fetchContestsEpic: Epic = action$ =>
         current_only: 1,
         timetables_public: 1,
       })
-        .map((contests) => fetchContestsSuccess(contests))
+        .map((contestsJSON) => fetchContestsSuccess(parseContests(contestsJSON)))
         .catch(error => Observable.of(fetchContestsFailure(error)))
     )
+
+// Helpers
+
+function parseContests(contestsJSON: Array<Object>): Array<Contest> {
+  return contestsJSON.map(json => {
+    return {
+      id: json.id,
+      name: json.name,
+      hostCountry: json.host_country,
+      timeZone: json.time_zone,
+      startDate: json.start_date,
+      endDate: json.end_date,
+      venues: json.venues,
+    }
+  })
+}
 
 // Reducer
 

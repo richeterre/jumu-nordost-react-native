@@ -31,9 +31,9 @@ class ContestCell extends Component {
               <View style={styles.rightContainer}>
                 <Text style={styles.name}>{contest.name}</Text>
                 <Text style={styles.dateInfo}>
-                  {moment(contest.start_date).tz(contest.time_zone).format('LL')}
+                  {moment(contest.startDate).tz(contest.timeZone).format('LL')}
                   –
-                  {moment(contest.end_date).tz(contest.time_zone).format('LL')}
+                  {moment(contest.endDate).tz(contest.timeZone).format('LL')}
                 </Text>
               </View>
             </View>
