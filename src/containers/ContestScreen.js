@@ -12,6 +12,7 @@ import listIcon from '../../images/icon-list.png'
 import IconButton from '../components/IconButton'
 import PerformanceScreen from '../components/PerformanceScreen'
 import colors from '../constants/colors'
+import ContestCategoryListScreen from './ContestCategoryListScreen'
 import PerformanceListScreen from './PerformanceListScreen'
 
 type PropsFromParent = {|
@@ -68,12 +69,35 @@ class HomeScreen extends Component {
       navigationOptions,
     })
 
+    const ResultsTab = StackNavigator({
+      ContestCategoryList: {
+        screen: ContestCategoryListScreen,
+        navigationOptions: {
+          title: () => contest.name,
+          header: {
+            ...navigationOptions.header,
+            left: contestListButton,
+          },
+        },
+      },
+    }, {
+      navigationOptions,
+    })
+
     const TabStack = TabNavigator({
       TimetableTab: {
         screen: TimetableTab,
         navigationOptions: {
           tabBar: () => ({
             label: 'Vorspielplan',
+          }),
+        },
+      },
+      ResultsTab: {
+        screen: ResultsTab,
+        navigationOptions: {
+          tabBar: () => ({
+            label: 'Ergebnisse',
           }),
         },
       },

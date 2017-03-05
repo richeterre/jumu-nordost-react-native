@@ -19,7 +19,13 @@ export type Contest = {|
   timeZone: string,
   startDate: string,
   endDate: string,
+  contestCategories: Array<ContestCategory>,
   venues: Array<Venue>,
+|}
+
+export type ContestCategory = {|
+  id: string,
+  name: string,
 |}
 
 export type ContestsState = {
@@ -92,6 +98,7 @@ function parseContests(contestsJSON: Array<Object>): Array<Contest> {
       timeZone: json.time_zone,
       startDate: json.start_date,
       endDate: json.end_date,
+      contestCategories: json.contest_categories,
       venues: json.venues,
     }
   })
