@@ -1,3 +1,6 @@
+// @flow
+import type { Event } from 'react-native'
+
 import React, { Component } from 'react'
 import {
   SegmentedControlIOS,
@@ -6,16 +9,26 @@ import {
 
 import colors from '../constants/colors'
 
+type Props = {|
+  onChange: (event: Event) => any,
+  selectedIndex: number,
+  values: Array<string>,
+|}
+
 class SegmentedControl extends Component {
+  props: Props
+
   render() {
+    const { onChange, selectedIndex, values } = this.props
+
     return (
       <SegmentedControlIOS
         style={styles.segmentedControl}
-        values={this.props.values}
-        selectedIndex={this.props.selectedIndex}
+        values={values}
+        selectedIndex={selectedIndex}
         onChange={event => {
           const index = event.nativeEvent.selectedSegmentIndex
-          this.props.onChange(index)
+          onChange(index)
         }}
         tintColor={colors.primary}
       />

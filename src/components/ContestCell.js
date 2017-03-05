@@ -1,4 +1,5 @@
 // @flow
+import type { Contest } from '../redux/modules/contests'
 
 import moment from 'moment-timezone'
 import React, { Component } from 'react'
@@ -13,9 +14,16 @@ import {
 
 import colors from '../constants/colors'
 
+type Props = {|
+  contest: Contest,
+  onSelect: () => any,
+|}
+
 class ContestCell extends Component {
+  props: Props
+
   render() {
-    const contest = this.props.contest
+    const { contest, onSelect } = this.props
 
     const TouchableElement = (Platform.OS === 'android')
       ? TouchableNativeFeedback
@@ -24,7 +32,7 @@ class ContestCell extends Component {
     return (
       <View>
         <TouchableElement
-          onPress={this.props.onSelect}
+          onPress={onSelect}
         >
           <View style={styles.row}>
             <View style={styles.container}>
