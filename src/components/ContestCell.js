@@ -1,6 +1,7 @@
 // @flow
 import type { Contest } from '../redux/modules/contests'
 
+import emojiFlag from 'emoji-flag'
 import moment from 'moment-timezone'
 import React, { Component } from 'react'
 import {
@@ -37,7 +38,9 @@ class ContestCell extends Component {
           <View style={styles.row}>
             <View style={styles.container}>
               <View style={styles.rightContainer}>
-                <Text style={styles.name}>{contest.name}</Text>
+                <Text style={styles.name}>
+                  {`${emojiFlag(contest.hostCountry)} ${contest.name}`}
+                </Text>
                 <Text style={styles.dateInfo}>
                   {moment(contest.startDate).tz(contest.timeZone).format('LL')}
                   –
