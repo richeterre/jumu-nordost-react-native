@@ -39,6 +39,10 @@ class PerformanceListScreen extends Component {
   props: Props
   state: ComponentState
 
+  static navigationOptions = {
+    title: ({ state }) => state.params.contestCategory.name,
+  }
+
   constructor(props) {
     super(props)
     this.state = {
