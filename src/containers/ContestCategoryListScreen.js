@@ -2,7 +2,6 @@
 import type { NavigationScreenProp } from 'react-navigation'
 import type { State } from '../redux/modules'
 import type { Contest, ContestCategory } from '../redux/modules/contests'
-import type { Performance } from '../redux/modules/performances'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
@@ -40,8 +39,8 @@ class ContestCategoryListScreen extends Component {
   }
 
   selectContestCategory(contestCategory: ContestCategory) {
-    // const { navigate } = this.props.navigation
-    // navigate('')
+    const { navigate } = this.props.navigation
+    navigate('ResultList', { contestCategory })
   }
 
   renderRow(contestCategory: ContestCategory) {

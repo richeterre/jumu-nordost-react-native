@@ -19,7 +19,7 @@ import PerformanceCell from '../components/PerformanceCell'
 // $FlowFixMe: Platform suffix support (https://github.com/facebook/flow/issues/945)
 import SegmentedControl from '../components/SegmentedControl'
 import colors from '../constants/colors'
-import { fetchPerformances } from '../redux/modules/performances'
+import { fetchTimetablePerformances } from '../redux/modules/performances'
 import moment from 'moment-timezone'
 
 type PropsFromParent = {|
@@ -234,14 +234,14 @@ const styles = StyleSheet.create({
 function mapStateToProps(state: State): PropsFromState {
   return {
     contest: state.contests.currentContest,
-    fetchPerformancesError: state.performances.fetchPerformancesError,
-    fetchingPerformances: state.performances.fetchingPerformances,
-    performances: state.performances.performances,
+    fetchPerformancesError: state.performances.fetchTimetablePerformancesError,
+    fetchingPerformances: state.performances.fetchingTimetablePerformances,
+    performances: state.performances.timetablePerformances,
   }
 }
 
 const mapDispatchToProps: PropsFromDispatch = {
-  fetchPerformances,
+  fetchPerformances: fetchTimetablePerformances,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PerformanceListScreen)

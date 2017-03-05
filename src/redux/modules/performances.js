@@ -1,7 +1,7 @@
 // @flow
 import type { Action } from 'redux'
 import type { Epic } from 'redux-observable'
-import type { Contest, Venue } from './contests'
+import type { Contest, ContestCategory, Venue } from './contests'
 
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/observable/of'
@@ -18,6 +18,7 @@ type Appearance = {|
   participantRole: string,
   instrumentName: string,
   ageGroup: string,
+  result?: Result,
 |}
 
 export type Performance = {|
@@ -32,9 +33,12 @@ export type Performance = {|
 |}
 
 export type PerformancesState = {
-  fetchPerformancesError: boolean,
-  fetchingPerformances: boolean,
-  performances: ?Array<Performance>,
+  fetchTimetablePerformancesError: boolean,
+  fetchingTimetablePerformances: boolean,
+  timetablePerformances: ?Array<Performance>,
+  fetchResultPerformancesError: boolean,
+  fetchingResultPerformances: boolean,
+  resultPerformances: ?Array<Performance>,
 }
 
 type Piece = {|
@@ -44,48 +48,93 @@ type Piece = {|
   composerDied: string,
 |}
 
+type Result = {|
+  points: number,
+  prize?: string,
+  predicate?: string,
+|}
+
 // Actions
 
-const FETCH_PERFORMANCES = 'performances/FETCH_PERFORMANCES'
-const FETCH_PERFORMANCES_SUCCESS = 'performances/FETCH_PERFORMANCES_SUCCESS'
-const FETCH_PERFORMANCES_FAILURE = 'performances/FETCH_PERFORMANCES_FAILURE'
+const FETCH_TIMETABLE_PERFORMANCES = 'performances/FETCH_TIMETABLE_PERFORMANCES'
+const FETCH_TIMETABLE_PERFORMANCES_SUCCESS = 'performances/FETCH_TIMETABLE_PERFORMANCES_SUCCESS'
+const FETCH_TIMETABLE_PERFORMANCES_FAILURE = 'performances/FETCH_TIMETABLE_PERFORMANCES_FAILURE'
 
-export function fetchPerformances(contest: Contest, venue: Venue, date: string): Action {
+const FETCH_RESULT_PERFORMANCES = 'performances/FETCH_RESULT_PERFORMANCES'
+const FETCH_RESULT_PERFORMANCES_SUCCESS = 'performances/FETCH_RESULT_PERFORMANCES_SUCCESS'
+const FETCH_RESULT_PERFORMANCES_FAILURE = 'performances/FETCH_RESULT_PERFORMANCES_FAILURE'
+
+export function fetchTimetablePerformances(contest: Contest, venue: Venue, date: string): Action {
   return {
-    type: FETCH_PERFORMANCES,
+    type: FETCH_TIMETABLE_PERFORMANCES,
     contest,
     venue,
     date,
   }
 }
 
-function fetchPerformancesSuccess(performances: Array<Performance>): Action {
+function fetchTimetablePerformancesSuccess(performances: Array<Performance>): Action {
   return {
-    type: FETCH_PERFORMANCES_SUCCESS,
+    type: FETCH_TIMETABLE_PERFORMANCES_SUCCESS,
     performances,
   }
 }
 
-function fetchPerformancesFailure(error: Error): Action {
+function fetchTimetablePerformancesFailure(error: Error): Action {
   return {
-    type: FETCH_PERFORMANCES_FAILURE,
+    type: FETCH_TIMETABLE_PERFORMANCES_FAILURE,
+    error,
+  }
+}
+
+export function fetchResultPerformances(contest: Contest, contestCategory: ContestCategory): Action {
+  return {
+    type: FETCH_RESULT_PERFORMANCES,
+    contest,
+    contestCategory,
+  }
+}
+
+function fetchResultPerformancesSuccess(performances: Array<Performance>): Action {
+  return {
+    type: FETCH_RESULT_PERFORMANCES_SUCCESS,
+    performances,
+  }
+}
+
+function fetchResultPerformancesFailure(error: Error): Action {
+  return {
+    type: FETCH_RESULT_PERFORMANCES_FAILURE,
     error,
   }
 }
 
 // Epics
 
-export const fetchPerformancesEpic: Epic = action$ =>
-  action$.ofType(FETCH_PERFORMANCES)
+export const fetchTimetablePerformancesEpic: Epic = action$ =>
+  action$.ofType(FETCH_TIMETABLE_PERFORMANCES)
     .switchMap(action =>
       ApiService.get$(`/contests/${action.contest.id}/performances`, {
         venue_id: action.venue.id,
         date: action.date,
       })
-        .map((performancesJSON) => fetchPerformancesSuccess(
+        .map((performancesJSON) => fetchTimetablePerformancesSuccess(
           parsePerformances(performancesJSON))
         )
-        .catch(error => Observable.of(fetchPerformancesFailure(error)))
+        .catch(error => Observable.of(fetchTimetablePerformancesFailure(error)))
+    )
+
+export const fetchResultPerformancesEpic: Epic = action$ =>
+  action$.ofType(FETCH_RESULT_PERFORMANCES)
+    .switchMap(action =>
+      ApiService.get$(`/contests/${action.contest.id}/performances`, {
+        contest_category_id: action.contestCategory.id,
+        results_public: 1,
+      })
+        .map((performancesJSON) => fetchResultPerformancesSuccess(
+          parsePerformances(performancesJSON))
+        )
+        .catch(error => Observable.of(fetchResultPerformancesFailure(error)))
     )
 
 // Helpers
@@ -111,6 +160,7 @@ function parseAppearance(json: Object): Appearance {
     participantRole: json.participant_role,
     instrumentName: json.instrument_name,
     ageGroup: json.age_group,
+    result: json.result,
   }
 }
 
@@ -126,31 +176,53 @@ function parsePiece(json: Object): Piece {
 // Reducer
 
 const initialState = {
-  fetchPerformancesError: false,
-  fetchingPerformances: false,
-  performances: null,
+  fetchTimetablePerformancesError: false,
+  fetchingTimetablePerformances: false,
+  timetablePerformances: null,
+  fetchResultPerformancesError: false,
+  fetchingResultPerformances: false,
+  resultPerformances: null,
 }
 
 export default function contestsReducer(state: PerformancesState = initialState, action: Action): PerformancesState {
   switch (action.type) {
-    case FETCH_PERFORMANCES:
+    case FETCH_TIMETABLE_PERFORMANCES:
       return {
         ...state,
-        fetchingPerformances: true,
+        fetchingTimetablePerformances: true,
       }
-    case FETCH_PERFORMANCES_SUCCESS:
+    case FETCH_TIMETABLE_PERFORMANCES_SUCCESS:
       return {
         ...state,
-        performances: action.performances,
-        fetchPerformancesError: false,
-        fetchingPerformances: false,
+        timetablePerformances: action.performances,
+        fetchTimetablePerformancesError: false,
+        fetchingTimetablePerformances: false,
       }
-    case FETCH_PERFORMANCES_FAILURE:
+    case FETCH_TIMETABLE_PERFORMANCES_FAILURE:
       return {
         ...state,
-        performances: null,
-        fetchPerformancesError: true,
-        fetchingPerformances: false,
+        timetablePerformances: null,
+        fetchTimetablePerformancesError: true,
+        fetchingTimetablePerformances: false,
+      }
+    case FETCH_RESULT_PERFORMANCES:
+      return {
+        ...state,
+        fetchingResultPerformances: true,
+      }
+    case FETCH_RESULT_PERFORMANCES_SUCCESS:
+      return {
+        ...state,
+        resultPerformances: action.performances,
+        fetchResultPerformancesError: false,
+        fetchingResultPerformances: false,
+      }
+    case FETCH_RESULT_PERFORMANCES_FAILURE:
+      return {
+        ...state,
+        resultPerformances: null,
+        fetchResultPerformancesError: true,
+        fetchingResultPerformances: false,
       }
     default:
       return state

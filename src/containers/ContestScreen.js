@@ -14,6 +14,7 @@ import PerformanceScreen from '../components/PerformanceScreen'
 import colors from '../constants/colors'
 import ContestCategoryListScreen from './ContestCategoryListScreen'
 import PerformanceListScreen from './PerformanceListScreen'
+import ResultListScreen from './ResultListScreen'
 
 type PropsFromParent = {|
   navigation: NavigationScreenProp,
@@ -80,6 +81,7 @@ class HomeScreen extends Component {
           },
         },
       },
+      ResultList: { screen: ResultListScreen },
     }, {
       navigationOptions,
     })

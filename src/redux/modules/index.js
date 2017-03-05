@@ -6,7 +6,10 @@ import { combineReducers } from 'redux'
 import { combineEpics } from 'redux-observable'
 
 import contests, { fetchContestsEpic } from './contests'
-import performances, { fetchPerformancesEpic } from './performances'
+import performances, {
+  fetchTimetablePerformancesEpic,
+  fetchResultPerformancesEpic,
+} from './performances'
 
 // Types
 
@@ -17,7 +20,8 @@ export type State = {|
 
 export const rootEpic = combineEpics(
   fetchContestsEpic,
-  fetchPerformancesEpic
+  fetchTimetablePerformancesEpic,
+  fetchResultPerformancesEpic
 )
 
 export const rootReducer = combineReducers({

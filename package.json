@@ -7,11 +7,14 @@
     "lint": "node node_modules/.bin/eslint *.js src/"
   },
   "rnpm": {
-    "assets": ["./fonts"]
+    "assets": [
+      "./fonts"
+    ]
   },
   "dependencies": {
     "axios": "^0.15.3",
     "emoji-flag": "^1.1.0",
+    "lodash": "^4.17.4",
     "moment-timezone": "0.5.11",
     "punycode": "2.1.0",
     "react": "15.4.2",
