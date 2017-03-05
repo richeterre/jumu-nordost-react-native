@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import SegmentedView from 'react-native-segmented-view'
 
 import colors from '../constants/colors'
+import fonts from '../constants/fonts'
 
 type Props = {|
   onChange: () => any,
@@ -17,9 +18,15 @@ class SegmentedControl extends Component {
   render() {
     const { onChange, selectedIndex, values } = this.props
 
+    const titleStyle = {
+      color: colors.veryLightGray,
+      fontFamily: fonts.regular.normal,
+      fontSize: 14,
+    }
+
     const selectedTitleStyle = {
       color: colors.primary,
-      fontWeight: 'bold',
+      fontFamily: fonts.bold.normal,
     }
 
     return (
@@ -28,6 +35,7 @@ class SegmentedControl extends Component {
         index={selectedIndex}
         stretch
         onPress={onChange}
+        titleStyle={titleStyle}
         selectedTitleStyle={selectedTitleStyle}
       />
     )

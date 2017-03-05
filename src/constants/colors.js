@@ -3,6 +3,7 @@
 const colors = {}
 
 colors.white = '#FFFFFF'
+colors.veryLightGray = '#999999'
 colors.lightGray = '#666666'
 colors.gray = '#333333'
 

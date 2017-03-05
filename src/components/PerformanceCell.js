@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
     color: colors.gray,
     fontFamily: fonts.bold.normal,
     fontSize: 16,
-    fontWeight: 'bold',
     textAlign: 'left',
   },
   appearanceText: {
