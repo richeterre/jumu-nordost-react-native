@@ -1,3 +1,6 @@
+// @flow
+import type { NavigationScreenProp } from 'react-navigation'
+
 import emojiFlag from 'emoji-flag'
 import moment from 'moment-timezone'
 import React, { Component } from 'react'
@@ -10,9 +13,15 @@ import {
 
 import colors from '../constants/colors'
 
+type Props = {|
+  navigation: NavigationScreenProp,
+|}
+
 class PerformanceScreen extends Component {
+  props: Props
+
   static navigationOptions = {
-    title: ({ state }) => state.params.performance.category_name,
+    title: ({ state }) => state.params.performance.categoryName,
   }
 
   render() {
@@ -20,26 +29,25 @@ class PerformanceScreen extends Component {
     const { performance, timeZone, venue } = params
 
     const mainAppearances = performance.appearances
-      .filter(a => a.participant_role !== 'accompanist')
+      .filter(a => a.participantRole !== 'accompanist')
 
     const accompanists = performance.appearances
-      .filter(a => a.participant_role === 'accompanist')
+      .filter(a => a.participantRole === 'accompanist')
 
-    const predecessorHostCountry = performance.predecessor_host_country
-    const predecessorHostName = performance.predecessor_host_name
+    const { predecessorHostCountry, predecessorHostName } = performance
 
     const predecessorInfo = predecessorHostCountry && predecessorHostName
-      ? emojiFlag(performance.predecessor_host_country) + ' ' + performance.predecessor_host_name
+      ? emojiFlag(predecessorHostCountry) + ' ' + predecessorHostName
       : null
 
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.generalInfo}>
-            <Text style={styles.categoryName}>{performance.category_name}</Text>
-            <Text style={styles.ageGroup}>Altersgruppe {performance.age_group}</Text>
+            <Text style={styles.categoryName}>{performance.categoryName}</Text>
+            <Text style={styles.ageGroup}>Altersgruppe {performance.ageGroup}</Text>
             <Text style={styles.stageTime}>
-              {moment(performance.stage_time).tz(timeZone).format('LLLL')}
+              {moment(performance.stageTime).tz(timeZone).format('LLLL')}
             </Text>
             <Text style={styles.venueName}>{venue.name}</Text>
 
@@ -47,15 +55,15 @@ class PerformanceScreen extends Component {
           <View style={styles.appearancesInfo}>
             {mainAppearances.map((appearance, i) =>
               <Text key={'mainAppearance' + (i + 1)} style={styles.mainAppearanceText}>
-                {appearance.participant_name}, {appearance.instrument_name}
+                {appearance.participantName}, {appearance.instrumentName}
               </Text>
             )}
             {accompanists.map((appearance, i) => {
-              const ageGroupText = appearance.age_group !== performance.age_group
-                ? ' (AG ' + appearance.age_group + ')'
+              const ageGroupText = appearance.ageGroup !== performance.ageGroup
+                ? ' (AG ' + appearance.ageGroup + ')'
                 : ''
               return <Text key={'accompanist' + (i + 1)} style={styles.accompanistText}>
-                {appearance.participant_name}, {appearance.instrument_name}{ageGroupText}
+                {appearance.participantName}, {appearance.instrumentName}{ageGroupText}
                 </Text>
             }
             )}
@@ -65,12 +73,12 @@ class PerformanceScreen extends Component {
           </View>
           <View style={styles.piecesInfo}>
             {performance.pieces.map((piece, i) => {
-              const composerDates = piece.composer_born
-                ? ' (' + piece.composer_born + '–' + piece.composer_died + ')'
+              const composerDates = piece.composerBorn
+                ? ' (' + piece.composerBorn + '–' + piece.composerDied + ')'
                 : ''
               return <View key={'piece' + (i + 1)} style={styles.piece}>
                 <Text style={styles.composer}>
-                  {piece.composer_name}{composerDates}
+                  {piece.composerName}{composerDates}
                 </Text>
                 <Text style={styles.pieceTitle}>
                   {piece.title}

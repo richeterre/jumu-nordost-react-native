@@ -1,3 +1,6 @@
+// @flow
+import type { Performance } from '../redux/modules/performances'
+
 import emojiFlag from 'emoji-flag'
 import moment from 'moment-timezone'
 import React, { Component } from 'react'
@@ -12,13 +15,19 @@ import {
 
 import colors from '../constants/colors'
 
-class PerformanceCell extends Component {
-  render() {
-    const performance = this.props.performance
-    const timeZone = this.props.timeZone
+type Props = {|
+  onSelect: () => any,
+  performance: Performance,
+  timeZone: string,
+|}
 
-    const predecessorHostCountry = performance.predecessor_host_country
-    const predecessorHostName = performance.predecessor_host_name
+class PerformanceCell extends Component {
+  props: Props
+
+  render() {
+    const { onSelect, performance, timeZone } = this.props
+
+    const { predecessorHostCountry, predecessorHostName } = performance
 
     const predecessorInfo = predecessorHostCountry && predecessorHostName
       ? `${emojiFlag(predecessorHostCountry)} ${predecessorHostName}`
@@ -30,28 +39,22 @@ class PerformanceCell extends Component {
 
     return (
       <View>
-        <TouchableElement
-          onPress={this.props.onSelect}
-        >
+        <TouchableElement onPress={onSelect}>
           <View style={styles.row}>
-            {/* $FlowIssue #7363964 - There's a bug in Flow where you cannot
-              * omit a property or set it to undefined if it's inside a shape,
-              * even if it isn't required */}
-
             <View style={styles.container}>
               <View style={styles.leftContainer}>
                 <Text style={styles.time}>
-                  {moment(performance.stage_time).tz(timeZone).format('HH:mm')}
+                  {moment(performance.stageTime).tz(timeZone).format('HH:mm')}
                 </Text>
               </View>
               <View style={styles.rightContainer}>
                 <Text style={styles.categoryInfo}>
-                  {performance.category_name}, AG {performance.age_group}
+                  {performance.categoryName}, AG {performance.ageGroup}
                 </Text>
                 <View style={styles.appearances}>
                   {performance.appearances.map((appearance, i) =>
                     <Text key={'appearance' + (i + 1)} style={styles.appearanceText}>
-                      {appearance.participant_name}, {appearance.instrument_name}
+                      {appearance.participantName}, {appearance.instrumentName}
                     </Text>
                   )}
                 </View>

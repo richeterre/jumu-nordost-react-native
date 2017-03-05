@@ -29,7 +29,7 @@ export type ContestsState = {
   fetchingContests: boolean,
 }
 
-type Venue = {|
+export type Venue = {|
   id: string,
   name: string,
 |}

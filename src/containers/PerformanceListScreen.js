@@ -1,6 +1,8 @@
 // @flow
+import type { NavigationScreenProp } from 'react-navigation'
 import type { State } from '../redux/modules'
-import type { Contest } from '../redux/modules/contests'
+import type { Contest, Venue } from '../redux/modules/contests'
+import type { Performance } from '../redux/modules/performances'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
@@ -16,20 +18,29 @@ import {
 import PerformanceCell from '../components/PerformanceCell'
 import SegmentedControl from '../components/SegmentedControl'
 import colors from '../constants/colors'
-import config from '../../config'
+import { fetchPerformances } from '../redux/modules/performances'
 import moment from 'moment-timezone'
+
+type PropsFromParent = {|
+  navigation: NavigationScreenProp,
+|}
 
 type PropsFromState = {|
   contest: ?Contest,
+  fetchPerformancesError: boolean,
+  fetchingPerformances: boolean,
+  performances: ?Array<Performance>,
 |}
 
-type Props = PropsFromState
+type PropsFromDispatch = {|
+  fetchPerformances: (contest: Contest, venue: Venue, date: string) => any,
+|}
+
+type Props = PropsFromParent & PropsFromState & PropsFromDispatch
 
 type ComponentState = {|
   dateIndex: number,
   dataSource: ListView.DataSource,
-  hasError: boolean,
-  loading: boolean,
   venueIndex: number,
 |}
 
@@ -43,8 +54,6 @@ class PerformanceListScreen extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
-      loading: true,
-      hasError: false,
       dateIndex: 0,
       venueIndex: 0,
     }
@@ -53,6 +62,19 @@ class PerformanceListScreen extends Component {
   componentDidMount() {
     AppState.addEventListener('change', this.handleAppStateChange.bind(this))
     this.fetchData()
+  }
+
+  componentWillReceiveProps(nextProps: Props) {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(nextProps.performances || []),
+    })
+  }
+
+  componentDidUpdate(prevProps: Props, prevState: ComponentState) {
+    const { dateIndex, venueIndex } = this.state
+    if (prevState.dateIndex !== dateIndex || prevState.venueIndex !== venueIndex) {
+      this.fetchData()
+    }
   }
 
   componentWillUnmount() {
@@ -77,31 +99,7 @@ class PerformanceListScreen extends Component {
     const dateString = date.tz(contest.timeZone).format('YYYY-MM-DD')
     const venue = contest.venues[this.state.venueIndex]
 
-    const query = '?venue_id=' + venue.id + '&date=' + dateString
-
-    this.setState({
-      loading: true,
-      hasError: false,
-    })
-
-    fetch(
-      config.baseUrl + 'contests/' + contest.id + '/performances' + query,
-      { headers: { 'X-Api-Key': config.apiKey } }
-    )
-    .then((response) => response.json())
-    .then((responseData) => {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(responseData),
-        loading: false,
-      })
-    })
-    .catch(error => {
-      this.setState({
-        hasError: true,
-        loading: false,
-      })
-    })
-    .done()
+    this.props.fetchPerformances(contest, venue, dateString)
   }
 
   selectPerformance(performance) {
@@ -142,58 +140,66 @@ class PerformanceListScreen extends Component {
 
     const dayFormat = dates.length > 2 ? 'ddd, Do MMMM' : 'dddd, Do MMMM'
 
-    const messageText = this.state.hasError
-      ? 'Der Vorspielplan konnte leider nicht geladen werden.'
-      : 'Einen Moment, bitte…'
-
     return (
       <View style={styles.container}>
         <View style={styles.filterControls}>
           <SegmentedControl
             values={dates.map(date => date.tz(contest.timeZone).format(dayFormat))}
             selectedIndex={this.state.dateIndex}
-            onChange={index => {
-              this.setState({ dateIndex: index })
-              this.fetchData()
-            }}
+            onChange={index => this.setState({ dateIndex: index })}
           />
           <SegmentedControl
             values={contest.venues.map(venue => venue.name)}
             selectedIndex={this.state.venueIndex}
-            onChange={index => {
-              this.setState({ venueIndex: index })
-              this.fetchData()
-            }}
+            onChange={index => this.setState({ venueIndex: index })}
           />
         </View>
-        <View style={styles.contentArea}>
-          {
-            this.state.loading || this.state.hasError ? (
-              <Text style={styles.messageText}>
-                {messageText}
-              </Text>
-            ) : (
-              this.state.dataSource.getRowCount() > 0 ? (
-                <ListView
-                  dataSource={this.state.dataSource}
-                  renderRow={this.renderRow.bind(this)}
-                  refreshControl={
-                    <RefreshControl
-                      refreshing={this.state.loading}
-                      onRefresh={this.fetchData.bind(this)}
-                    />
-                  }
-                />
-              ) : (
-                <Text style={styles.messageText}>
-                  An diesem Tag finden am ausgewählten Ort keine Vorspiele statt.
-                </Text>
-              )
-            )
-          }
-        </View>
+        {this.renderContent()}
       </View>
     )
+  }
+
+  renderContent() {
+    const { fetchingPerformances } = this.props
+
+    const statusText = this.statusText()
+
+    return (
+      <View style={styles.content}>
+        <View style={styles.statusContainer}>
+          {statusText && <Text style={styles.statusText}>{statusText}</Text>}
+        </View>
+        <ListView
+          style={styles.listView}
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow.bind(this)}
+          refreshControl={
+            <RefreshControl
+              refreshing={fetchingPerformances}
+              onRefresh={() => this.fetchData()}
+            />
+          }
+          enableEmptySections={true}
+        />
+      </View>
+    )
+  }
+
+  statusText(): ?string {
+    const { performances, fetchPerformancesError, fetchingPerformances } = this.props
+
+    if (fetchPerformancesError) {
+      return [
+        'Der Vorspielplan konnte leider nicht geladen werden. 😕',
+        'Prüfe bitte auch, ob du die neueste Version der App verwendest!',
+      ].join('\n')
+    } else if (!performances && fetchingPerformances) {
+      return 'Einen Moment, bitte…'
+    } else if (performances && performances.length === 0) {
+      return 'An diesem Tag finden am ausgewählten Ort keine Vorspiele statt.'
+    } else {
+      return null
+    }
   }
 }
 
@@ -202,25 +208,44 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     flex: 1,
   },
-  messageText: {
-    marginTop: 100,
-    textAlign: 'center',
-    fontStyle: 'italic',
-  },
   filterControls: {
     minHeight: 80,
     marginTop: 6,
     marginBottom: 6,
   },
-  contentArea: {
+  content: {
     flex: 1,
+  },
+  statusContainer: {
+    alignItems: 'center',
+    bottom: 0,
+    justifyContent: 'center',
+    left: 0,
+    right: 0,
+    top: 0,
+    position: 'absolute',
+  },
+  statusText: {
+    color: colors.lightGray,
+    fontSize: 16,
+    fontStyle: 'italic',
+    marginLeft: 16,
+    marginRight: 16,
+    textAlign: 'center',
   },
 })
 
 function mapStateToProps(state: State): PropsFromState {
   return {
     contest: state.contests.currentContest,
+    fetchPerformancesError: state.performances.fetchPerformancesError,
+    fetchingPerformances: state.performances.fetchingPerformances,
+    performances: state.performances.performances,
   }
 }
 
-export default connect(mapStateToProps)(PerformanceListScreen)
+const mapDispatchToProps: PropsFromDispatch = {
+  fetchPerformances,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PerformanceListScreen)
