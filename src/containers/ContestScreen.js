@@ -40,6 +40,7 @@ class HomeScreen extends Component {
 
     const navigationOptions = {
       header: {
+        backTitle: null,
         style: { backgroundColor: colors.primary },
         tintColor: colors.white,
       },
