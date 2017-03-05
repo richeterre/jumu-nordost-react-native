@@ -6,6 +6,9 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "lint": "node node_modules/.bin/eslint *.js src/"
   },
+  "rnpm": {
+    "assets": ["./fonts"]
+  },
   "dependencies": {
     "axios": "^0.15.3",
     "emoji-flag": "^1.1.0",
