@@ -16,6 +16,7 @@ import {
 } from 'react-native'
 
 import PerformanceCell from '../components/PerformanceCell'
+// $FlowFixMe: Platform suffix support (https://github.com/facebook/flow/issues/945)
 import SegmentedControl from '../components/SegmentedControl'
 import colors from '../constants/colors'
 import { fetchPerformances } from '../redux/modules/performances'
