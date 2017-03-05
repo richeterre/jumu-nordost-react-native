@@ -5,12 +5,15 @@ import emojiFlag from 'emoji-flag'
 import moment from 'moment-timezone'
 import React, { Component } from 'react'
 import {
+  Image,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native'
 
+import calendarIcon from '../../images/icon-calendar.png'
+import locationIcon from '../../images/icon-location.png'
 import Separator from '../components/Separator'
 import colors from '../constants/colors'
 import fonts from '../constants/fonts'
@@ -49,12 +52,22 @@ class PerformanceScreen extends Component {
           alwaysBounceVertical={false}
         >
           <View style={styles.generalInfo}>
-            <Text style={styles.categoryName}>{performance.categoryName}</Text>
-            <Text style={styles.ageGroup}>Altersgruppe {performance.ageGroup}</Text>
-            <Text style={styles.stageTime}>
-              {moment(performance.stageTime).tz(timeZone).format('LLLL')}
+            <Text style={styles.categoryName}>
+              {performance.categoryName}
             </Text>
-            <Text style={styles.venueName}>{venue.name}</Text>
+            <Text style={styles.ageGroup}>
+              Altersgruppe {performance.ageGroup}
+            </Text>
+            <View style={styles.stageTimeInfo}>
+              <Image style={styles.icon} source={calendarIcon} />
+              <Text style={styles.stageTime}>
+                {moment(performance.stageTime).tz(timeZone).format('LLLL')}
+              </Text>
+            </View>
+            <View style={styles.venueInfo}>
+              <Image style={styles.icon} source={locationIcon} />
+              <Text style={styles.venueName}>{venue.name}</Text>
+            </View>
           </View>
           <Separator style={styles.separator} />
           <View>
@@ -129,10 +142,22 @@ const styles = StyleSheet.create({
     fontSize: 19,
     marginBottom: 16,
   },
+  icon: {
+    marginRight: 8,
+  },
+  stageTimeInfo: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   stageTime: {
     color: colors.gray,
     fontFamily: fonts.regular.normal,
     fontSize: 16,
+  },
+  venueInfo: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: 4,
   },
   venueName: {
     color: colors.gray,
