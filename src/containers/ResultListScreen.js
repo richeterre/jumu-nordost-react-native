@@ -7,9 +7,9 @@ import type { Performance } from '../redux/modules/performances'
 import { get } from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { ListView, RefreshControl, StyleSheet, View } from 'react-native'
+import { ListView, StyleSheet } from 'react-native'
 
-import ListStatusView from '../components/ListStatusView'
+import ListViewWithStatus from '../components/ListViewWithStatus'
 import ResultCell from '../components/ResultCell'
 import colors from '../constants/colors'
 import { fetchResultPerformances } from '../redux/modules/performances'
@@ -75,40 +75,23 @@ class PerformanceListScreen extends Component {
     this.props.fetchPerformances(contest, contestCategory)
   }
 
-  renderRow(performance) {
+  render() {
+    const { fetchingPerformances } = this.props
+
     return (
-      <ResultCell
-        key={performance.id}
-        performance={performance}
+      <ListViewWithStatus
+        style={styles.listView}
+        dataSource={this.state.dataSource}
+        renderRow={this.renderRow.bind(this)}
+        refreshing={fetchingPerformances}
+        onRefresh={() => this.fetchData()}
+        statusText={this.statusText()}
       />
     )
   }
 
-  render() {
-    const { fetchingPerformances } = this.props
-
-    const statusText = this.statusText()
-
-    return (
-      <View style={styles.root}>
-        <View style={styles.statusContainer}>
-          {statusText &&
-            <ListStatusView style={styles.statusView} text={statusText} />}
-        </View>
-        <ListView
-          style={styles.listView}
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow.bind(this)}
-          refreshControl={
-            <RefreshControl
-              refreshing={fetchingPerformances}
-              onRefresh={() => this.fetchData()}
-            />
-          }
-          enableEmptySections={true}
-        />
-      </View>
-    )
+  renderRow(performance) {
+    return <ResultCell key={performance.id} performance={performance} />
   }
 
   statusText(): ?string {
@@ -130,20 +113,9 @@ class PerformanceListScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  root: {
+  listView: {
     backgroundColor: colors.white,
     flex: 1,
-  },
-  statusContainer: {
-    alignItems: 'center',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top: 0,
-    position: 'absolute',
-  },
-  statusView: {
-    marginTop: 96,
   },
 })
 

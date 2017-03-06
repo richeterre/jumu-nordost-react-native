@@ -6,15 +6,9 @@ import type { Performance } from '../redux/modules/performances'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-  AppState,
-  ListView,
-  RefreshControl,
-  StyleSheet,
-  View,
-} from 'react-native'
+import { AppState, ListView, StyleSheet, View } from 'react-native'
 
-import ListStatusView from '../components/ListStatusView'
+import ListViewWithStatus from '../components/ListViewWithStatus'
 import PerformanceCell from '../components/PerformanceCell'
 // $FlowFixMe: Platform suffix support (https://github.com/facebook/flow/issues/945)
 import SegmentedControl from '../components/SegmentedControl'
@@ -103,29 +97,6 @@ class PerformanceListScreen extends Component {
     this.props.fetchPerformances(contest, venue, dateString)
   }
 
-  selectPerformance(performance) {
-    const { navigate } = this.props.navigation
-
-    const contest = this.contest()
-    const venue = contest.venues[this.state.venueIndex]
-    const timeZone = contest.timeZone
-
-    navigate('Performance', { performance, venue, timeZone })
-  }
-
-  renderRow(performance) {
-    const contest = this.contest()
-
-    return (
-      <PerformanceCell
-        key={performance.id}
-        onSelect={() => this.selectPerformance(performance)}
-        performance={performance}
-        timeZone={contest.timeZone}
-      />
-    )
-  }
-
   render() {
     const contest = this.contest()
     const endDate = moment(contest.endDate)
@@ -163,28 +134,39 @@ class PerformanceListScreen extends Component {
   renderContent() {
     const { fetchingPerformances } = this.props
 
-    const statusText = this.statusText()
+    return (
+      <ListViewWithStatus
+        style={styles.listView}
+        dataSource={this.state.dataSource}
+        renderRow={this.renderRow.bind(this)}
+        refreshing={fetchingPerformances}
+        onRefresh={() => this.fetchData()}
+        statusText={this.statusText()}
+      />
+    )
+  }
+
+  renderRow(performance) {
+    const contest = this.contest()
 
     return (
-      <View style={styles.content}>
-        <View style={styles.statusContainer}>
-          {statusText &&
-            <ListStatusView style={styles.statusView} text={statusText} />}
-        </View>
-        <ListView
-          style={styles.listView}
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow.bind(this)}
-          refreshControl={
-            <RefreshControl
-              refreshing={fetchingPerformances}
-              onRefresh={() => this.fetchData()}
-            />
-          }
-          enableEmptySections={true}
-        />
-      </View>
+      <PerformanceCell
+        key={performance.id}
+        onSelect={() => this.selectPerformance(performance)}
+        performance={performance}
+        timeZone={contest.timeZone}
+      />
     )
+  }
+
+  selectPerformance(performance) {
+    const { navigate } = this.props.navigation
+
+    const contest = this.contest()
+    const venue = contest.venues[this.state.venueIndex]
+    const timeZone = contest.timeZone
+
+    navigate('Performance', { performance, venue, timeZone })
   }
 
   statusText(): ?string {
@@ -215,19 +197,8 @@ const styles = StyleSheet.create({
     marginTop: 6,
     marginBottom: 6,
   },
-  content: {
+  listView: {
     flex: 1,
-  },
-  statusContainer: {
-    alignItems: 'center',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top: 0,
-    position: 'absolute',
-  },
-  statusView: {
-    marginTop: 96,
   },
 })
 

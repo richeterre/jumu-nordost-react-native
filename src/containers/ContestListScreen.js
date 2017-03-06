@@ -9,13 +9,12 @@ import {
   AppState,
   ListView,
   StyleSheet,
-  RefreshControl,
   Text,
   View,
 } from 'react-native'
 
 import ContestCell from '../components/ContestCell'
-import ListStatusView from '../components/ListStatusView'
+import ListViewWithStatus from '../components/ListViewWithStatus'
 import colors from '../constants/colors'
 import fonts from '../constants/fonts'
 import { fetchContests, selectContest } from '../redux/modules/contests'
@@ -87,16 +86,6 @@ class ContestListScreen extends Component {
     navigate('Contest')
   }
 
-  renderRow(contest) {
-    return (
-      <ContestCell
-        key={contest.id}
-        onSelect={() => this.handleRowSelect(contest)}
-        contest={contest}
-      />
-    )
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -114,24 +103,24 @@ class ContestListScreen extends Component {
     const statusText = this.statusText()
 
     return (
-      <View style={styles.content}>
-        <View style={styles.statusContainer}>
-          {statusText &&
-            <ListStatusView style={styles.statusView} text={statusText} />}
-        </View>
-        <ListView
-          style={styles.listView}
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow.bind(this)}
-          refreshControl={
-            <RefreshControl
-              refreshing={fetchingContests}
-              onRefresh={() => fetchContests()}
-            />
-          }
-          enableEmptySections={true}
-        />
-      </View>
+      <ListViewWithStatus
+        style={styles.listView}
+        dataSource={this.state.dataSource}
+        onRefresh={() => fetchContests()}
+        refreshing={fetchingContests}
+        renderRow={this.renderRow.bind(this)}
+        statusText={statusText}
+      />
+    )
+  }
+
+  renderRow(contest) {
+    return (
+      <ContestCell
+        key={contest.id}
+        onSelect={() => this.handleRowSelect(contest)}
+        contest={contest}
+      />
     )
   }
 
@@ -163,18 +152,8 @@ const styles = StyleSheet.create({
     padding: 16,
     textAlign: 'center',
   },
-  content: {
+  listView: {
     flex: 1,
-  },
-  statusContainer: {
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top: 0,
-    position: 'absolute',
-  },
-  statusView: {
-    marginTop: 96,
   },
 })
 
