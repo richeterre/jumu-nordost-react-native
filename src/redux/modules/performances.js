@@ -208,6 +208,7 @@ export default function contestsReducer(state: PerformancesState = initialState,
     case FETCH_RESULT_PERFORMANCES:
       return {
         ...state,
+        resultPerformances: null,
         fetchingResultPerformances: true,
       }
     case FETCH_RESULT_PERFORMANCES_SUCCESS:

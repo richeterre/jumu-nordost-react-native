@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   statusView: {
-    marginTop: 96,
+    marginTop: 128,
   },
   separator: {
     marginLeft: 16,
