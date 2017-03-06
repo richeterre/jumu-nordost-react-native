@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import { ListView, StyleSheet } from 'react-native'
 
 import ContestCategoryCell from '../components/ContestCategoryCell'
+import Separator from '../components/Separator'
 import colors from '../constants/colors'
 
 type PropsFromParent = {|
@@ -38,9 +39,16 @@ class ContestCategoryListScreen extends Component {
     }
   }
 
-  selectContestCategory(contestCategory: ContestCategory) {
-    const { navigate } = this.props.navigation
-    navigate('ResultList', { contestCategory })
+  render() {
+    return (
+      <ListView
+        style={styles.root}
+        dataSource={this.state.dataSource}
+        renderRow={this.renderRow.bind(this)}
+        renderSeparator={this.renderSeparator}
+        enableEmptySections={true}
+      />
+    )
   }
 
   renderRow(contestCategory: ContestCategory) {
@@ -53,21 +61,27 @@ class ContestCategoryListScreen extends Component {
     )
   }
 
-  render() {
+  renderSeparator(sectionID: string, rowID: string) {
     return (
-      <ListView
-        style={styles.root}
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow.bind(this)}
-        enableEmptySections={true}
+      <Separator
+        style={styles.separator}
+        key={`separator-${sectionID}-${rowID}`}
       />
     )
+  }
+
+  selectContestCategory(contestCategory: ContestCategory) {
+    const { navigate } = this.props.navigation
+    navigate('ResultList', { contestCategory })
   }
 }
 
 const styles = StyleSheet.create({
   root: {
     backgroundColor: colors.white,
+  },
+  separator: {
+    marginLeft: 16,
   },
 })
 
