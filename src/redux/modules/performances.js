@@ -10,6 +10,7 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/switchMap'
 
 import ApiService from '../../services/ApiService'
+import { SELECT_CONTEST } from './contests'
 
 // Types
 
@@ -194,7 +195,7 @@ const initialState = {
   resultPerformances: null,
 }
 
-export default function contestsReducer(state: PerformancesState = initialState, action: Action): PerformancesState {
+export default function performancesReducer(state: PerformancesState = initialState, action: Action): PerformancesState {
   switch (action.type) {
     case FETCH_TIMETABLE_PERFORMANCES:
       return {
@@ -235,6 +236,8 @@ export default function contestsReducer(state: PerformancesState = initialState,
         fetchResultPerformancesError: true,
         fetchingResultPerformances: false,
       }
+    case SELECT_CONTEST:
+      return initialState
     default:
       return state
   }

@@ -45,7 +45,7 @@ export type Venue = {|
 const FETCH_CONTESTS = 'contests/FETCH_CONTESTS'
 const FETCH_CONTESTS_SUCCESS = 'contests/FETCH_CONTESTS_SUCCESS'
 const FETCH_CONTESTS_FAILURE = 'contests/FETCH_CONTESTS_FAILURE'
-const SELECT_CONTEST = 'contests/SELECT_CONTEST'
+export const SELECT_CONTEST = 'contests/SELECT_CONTEST'
 
 export function fetchContests(): Action {
   return {
