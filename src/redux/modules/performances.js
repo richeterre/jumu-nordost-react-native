@@ -13,7 +13,7 @@ import ApiService from '../../services/ApiService'
 
 // Types
 
-type Appearance = {|
+export type Appearance = {|
   participantName: string,
   participantRole: string,
   instrumentName: string,
@@ -48,10 +48,11 @@ type Piece = {|
   composerDied: string,
 |}
 
-type Result = {|
+export type Result = {|
   points: number,
   prize?: string,
-  predicate?: string,
+  rating?: string,
+  advancesToNextRound: boolean,
 |}
 
 // Actions
@@ -160,7 +161,7 @@ function parseAppearance(json: Object): Appearance {
     participantRole: json.participant_role,
     instrumentName: json.instrument_name,
     ageGroup: json.age_group,
-    result: json.result,
+    result: json.result && parseResult(json.result),
   }
 }
 
@@ -170,6 +171,15 @@ function parsePiece(json: Object): Piece {
     composerName: json.composer_name,
     composerBorn: json.composer_born,
     composerDied: json.composer_died,
+  }
+}
+
+function parseResult(json: Object): Result {
+  return {
+    points: json.points,
+    prize: json.prize,
+    rating: json.rating,
+    advancesToNextRound: json.advances_to_next_round,
   }
 }
 
