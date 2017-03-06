@@ -76,12 +76,11 @@ class PerformanceCell extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    flex: 1,
     flexDirection: 'row',
-    paddingTop: 5,
-    paddingLeft: 20,
-    paddingRight: 10,
-    paddingBottom: 5,
+    paddingTop: 8,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 8,
   },
   leftContainer: {
     flex: 1,

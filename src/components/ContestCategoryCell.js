@@ -48,10 +48,10 @@ class ContestCell extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    paddingBottom: 16,
+    paddingBottom: 12,
     paddingLeft: 16,
     paddingRight: 16,
-    paddingTop: 16,
+    paddingTop: 12,
   },
   name: {
     color: colors.gray,

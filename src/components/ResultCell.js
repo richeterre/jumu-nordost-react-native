@@ -52,10 +52,10 @@ class ResultCell extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    paddingTop: 12,
+    paddingBottom: 8,
     paddingLeft: 16,
     paddingRight: 16,
-    paddingBottom: 12,
+    paddingTop: 8,
   },
   appearance: {
     flexDirection: 'row',
