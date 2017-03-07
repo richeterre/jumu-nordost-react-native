@@ -102,10 +102,10 @@ class ResultCell extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    paddingBottom: 8,
+    paddingBottom: 12,
     paddingLeft: 16,
     paddingRight: 16,
-    paddingTop: 8,
+    paddingTop: 12,
   },
   appearance: {
     alignItems: 'flex-start',
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   prizeContainer: {
     alignItems: 'center',
     flexDirection: 'row',
-    width: 87,
+    width: 90,
   },
   prize: {
     color: colors.gray,
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular.normal,
     fontSize: 14,
     marginTop: 2,
-    width: 87,
+    width: 90,
   },
   generalInfo: {
     color: colors.gray,
