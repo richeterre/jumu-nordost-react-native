@@ -171,7 +171,10 @@ const styles = StyleSheet.create({
     color: colors.lightGray,
     fontFamily: fonts.regular.italic,
     fontSize: 16,
-    padding: 16,
+    marginBottom: 8,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 24,
     textAlign: 'center',
   },
   listView: {

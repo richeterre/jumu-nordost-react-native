@@ -178,10 +178,10 @@ const styles = StyleSheet.create({
     color: colors.gray,
     fontFamily: fonts.regular.normal,
     fontSize: 16,
-    marginTop: 5,
+    marginTop: 8,
   },
   piece: {
-    marginBottom: 5,
+    marginBottom: 8,
   },
   composer: {
     color: colors.gray,

@@ -40,33 +40,47 @@ class ContestCell extends Component {
             <Text style={styles.name} numberOfLines={1}>
               {`${emojiFlag(contest.hostCountry)} ${contest.name}`}
             </Text>
-            <Text style={styles.dateInfo} numberOfLines={1}>
-              {moment(contest.startDate).tz(contest.timeZone).format('LL')}
-              –
-              {moment(contest.endDate).tz(contest.timeZone).format('LL')}
+            <Text style={styles.dateRange} numberOfLines={1}>
+              {this.formattedDateRange(
+                contest.startDate,
+                contest.endDate,
+                contest.timeZone
+              )}
             </Text>
           </View>
         </TouchableElement>
       </View>
     )
   }
+
+  formattedDateRange(startDate: string, endDate: string, timeZone: string): string {
+    const startMoment = moment(startDate).tz(timeZone)
+    const endMoment = moment(endDate).tz(timeZone)
+
+    if (startMoment.isSame(endMoment)) {
+      return startMoment.format('LL')
+    } else if (startMoment.isSame(endMoment, 'month')) {
+      return `${startMoment.format('Do')}–${endMoment.format('LL')}`
+    } else {
+      return `${startMoment.format('LL')}–${endMoment.format('LL')}`
+    }
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    paddingBottom: 10,
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingTop: 10,
+    paddingBottom: 12,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 8,
   },
   name: {
     color: colors.gray,
     fontFamily: fonts.regular.normal,
     fontSize: 19,
-    marginBottom: 5,
   },
-  dateInfo: {
+  dateRange: {
     color: colors.gray,
     fontFamily: fonts.regular.normal,
     fontSize: 14,
