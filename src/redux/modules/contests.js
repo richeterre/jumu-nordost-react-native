@@ -47,9 +47,10 @@ const FETCH_CONTESTS_SUCCESS = 'contests/FETCH_CONTESTS_SUCCESS'
 const FETCH_CONTESTS_FAILURE = 'contests/FETCH_CONTESTS_FAILURE'
 export const SELECT_CONTEST = 'contests/SELECT_CONTEST'
 
-export function fetchContests(): Action {
+export function fetchContests(currentOnly: boolean): Action {
   return {
     type: FETCH_CONTESTS,
+    currentOnly,
   }
 }
 
@@ -80,7 +81,7 @@ export const fetchContestsEpic: Epic = action$ =>
   action$.ofType(FETCH_CONTESTS)
     .switchMap(action =>
       ApiService.get$('/contests', {
-        current_only: 1,
+        current_only: action.currentOnly ? 1 : 0,
         timetables_public: 1,
       })
         .map((contestsJSON) => fetchContestsSuccess(parseContests(contestsJSON)))

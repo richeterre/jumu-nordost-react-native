@@ -3,21 +3,21 @@ import type { NavigationScreenProp } from 'react-navigation'
 import type { State } from '../redux/modules'
 import type { Contest } from '../redux/modules/contests'
 
+import { get } from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-  AppState,
-  ListView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
+import { ListView, StyleSheet, Text, View } from 'react-native'
 
+import filterIcon from '../../images/icon-filter.png'
+import filterIconFilled from '../../images/icon-filter-filled.png'
 import ContestCell from '../components/ContestCell'
+import IconButton from '../components/IconButton'
 import ListViewWithStatus from '../components/ListViewWithStatus'
 import colors from '../constants/colors'
 import fonts from '../constants/fonts'
 import { fetchContests, selectContest } from '../redux/modules/contests'
+
+const showCurrentOnlyDefault = true
 
 type PropsFromParent = {|
   navigation: NavigationScreenProp,
@@ -30,7 +30,7 @@ type PropsFromState = {|
 |}
 
 type PropsFromDispatch = {|
-  fetchContests: () => any,
+  fetchContests: (currentOnly: boolean) => any,
   selectContest: (contest: Contest) => any,
 |}
 
@@ -38,6 +38,7 @@ type Props = PropsFromParent & PropsFromState & PropsFromDispatch
 
 type ComponentState = {|
   dataSource: ListView.DataSource,
+  showCurrentOnly: boolean,
 |}
 
 class ContestListScreen extends Component {
@@ -46,6 +47,19 @@ class ContestListScreen extends Component {
 
   static navigationOptions = {
     title: 'Wettbewerbe',
+    header: ({ state: { params }, setParams }, defaultHeader) => {
+      // FIXME: Work around https://github.com/react-community/react-navigation/pull/150
+      params = params || { showCurrentOnly: showCurrentOnlyDefault }
+
+      return {
+        ...defaultHeader,
+        left: <IconButton
+          style={styles.filterButton}
+          icon={params.showCurrentOnly ? filterIconFilled : filterIcon}
+          onPress={() => setParams({ showCurrentOnly: !params.showCurrentOnly })}
+        />,
+      }
+    },
   }
 
   constructor(props) {
@@ -55,28 +69,27 @@ class ContestListScreen extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      showCurrentOnly: showCurrentOnlyDefault,
     }
   }
 
   componentDidMount() {
-    AppState.addEventListener('change', this.handleAppStateChange.bind(this))
-
-    this.props.fetchContests()
+    this.props.fetchContests(this.state.showCurrentOnly)
   }
 
   componentWillReceiveProps(nextProps) {
+    const showCurrentOnlyValue = get(nextProps.navigation.state.params, 'showCurrentOnly')
+
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(nextProps.contests || []),
+      showCurrentOnly: showCurrentOnlyValue === undefined ? showCurrentOnlyDefault : showCurrentOnlyValue,
     })
   }
 
-  componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange.bind(this))
-  }
-
-  handleAppStateChange(currentAppState) {
-    if (currentAppState === 'active') {
-      this.props.fetchContests()
+  componentWillUpdate(nextProps, nextState) {
+    const { showCurrentOnly } = nextState
+    if (showCurrentOnly !== this.state.showCurrentOnly) {
+      this.props.fetchContests(showCurrentOnly)
     }
   }
 
@@ -87,10 +100,15 @@ class ContestListScreen extends Component {
   }
 
   render() {
+    const { showCurrentOnly } = this.state
+
     return (
-      <View style={styles.container}>
+      <View style={styles.root}>
         <Text style={styles.welcomeText}>
-          {`Willkommen!\nBitte wähle einen Wettbewerb:`}
+          {[
+            'Willkommen!',
+            `Bitte wähle einen${showCurrentOnly ? ' aktuellen' : ''} Wettbewerb:`,
+          ].join('\n')}
         </Text>
         {this.renderContent()}
       </View>
@@ -99,6 +117,7 @@ class ContestListScreen extends Component {
 
   renderContent() {
     const { fetchContests, fetchingContests } = this.props
+    const { showCurrentOnly } = this.state
 
     const statusText = this.statusText()
 
@@ -106,7 +125,7 @@ class ContestListScreen extends Component {
       <ListViewWithStatus
         style={styles.listView}
         dataSource={this.state.dataSource}
-        onRefresh={() => fetchContests()}
+        onRefresh={() => fetchContests(showCurrentOnly)}
         refreshing={fetchingContests}
         renderRow={this.renderRow.bind(this)}
         statusText={statusText}
@@ -141,7 +160,10 @@ class ContestListScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  filterButton: {
+    marginLeft: 8,
+  },
+  root: {
     backgroundColor: colors.white,
     flex: 1,
   },
