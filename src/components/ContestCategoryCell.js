@@ -3,6 +3,7 @@ import type { ContestCategory } from '../redux/modules/contests'
 
 import React, { Component } from 'react'
 import {
+  Image,
   Platform,
   StyleSheet,
   Text,
@@ -11,6 +12,7 @@ import {
   View,
 } from 'react-native'
 
+import forwardArrow from '../../images/arrow-forward.png'
 import colors from '../constants/colors'
 import fonts from '../constants/fonts'
 
@@ -38,6 +40,7 @@ class ContestCell extends Component {
             <Text style={styles.name} numberOfLines={1}>
               {contestCategory.name}
             </Text>
+            <Image style={styles.arrow} source={forwardArrow} />
           </View>
         </TouchableElement>
       </View>
@@ -48,15 +51,22 @@ class ContestCell extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
+    flexDirection: 'row',
     paddingBottom: 12,
     paddingLeft: 16,
-    paddingRight: 16,
+    paddingRight: 12,
     paddingTop: 12,
   },
   name: {
     color: colors.gray,
+    flex: 1,
     fontFamily: fonts.regular.normal,
     fontSize: 16,
+  },
+  arrow: {
+    alignSelf: 'center',
+    marginLeft: 4,
+    tintColor: colors.veryLightGray,
   },
 })
 

@@ -5,6 +5,7 @@ import emojiFlag from 'emoji-flag'
 import moment from 'moment-timezone'
 import React, { Component } from 'react'
 import {
+  Image,
   Platform,
   StyleSheet,
   Text,
@@ -13,6 +14,7 @@ import {
   View,
 } from 'react-native'
 
+import forwardArrow from '../../images/arrow-forward.png'
 import colors from '../constants/colors'
 import fonts from '../constants/fonts'
 
@@ -41,31 +43,30 @@ class PerformanceCell extends Component {
     return (
       <View>
         <TouchableElement onPress={onSelect}>
-          <View style={styles.row}>
-            <View style={styles.container}>
-              <View style={styles.leftContainer}>
-                <Text style={styles.time}>
-                  {moment(performance.stageTime).tz(timeZone).format('HH:mm')}
-                </Text>
-              </View>
-              <View style={styles.rightContainer}>
-                <Text style={styles.categoryInfo}>
-                  {performance.categoryName}, AG {performance.ageGroup}
-                </Text>
-                <View style={styles.appearances}>
-                  {performance.appearances.map((appearance, i) =>
-                    <Text key={'appearance' + (i + 1)} style={styles.appearanceText}>
-                      {appearance.participantName}, {appearance.instrumentName}
-                    </Text>
-                  )}
-                </View>
-                {predecessorInfo &&
-                  <Text style={styles.predecessorInfo}>
-                    {predecessorInfo}
-                  </Text>
-                }
-              </View>
+          <View style={styles.container}>
+            <View style={styles.leftContainer}>
+              <Text style={styles.time}>
+                {moment(performance.stageTime).tz(timeZone).format('HH:mm')}
+              </Text>
             </View>
+            <View style={styles.rightContainer}>
+              <Text style={styles.categoryInfo}>
+                {performance.categoryName}, AG {performance.ageGroup}
+              </Text>
+              <View style={styles.appearances}>
+                {performance.appearances.map((appearance, index) =>
+                  <Text key={`appearance-${index}`} style={styles.appearanceText}>
+                    {`${appearance.participantName}, ${appearance.instrumentName}`}
+                  </Text>
+                )}
+              </View>
+              {predecessorInfo &&
+                <Text style={styles.predecessorInfo}>
+                  {predecessorInfo}
+                </Text>
+              }
+            </View>
+            <Image style={styles.arrow} source={forwardArrow} />
           </View>
         </TouchableElement>
       </View>
@@ -76,10 +77,11 @@ class PerformanceCell extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
+    flex: 1,
     flexDirection: 'row',
     paddingTop: 8,
     paddingLeft: 16,
-    paddingRight: 16,
+    paddingRight: 12,
     paddingBottom: 8,
   },
   leftContainer: {
@@ -111,6 +113,11 @@ const styles = StyleSheet.create({
     fontFamily: fonts.regular.normal,
     fontSize: 16,
     marginTop: 5,
+  },
+  arrow: {
+    alignSelf: 'center',
+    marginLeft: 4,
+    tintColor: colors.veryLightGray,
   },
 })
 

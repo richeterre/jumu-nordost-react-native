@@ -33,9 +33,7 @@ class ContestCell extends Component {
 
     return (
       <View>
-        <TouchableElement
-          onPress={onSelect}
-        >
+        <TouchableElement onPress={onSelect}>
           <View style={styles.container}>
             <Text style={styles.name} numberOfLines={1}>
               {`${emojiFlag(contest.hostCountry)} ${contest.name}`}
