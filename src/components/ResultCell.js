@@ -32,7 +32,10 @@ class ResultCell extends Component {
             {performance.appearances.map(this.renderAppearance.bind(this))}
           </View>
           <Text style={styles.generalInfo}>
-            {[predecessorInfo, `AG ${performance.ageGroup}`].join(', ')}
+            {predecessorInfo
+              ? `${predecessorInfo}, AG ${performance.ageGroup}`
+              : `AG ${performance.ageGroup}`
+            }
           </Text>
         </View>
       </View>
