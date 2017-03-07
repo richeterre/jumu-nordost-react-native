@@ -110,7 +110,7 @@ class PerformanceListScreen extends Component {
       date = newDate
     }
 
-    const dayFormat = dates.length > 2 ? 'ddd, Do MMMM' : 'dddd, Do MMMM'
+    const dayFormat = dates.length > 2 ? 'dd, Do MMMM' : 'dddd, Do MMMM'
 
     return (
       <View style={styles.container}>
