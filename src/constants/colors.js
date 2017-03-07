@@ -8,7 +8,7 @@ colors.veryLightGray = '#999999'
 colors.lightGray = '#666666'
 colors.gray = '#333333'
 
-colors.primary = '#D61921'
+colors.primary = '#C82432'
 colors.success = '#248A0F'
 colors.separator = '#E9E9E9'
 
