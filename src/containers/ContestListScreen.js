@@ -3,7 +3,7 @@ import type { NavigationScreenProp } from 'react-navigation'
 import type { State } from '../redux/modules'
 import type { Contest } from '../redux/modules/contests'
 
-import { get } from 'lodash'
+import { get, isEqual } from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { ListView, StyleSheet, Text, View } from 'react-native'
@@ -38,7 +38,6 @@ type Props = PropsFromParent & PropsFromState & PropsFromDispatch
 
 type ComponentState = {|
   dataSource: ListView.DataSource,
-  showCurrentOnly: boolean,
 |}
 
 class ContestListScreen extends Component {
@@ -69,21 +68,24 @@ class ContestListScreen extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
-      showCurrentOnly: showCurrentOnlyDefault,
     }
   }
 
   componentDidMount() {
-    this.props.fetchContests(this.state.showCurrentOnly)
+    this.props.fetchContests(this.showCurrentOnly(this.props))
   }
 
   componentWillReceiveProps(nextProps) {
-    const showCurrentOnlyValue = get(nextProps.navigation.state.params, 'showCurrentOnly')
+    const showCurrentOnly = this.showCurrentOnly(nextProps)
+    if (showCurrentOnly !== this.showCurrentOnly(this.props)) {
+      this.props.fetchContests(showCurrentOnly)
+    }
 
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(nextProps.contests || []),
-      showCurrentOnly: showCurrentOnlyValue === undefined ? showCurrentOnlyDefault : showCurrentOnlyValue,
-    })
+    if (!isEqual(nextProps.contests, this.props.contests)) {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(nextProps.contests || []),
+      })
+    }
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -91,12 +93,6 @@ class ContestListScreen extends Component {
     if (showCurrentOnly !== this.state.showCurrentOnly) {
       this.props.fetchContests(showCurrentOnly)
     }
-  }
-
-  handleRowSelect(contest) {
-    const { navigation: { navigate }, selectContest } = this.props
-    selectContest(contest)
-    navigate('Contest')
   }
 
   render() {
@@ -117,7 +113,7 @@ class ContestListScreen extends Component {
 
   renderContent() {
     const { fetchContests, fetchingContests } = this.props
-    const { showCurrentOnly } = this.state
+    const showCurrentOnly = this.showCurrentOnly(this.props)
 
     const statusText = this.statusText()
 
@@ -141,6 +137,19 @@ class ContestListScreen extends Component {
         contest={contest}
       />
     )
+  }
+
+  handleRowSelect(contest) {
+    const { navigation: { navigate }, selectContest } = this.props
+    selectContest(contest)
+    navigate('Contest')
+  }
+
+  showCurrentOnly(props: Props): boolean {
+    const showCurrentOnlyValue = get(props.navigation.state.params, 'showCurrentOnly')
+    return showCurrentOnlyValue === undefined
+      ? showCurrentOnlyDefault
+      : showCurrentOnlyValue
   }
 
   statusText(): ?string {
