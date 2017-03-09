@@ -105,8 +105,6 @@ class HomeScreen extends Component {
       },
     }, {
       tabBarPosition: 'bottom',
-      animationEnabled: false,
-      swipeEnabled: false,
       tabBarOptions: this.tabBarOptions(),
     })
 
