@@ -7,7 +7,7 @@ import type { Performance } from '../redux/modules/performances'
 import { get } from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { ListView, StyleSheet } from 'react-native'
+import { AppState, ListView, StyleSheet } from 'react-native'
 
 import ListViewWithStatus from '../components/ListViewWithStatus'
 import ResultCell from '../components/ResultCell'
@@ -53,6 +53,7 @@ class PerformanceListScreen extends Component {
   }
 
   componentWillMount() {
+    AppState.addEventListener('change', this.handleAppStateChange.bind(this))
     this.fetchData()
   }
 
@@ -60,6 +61,16 @@ class PerformanceListScreen extends Component {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(nextProps.performances || []),
     })
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange.bind(this))
+  }
+
+  handleAppStateChange(currentAppState) {
+    if (currentAppState === 'active') {
+      this.fetchData()
+    }
   }
 
   contest() {

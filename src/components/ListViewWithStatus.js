@@ -32,7 +32,6 @@ export default function ListViewWithStatus(props: Props) {
           <ListStatusView style={styles.statusView} text={statusText} />}
       </View>
       <ListView
-        style={styles.listView}
         dataSource={dataSource}
         renderRow={renderRow}
         renderSeparator={renderSeparator}

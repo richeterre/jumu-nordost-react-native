@@ -3,10 +3,10 @@ import type { NavigationScreenProp } from 'react-navigation'
 import type { State } from '../redux/modules'
 import type { Contest } from '../redux/modules/contests'
 
-import { get, isEqual } from 'lodash'
+import { get } from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { ListView, StyleSheet, Text, View } from 'react-native'
+import { AppState, ListView, StyleSheet, Text, View } from 'react-native'
 
 import filterIcon from '../../images/icon-filter.png'
 import filterIconFilled from '../../images/icon-filter-filled.png'
@@ -72,7 +72,8 @@ class ContestListScreen extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchContests(this.showCurrentOnly(this.props))
+    AppState.addEventListener('change', this.handleAppStateChange.bind(this))
+    this.fetchData()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -81,11 +82,23 @@ class ContestListScreen extends Component {
       this.props.fetchContests(showCurrentOnly)
     }
 
-    if (!isEqual(nextProps.contests, this.props.contests)) {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(nextProps.contests || []),
-      })
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(nextProps.contests || []),
+    })
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange.bind(this))
+  }
+
+  handleAppStateChange(currentAppState) {
+    if (currentAppState === 'active') {
+      this.fetchData()
     }
+  }
+
+  fetchData() {
+    this.props.fetchContests(this.showCurrentOnly(this.props))
   }
 
   render() {
