@@ -65,7 +65,12 @@ class HomeScreen extends Component {
           },
         },
       },
-      Performance: { screen: PerformanceScreen },
+      Performance: {
+        screen: PerformanceScreen,
+        navigationOptions: {
+          title: 'Vorspieldetails',
+        },
+      },
     }, {
       navigationOptions,
     })

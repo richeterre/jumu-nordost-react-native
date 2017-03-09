@@ -25,10 +25,6 @@ type Props = {|
 class PerformanceScreen extends Component {
   props: Props
 
-  static navigationOptions = {
-    title: ({ state }) => state.params.performance.categoryName,
-  }
-
   render() {
     const { params } = this.props.navigation.state
     const { performance, timeZone, venue } = params
