@@ -88,15 +88,8 @@ class ContestListScreen extends Component {
     }
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    const { showCurrentOnly } = nextState
-    if (showCurrentOnly !== this.state.showCurrentOnly) {
-      this.props.fetchContests(showCurrentOnly)
-    }
-  }
-
   render() {
-    const { showCurrentOnly } = this.state
+    const showCurrentOnly = this.showCurrentOnly(this.props)
 
     return (
       <View style={styles.root}>
