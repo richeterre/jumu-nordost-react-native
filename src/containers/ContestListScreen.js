@@ -3,7 +3,6 @@ import type { NavigationScreenProp } from 'react-navigation'
 import type { State } from '../redux/modules'
 import type { Contest } from '../redux/modules/contests'
 
-import { get } from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { AppState, ListView, StyleSheet, Text, View } from 'react-native'
@@ -16,8 +15,6 @@ import ListViewWithStatus from '../components/ListViewWithStatus'
 import colors from '../constants/colors'
 import fonts from '../constants/fonts'
 import { fetchContests, selectContest } from '../redux/modules/contests'
-
-const showCurrentOnlyDefault = true
 
 type PropsFromParent = {|
   navigation: NavigationScreenProp,
@@ -47,9 +44,6 @@ class ContestListScreen extends Component {
   static navigationOptions = {
     title: 'Wettbewerbe',
     header: ({ state: { params }, setParams }, defaultHeader) => {
-      // FIXME: Work around https://github.com/react-community/react-navigation/pull/150
-      params = params || { showCurrentOnly: showCurrentOnlyDefault }
-
       return {
         ...defaultHeader,
         left: <IconButton
@@ -152,10 +146,7 @@ class ContestListScreen extends Component {
   }
 
   showCurrentOnly(props: Props): boolean {
-    const showCurrentOnlyValue = get(props.navigation.state.params, 'showCurrentOnly')
-    return showCurrentOnlyValue === undefined
-      ? showCurrentOnlyDefault
-      : showCurrentOnlyValue
+    return props.navigation.state.params.showCurrentOnly
   }
 
   statusText(): ?string {

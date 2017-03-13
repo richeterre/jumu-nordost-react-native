@@ -37,6 +37,9 @@ const AppNavigator = StackNavigator({
 }, {
   mode: 'modal',
   headerMode: 'screen',
+  initialRouteParams: {
+    showCurrentOnly: true,
+  },
   navigationOptions: {
     header: {
       style: { backgroundColor: colors.primary },
